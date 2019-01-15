@@ -3,7 +3,7 @@ Delivery Analysis on Facebook
 
 Steps:
 1. In FB Ads Reporting, export a CSV with Country, Amount Spent, Reach, Results
-2. Rename it to results-by-country.csv and paste it in this folder
+2. Rename it to data.csv and paste it in this folder
 3. Run python3 delivery.py
 4. Review png files generated
 
@@ -21,7 +21,7 @@ results_threshold = 1
 min_spend = 10
 
 # load results by country
-dataset = pd.DataFrame.from_csv("results-by-country.csv", index_col=None)  # ignore index column
+dataset = pd.DataFrame.from_csv("data.csv", index_col=None)  # ignore index column
 
 # remove countr without reach
 dataset = dataset[dataset.Reach > 0]
