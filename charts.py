@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plot
-from entities import Country
+from dimensions import Country
 
 
 class Charts:

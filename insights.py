@@ -1,6 +1,6 @@
 import locale
 
-from entities import Country
+from dimensions import Country
 
 locale.setlocale(locale.LC_ALL, '')
 
