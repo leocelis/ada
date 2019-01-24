@@ -1,21 +1,42 @@
 import pandas as pd
 
 
-class Country:
+class Dimension:
     def __init__(self):
+        return
+
+    def data_load(self, filename="default.csv"):
+        self.dataset = pd.DataFrame.from_csv(filename, index_col=None)  # ignore index column
+
+
+class Day(Dimension):
+    """
+    Analyze data by day
+    """
+
+    def __init__(self):
+        super().__init__()
+
+        self.data_load(filename='day.csv')
+        return
+
+
+class Country(Dimension):
+    """
+    Analyze data by country
+    """
+
+    def __init__(self):
+        super().__init__()
         # in dollars
-        self.min_spend = 10
-        self.results_threshold = 1
+        self.min_spend = 1
+        self.results_threshold = 0
         self.dataset = None
 
         # initialize
-        self.data_load()
+        self.data_load(filename='country.csv')
         self.data_cleanup()
         self.add_extra_fields()
-
-    def data_load(self, filename="country.csv"):
-        # load results by country
-        self.dataset = pd.DataFrame.from_csv(filename, index_col=None)  # ignore index column
 
     def data_cleanup(self):
         # remove country without reach
