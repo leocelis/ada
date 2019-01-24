@@ -4,7 +4,7 @@ import plotly
 import plotly.plotly as py
 from plotly import graph_objs as go
 
-plotly.tools.set_credentials_file(username='leocelis', api_key='nkMxRYYLyF5Wae8RevEi')
+plotly.tools.set_credentials_file(username='', api_key='')
 
 # chart stages data
 values = [414597, 123616, 2745, 72]
