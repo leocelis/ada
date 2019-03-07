@@ -29,7 +29,7 @@ class Country(Dimension):
     def __init__(self):
         super().__init__()
         # in dollars
-        self.min_spend = 1
+        self.min_spend = 0
         self.results_threshold = 0
         self.dataset = None
 
@@ -39,6 +39,9 @@ class Country(Dimension):
         self.add_extra_fields()
 
     def data_cleanup(self):
+        # fill NaNs with 0s
+        self.dataset = self.dataset.fillna(0)
+
         # remove country without reach
         self.dataset = self.dataset[self.dataset.Reach > 0]
 
@@ -46,7 +49,8 @@ class Country(Dimension):
         self.dataset = self.dataset[self.dataset['Amount Spent (USD)'] >= self.min_spend]
 
         # remove countries with more than one result
-        self.dataset = self.dataset[self.dataset.Results > self.results_threshold]
+        self.dataset = self.dataset[self.dataset.Results >= self.results_threshold]
+        return self.dataset
 
     def add_extra_fields(self):
         # add cost per result column

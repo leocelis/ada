@@ -11,6 +11,7 @@ class Insight:
         self.cpa_min = None
         self.cpa_max = None
         self.reach_min = None
+        self.cpr_max = None
         self.load_country_insights()
 
     def load_country_insights(self):
@@ -20,14 +21,24 @@ class Insight:
         self.cpa_min = dataset.loc[dataset["cpa"].idxmin()]
         self.cpa_max = dataset.loc[dataset["cpa"].idxmax()]
         self.reach_delta = dataset.loc[dataset["reach_delta"].idxmin()]
+        self.cpr_max = dataset.loc[dataset["Cost per 1,000 People Reached"].idxmax()]
 
     def print_insights(self):
         # Most expensive to reach
+        c = self.cpr_max
+        country = c['Country']
+        cppr = locale.currency(c['Cost per 1,000 People Reached'], grouping=True)
+        msg = "The country {} has the most expensive cost per 1,000 people reach of {}" \
+              "".format(country, cppr)
+        print(msg)
+        print()
+
+        # Most expensive to reach vs. cpa
         c = self.reach_delta
         country = c['Country']
         cpr = locale.currency(c['Cost per Result'], grouping=True)
         cppr = locale.currency(c['Cost per 1,000 People Reached'], grouping=True)
-        msg = "The country {} has a CPA of {} greater than reaching 1,000 users ({})" \
+        msg = "The country {} has the biggest delta between CPA ({}) and reaching 1,000 people ({})" \
               "".format(country, cpr, cppr)
         print(msg)
         print()
