@@ -28,7 +28,7 @@ class Insight:
         c = self.cpr_max
         country = c['Country']
         cppr = locale.currency(c['Cost per 1,000 People Reached'], grouping=True)
-        msg = "The country {} has the most expensive cost per 1,000 people reach of {}" \
+        msg = "\nThe country {} has the most expensive cost per 1,000 people reach of {}" \
               "".format(country, cppr)
         print(msg)
         print()
@@ -38,7 +38,7 @@ class Insight:
         country = c['Country']
         cpr = locale.currency(c['Cost per Result'], grouping=True)
         cppr = locale.currency(c['Cost per 1,000 People Reached'], grouping=True)
-        msg = "The country {} has the biggest delta between CPA ({}) and reaching 1,000 people ({})" \
+        msg = "\nThe country {} has the biggest delta between CPA ({}) and reaching 1,000 people ({})" \
               "".format(country, cpr, cppr)
         print(msg)
         print()
@@ -47,7 +47,7 @@ class Insight:
         c = self.cpa_max
         country = c['Country']
         cpr = locale.currency(c['Cost per Result'], grouping=True)
-        msg = "The country {} has the most expensive CPA of {}".format(country, cpr)
+        msg = "\nThe country {} has the most expensive CPA of {}".format(country, cpr)
         print(msg)
         print()
 
@@ -55,7 +55,7 @@ class Insight:
         c = self.cpa_min
         country = c['Country']
         cpr = locale.currency(c['Cost per Result'], grouping=True)
-        msg = "The country {} has the least expensive CPA of {}".format(country, cpr)
+        msg = "\nThe country {} has the least expensive CPA of {}".format(country, cpr)
         print(msg)
         print()
 

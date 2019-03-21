@@ -1,4 +1,10 @@
+import os
+import sys
+
 import pandas as pd
+
+sys.path.append(os.path.dirname(os.getcwd()))
+from ada.config import DATA_FOLDER
 
 
 class Dimension:
@@ -6,7 +12,8 @@ class Dimension:
         return
 
     def data_load(self, filename="default.csv"):
-        self.dataset = pd.DataFrame.from_csv(filename, index_col=None)  # ignore index column
+        file_location = "{}/{}".format(DATA_FOLDER, filename)
+        self.dataset = pd.DataFrame.from_csv(file_location, index_col=None)  # ignore index column
 
 
 class Day(Dimension):
