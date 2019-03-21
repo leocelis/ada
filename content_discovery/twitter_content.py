@@ -18,9 +18,9 @@ DB_PASSWORD = os.environ.get('DB_PASSWORD')
 # twitter vars
 TWITTER_APP_KEY = os.environ.get('TWITTER_APP_KEY')
 TWITTER_APP_SECRET = os.environ.get('TWITTER_APP_SECRET')
-TWITTER_RETWEETS_THRESHOLD = 50  # min retweets a tweet should have
-TWITTER_WAIT_REQUESTS = 2  # wait seconds between requests
-TWITTER_HISTORY_COUNT = 1000  # how many tweets in the past we will consider
+TWITTER_RETWEETS_THRESHOLD = 10  # min retweets a tweet should have
+TWITTER_WAIT_REQUESTS = 1  # wait seconds between requests
+TWITTER_HISTORY_COUNT = 500  # how many tweets in the past we will consider
 
 # create twitter connection
 twitter = Twython(TWITTER_APP_KEY, TWITTER_APP_SECRET)
@@ -38,7 +38,9 @@ def dictfecth(cursor):
     return [dict(zip([col[0] for col in desc], row)) for row in cursor.fetchall()]
 
 
+# TODO: sync result_type="popular" with TWITTER_HISTORY_COUNT=100
 def sync_tweets(keyword: str) -> None:
+    query = "{} -filter:retweets".format(keyword)
     tweets_count = 0
     next_max_id = 0
 
@@ -47,19 +49,21 @@ def sync_tweets(keyword: str) -> None:
     while tweets_count <= TWITTER_HISTORY_COUNT:
         # get first 100
         if tweets_count == 0:
-            results = twitter.search(q=keyword, result_type="recent", include_entities="false", lang="en", count='100')
+            results = twitter.search(q=query, result_type="recent", include_entities="false", lang="en", count='100')
         else:
             # search next page
-            results = twitter.search(q=keyword, result_type="recent", include_entities="false", lang="en",
+            results = twitter.search(q=query, result_type="recent", include_entities="false", lang="en",
                                      max_id=next_max_id)
 
         # keep tweets in mem
         for result in results['statuses']:
             tweets_count += 1
             retweets = result.get('retweet_count', 0)
+            # print("\n{} - *** Retweets {}...".format(result['text'], retweets))
             print("Retweets {}...".format(retweets))
 
             # save it if retweets is greater than threshold
+            # TODO: if same created day and retweet count, skip
             if retweets >= TWITTER_RETWEETS_THRESHOLD:
                 save_tweet(t=result, keyword=keyword)
 
@@ -100,13 +104,13 @@ def save_tweet(t: dict, keyword: str) -> None:
     sql = """
     INSERT INTO twitter_most_retweeted(created_at, tweet_id, retweet_count, tweet, user_id, user_name,
     tweet_blob, tweet_link, keyword)
-    VALUES ('{}', '{}', {}, '{}', '{}', '{}', '{}', '{}', '{}')
-    """.format(created_at, tweet_id, retweet_count, tweet, user_id, user_name, blob, tweet_link, keyword)
+    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+    """
 
     print("\nSaving tweet: {}...".format(tweet_link))
 
     try:
-        cursor.execute(sql)
+        cursor.execute(sql, (created_at, tweet_id, retweet_count, tweet, user_id, user_name, blob, tweet_link, keyword))
         conn.commit()
     except Exception as e:
         print("\nERROR! ({})".format(str(e)))
@@ -118,57 +122,46 @@ def save_tweet(t: dict, keyword: str) -> None:
 
 
 # relevant words to the industry
-keywords = ["oribi",
-            "mixpanel",
-            "ubersuggest",
-            "martech",
-            "ad tech",
-            "adtech",
-            "performance marketing",
-            "growth  marketing",
-            "martech stack",
-            "conversion metrics",
-            "affiliating marketing",
-            "googleadwords",
-            "customer acquisition cost",
-            "customer cost of acquisition",
-            "viral loop",
-            "data driven",
-            "life cycle marketing",
-            "predict growth",
-            "growth engineering",
-            "mobile attribution partners",
-            "lifecycle marketing",
-            "mobile stack",
-            "attribution partners",
-            "mobile growth stack",
-            "modeling growth",
-            "mar tech",
-            "stack market",
-            "chief martech",
-            "marketing technology landscape",
-            "marketing landscape",
-            "martech stack",
-            "chief marketing",
-            "marketing stack",
-            "hacking marketing",
-            "chief marketing technology"
-            "ad tech",
-            "ad tech conference",
-            "adtech conference",
-            "ad tech company",
-            "adtech company",
-            "marketing technology conference",
-            "marketing tech conferences",
-            "marketing automation conference",
-            "analytics for marketers",
-            "socialcode",
-            "data analytics for marketers",
-            "data analytics marketing",
-            "native advertising",
-            "customers engagement",
-            "content distribution",
-            "programmatic"]
+keywords = ['martech',
+            '"ad tech"',
+            'adtech',
+            '"performance marketing"',
+            '"growth marketing"',
+            '"martech stack"',
+            '"conversion metrics"',
+            '"affiliating marketing"',
+            '"customer acquisition cost"',
+            '"customer cost of acquisition"',
+            '"viral loop"',
+            '"life cycle marketing"',
+            '"predict growth"',
+            '"mobile attribution partners"',
+            '"lifecycle marketing"',
+            '"mobile stack"',
+            '"attribution partners"',
+            '"mobile growth stack"',
+            '"modeling growth"',
+            '"mar tech"',
+            '"stack market"',
+            '"chief martech"',
+            '"marketing technology landscape"',
+            '"marketing landscape"',
+            '"martech stack"',
+            '"marketing stack"',
+            '"hacking marketing"',
+            '"chief marketing technology"'
+            '"ad tech conference"',
+            '"adtech conference"',
+            '"ad tech company"',
+            '"adtech company"',
+            '"marketing technology conference"',
+            '"marketing tech conferences"',
+            '"marketing automation conference"',
+            '"analytics for marketers"',
+            'socialcode',
+            '"data analytics for marketers"',
+            '"data analytics marketing"',
+            '"customers engagement"']
 
 for k in keywords:
     sync_tweets(keyword=k)
