@@ -24,6 +24,12 @@ export TWITTER_APP_KEY=<val>
 export TWITTER_APP_SECRET=<val>
 ```
 
+### Plotly
+```
+export PLOTLY_USERNAME=<val>
+export PLOTLY_API_KEY=<val>
+```
+
 ## How to execute scripts
 
 ### Facebook Ads Optimization
@@ -54,9 +60,6 @@ aws_secret_access_key = YOUR_SECRET_KEY
 #### Funnel chart
 ```
 1. Create an account in https://plot.ly/
-2. Export env vars:
-export PLOTLY_USERNAME=<val>
-export PLOTLY_API_KEY=<val>
 3. Run python3 fb_ads_optimization/funnel.py
 ```
 
