@@ -1,10 +1,14 @@
 from __future__ import division
 
+import os
+
 import plotly
 import plotly.plotly as py
 from plotly import graph_objs as go
 
-plotly.tools.set_credentials_file(username='leocelis', api_key='nkMxRYYLyF5Wae8RevEi')
+PLOTLY_USERNAME = os.environ.get('PLOTLY_USERNAME')
+PLOTLY_API_KEY = os.environ.get('PLOTLY_API_KEY')
+plotly.tools.set_credentials_file(username=PLOTLY_USERNAME, api_key=PLOTLY_API_KEY)
 
 # chart stages data
 values = [414597, 123616, 2745, 72]

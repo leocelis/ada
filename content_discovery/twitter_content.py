@@ -9,6 +9,8 @@ from time import sleep
 import pymysql
 from twython import Twython
 
+from ada.config import TWITTER_RETWEETS_THRESHOLD, TWITTER_WAIT_REQUESTS, TWITTER_HISTORY_COUNT, AD_TECH_KEYWORDS
+
 # mysql vars
 DB_HOST = os.environ.get('DB_HOST')
 DB_PORT = os.environ.get('DB_PORT')
@@ -18,9 +20,6 @@ DB_PASSWORD = os.environ.get('DB_PASSWORD')
 # twitter vars
 TWITTER_APP_KEY = os.environ.get('TWITTER_APP_KEY')
 TWITTER_APP_SECRET = os.environ.get('TWITTER_APP_SECRET')
-TWITTER_RETWEETS_THRESHOLD = 10  # min retweets a tweet should have
-TWITTER_WAIT_REQUESTS = 1  # wait seconds between requests
-TWITTER_HISTORY_COUNT = 500  # how many tweets in the past we will consider
 
 # create twitter connection
 twitter = Twython(TWITTER_APP_KEY, TWITTER_APP_SECRET)
@@ -121,47 +120,6 @@ def save_tweet(t: dict, keyword: str) -> None:
     return
 
 
-# relevant words to the industry
-keywords = ['martech',
-            '"ad tech"',
-            'adtech',
-            '"performance marketing"',
-            '"growth marketing"',
-            '"martech stack"',
-            '"conversion metrics"',
-            '"affiliating marketing"',
-            '"customer acquisition cost"',
-            '"customer cost of acquisition"',
-            '"viral loop"',
-            '"life cycle marketing"',
-            '"predict growth"',
-            '"mobile attribution partners"',
-            '"lifecycle marketing"',
-            '"mobile stack"',
-            '"attribution partners"',
-            '"mobile growth stack"',
-            '"modeling growth"',
-            '"mar tech"',
-            '"stack market"',
-            '"chief martech"',
-            '"marketing technology landscape"',
-            '"marketing landscape"',
-            '"martech stack"',
-            '"marketing stack"',
-            '"hacking marketing"',
-            '"chief marketing technology"'
-            '"ad tech conference"',
-            '"adtech conference"',
-            '"ad tech company"',
-            '"adtech company"',
-            '"marketing technology conference"',
-            '"marketing tech conferences"',
-            '"marketing automation conference"',
-            '"analytics for marketers"',
-            'socialcode',
-            '"data analytics for marketers"',
-            '"data analytics marketing"',
-            '"customers engagement"']
-
-for k in keywords:
+# search by keyword
+for k in AD_TECH_KEYWORDS:
     sync_tweets(keyword=k)
