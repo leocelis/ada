@@ -1,5 +1,9 @@
+import os
+import sys
+
 import pandas as pd
 
+sys.path.append(os.path.dirname(os.getcwd()))
 from ada.config import DATA_FOLDER
 
 

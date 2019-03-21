@@ -112,4 +112,4 @@ layout = go.Layout(
 )
 
 fig = go.Figure(data=data, layout=layout)
-py.iplot(fig)
+py.plot(fig)

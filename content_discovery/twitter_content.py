@@ -3,12 +3,15 @@ Twitter Search Tweets API reference:
 https://developer.twitter.com/en/docs/tweets/search/api-reference/get-search-tweets.html
 """
 import os
+import sys
 import ujson
 from time import sleep
 
 import pymysql
 from twython import Twython
 
+# add parent dir
+sys.path.append(os.path.dirname(os.getcwd()))
 from ada.config import TWITTER_RETWEETS_THRESHOLD, TWITTER_WAIT_REQUESTS, TWITTER_HISTORY_COUNT, AD_TECH_KEYWORDS
 
 # mysql vars

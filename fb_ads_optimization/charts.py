@@ -16,7 +16,7 @@ class Charts:
         plot.ylabel('CPA')
         plot.xlabel('Country')
         # plot.show()
-        plot.savefig('cpa_by_country.png')
+        plot.savefig('reports/cpa_by_country.png')
 
         # show results by country
         self.country_dataset.plot.bar(y='Results', x='Country', rot=0)
@@ -24,7 +24,7 @@ class Charts:
         plot.ylabel('Results')
         plot.xlabel('Country')
         # plot.show()
-        plot.savefig('results_by_country.png')
+        plot.savefig('reports/results_by_country.png')
 
         fig, ax = plot.subplots()
         x = self.country_dataset['Country']
@@ -36,7 +36,7 @@ class Charts:
 
         ax.legend()
         # plot.show()
-        plot.savefig('cost_per_reach.png')
+        plot.savefig('reports/cost_per_reach.png')
 
         # show cost per reach daily variation
         self.day_dataset.plot.bar(y='Cost per 1,000 People Reached', x='Day', rot=0)
@@ -44,7 +44,7 @@ class Charts:
         plot.ylabel('Cost per 1,000 People Reached')
         plot.xlabel('Day')
         # plot.show()
-        plot.savefig('reach_daily_variation.png')
+        plot.savefig('reports/reach_daily_variation.png')
 
     def day_generate_charts(self):
         # show cost per reach daily variation
@@ -56,7 +56,7 @@ class Charts:
         ax = plot.gca()
         ax.invert_xaxis()  # invert x orientation
         # plot.show()
-        plot.savefig('reach_daily_variation.png')
+        plot.savefig('reports/reach_daily_variation.png')
 
 
 c = Charts()
