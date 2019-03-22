@@ -66,7 +66,25 @@ aws_secret_access_key = YOUR_SECRET_KEY
 ### Content Discovery
 #### Get most retweeted tweets in Ad Tech
 ```
-1. Create a new database.table
+1. Create a new database and table
+CREATE DATABASE `ada` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin */;
+
+CREATE TABLE `twitter_most_retweeted` (
+  `idtwitter_most_retweeted` int(11) NOT NULL AUTO_INCREMENT,
+  `insert_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_at` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+  `tweet_id` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+  `tweet_link` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+  `retweet_count` int(11) DEFAULT NULL,
+  `tweet` text COLLATE utf8mb4_bin,
+  `user_id` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+  `user_name` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+  `tweet_blob` longtext COLLATE utf8mb4_bin,
+  `keyword` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+  PRIMARY KEY (`idtwitter_most_retweeted`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
 2. Set up config in ada.config 
+
 3. python3 content_discovery/twitter_content.py
 ```
