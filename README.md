@@ -3,31 +3,41 @@
 ## Installation
 
 ```
-virtualenv -p python3 venv
-source venv/bin/activate
-pip3 install -r requirements.txt
+>virtualenv -p python3 venv
+>source venv/bin/activate
+>pip3 install -r requirements.txt
 ```
 
 ## ENV VARS
 
 ### MySQL
 ```
-export DB_HOST=<val>
-export DB_PORT=<val>
-export DB_USER=<val>
-export DB_PASSWORD=<val>
+>export DB_HOST=<val>
+>export DB_PORT=<val>
+>export DB_USER=<val>
+>export DB_PASSWORD=<val>
 ```
 
-### Twitter
+### Twitter API
 ```
-export TWITTER_APP_KEY=<val>
-export TWITTER_APP_SECRET=<val>
+Create a new Twitter App: https://developer.twitter.com
+
+>export TWITTER_APP_KEY=<val>
+>export TWITTER_APP_SECRET=<val>
+```
+
+### Facebook Open Graph
+```
+Create a new Facebook App: https://developers.facebook.com/
+export APP_ID=<val>
+export APP_SECRET=<val>
+export API_VERSION=<val>
 ```
 
 ### Plotly
 ```
-export PLOTLY_USERNAME=<val>
-export PLOTLY_API_KEY=<val>
+>export PLOTLY_USERNAME=<val>
+>export PLOTLY_API_KEY=<val>
 ```
 
 ## How to execute scripts
@@ -36,31 +46,34 @@ export PLOTLY_API_KEY=<val>
 #### Charts
 ```
 1. Export data from Facebook Ads Reporting and save it in data/
-2. python3 fb_ads_optimization/charts.py
+2. >python3 fb_ads_optimization/charts.py
 3. Check reports/ folder
 ```
 
 #### Insights
 ```
 1. Export data from Facebook Ads Reporting and save it in data/
-2. python3 fb_ads_optimization/insights.py
+2. >python3 fb_ads_optimization/insights.py
 ```
 
 #### Upload graphs to s3 folder
 ```
 1. Create ~/.aws/credentials with
+
 [default]
 aws_access_key_id = YOUR_ACCESS_KEY
 aws_secret_access_key = YOUR_SECRET_KEY
+
 2. Create a new s3 folder named "ada-reports"
-3. Run python3 fb_ads_optimization/s3_upload.py
+
+3. >python3 fb_ads_optimization/s3_upload.py
 
 ```
 
 #### Funnel chart
 ```
 1. Create an account in https://plot.ly/
-3. Run python3 fb_ads_optimization/funnel.py
+3. >python3 fb_ads_optimization/funnel.py
 ```
 
 ### Content Discovery
@@ -86,5 +99,16 @@ CREATE TABLE `twitter_most_retweeted` (
 
 2. Set up config in ada.config 
 
-3. python3 content_discovery/twitter_content.py
+3. >python3 content_discovery/twitter_content.py
+```
+
+2. >scrapy crawl ada -o links.csv -t csv
+#### Domains crawler
+```
+1. >cd links_extractor/
+```
+
+#### Facebook Links Open Graph data
+```
+1. >python3 content_analyzer/fb_link_stats.py
 ```

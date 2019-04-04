@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
 from links_extractor.items import LinksExtractorItem
+from links_extractor.utils import get_sites, get_domains
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import Rule, CrawlSpider
 
@@ -13,10 +14,11 @@ class AdaSpider(CrawlSpider):
     name = "ada"
 
     # The domains that are allowed (links to other domains are skipped)
-    allowed_domains = ["chiefmartec.com"]
+    allowed_domains = get_domains()
 
     # The URLs to start with
-    start_urls = ["https://chiefmartec.com/"]
+    # start_urls = ["https://chiefmartec.com/"]
+    start_urls = get_sites()
 
     # This spider has one rule: extract all (unique and canonicalized) links, follow them and
     # parse them using the parse_items method

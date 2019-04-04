@@ -3,8 +3,9 @@ DATA_FOLDER = "./data"
 
 # Content Discovery
 TWITTER_RETWEETS_THRESHOLD = 10  # min retweets a tweet should have
+FACEBOOK_SHARES_THRESHOLD = 500  # min shares a link should have
 TWITTER_WAIT_REQUESTS = 1  # wait seconds between requests
-TWITTER_HISTORY_COUNT = 500  # how many tweets in the past we will consider
+TWITTER_HISTORY_COUNT = 2000  # how many tweets in the past we will consider
 AD_TECH_KEYWORDS = ['martech',
                     '"ad tech"',
                     'adtech',
