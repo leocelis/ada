@@ -109,7 +109,6 @@ CREATE TABLE `twitter_most_retweeted` (
 ```
 
 #### Facebook Links Open Graph data
->>>>>>> content_discovery
 ```
 1. >python3 content_analyzer/fb_link_stats.py
 ```
