@@ -102,10 +102,10 @@ CREATE TABLE `twitter_most_retweeted` (
 3. >python3 content_discovery/twitter_content.py
 ```
 
-2. >scrapy crawl ada -o links.csv -t csv
 #### Domains crawler
 ```
 1. >cd links_extractor/
+2. >scrapy crawl ada -o links.csv -t csv
 ```
 
 #### Facebook Links Open Graph data
