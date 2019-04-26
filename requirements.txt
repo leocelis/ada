@@ -3,6 +3,7 @@ attrs==19.1.0
 Automat==0.7.0
 boto3==1.9.118
 botocore==1.12.118
+bsddb3==6.2.6
 certifi==2019.3.9
 cffi==1.12.2
 chardet==3.0.4
@@ -47,12 +48,13 @@ requests-oauthlib==1.2.0
 retrying==1.3.3
 s3transfer==0.2.0
 Scrapy==1.6.0
+scrapy-deltafetch==1.2.1
 service-identity==18.1.0
 six==1.12.0
 traitlets==4.3.2
 Twisted==18.9.0
 twython==3.7.0
 ujson==1.35
-urllib3==1.24.1
+urllib3==1.25.1
 w3lib==1.20.0
 zope.interface==4.6.0
