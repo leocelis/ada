@@ -7,12 +7,12 @@ import sys
 import ujson
 from time import sleep
 
-import pymysql
 from twython import Twython
 
 # add parent dir
 sys.path.append(os.path.dirname(os.getcwd()))
-from ada.config import TWITTER_RETWEETS_THRESHOLD, TWITTER_WAIT_REQUESTS, TWITTER_HISTORY_COUNT, AD_TECH_KEYWORDS
+from ada.config import TWITTER_RETWEETS_THRESHOLD, TWITTER_WAIT_REQUESTS, TWITTER_HISTORY_COUNT, TWITTER_KEYWORDS
+from ada.conn import get_mysql_conn
 
 # mysql vars
 DB_HOST = os.environ.get('DB_HOST')
@@ -29,33 +29,27 @@ twitter = Twython(TWITTER_APP_KEY, TWITTER_APP_SECRET)
 auth = twitter.get_authentication_tokens()
 
 
-def dictfecth(cursor):
-    """
-    Convert MySQL cursor to dict
-
-    :param cursor:
-    :return:
-    """
-    desc = cursor.description
-    return [dict(zip([col[0] for col in desc], row)) for row in cursor.fetchall()]
-
-
-# TODO: sync result_type="popular" with TWITTER_HISTORY_COUNT=100
 def sync_tweets(keyword: str) -> None:
-    query = "{} -filter:retweets".format(keyword)
+    query = "{} -filter:retweets".format(keyword)  # no retweets
     tweets_count = 0
     next_max_id = 0
 
     print("\nRetrieving tweets for keyword: {}".format(keyword))
 
     while tweets_count <= TWITTER_HISTORY_COUNT:
-        # get first 100
-        if tweets_count == 0:
-            results = twitter.search(q=query, result_type="recent", include_entities="false", lang="en", count='100')
-        else:
-            # search next page
-            results = twitter.search(q=query, result_type="recent", include_entities="false", lang="en",
-                                     max_id=next_max_id)
+        # mixed = popular & recent
+        try:
+            # get first 100
+            if tweets_count == 0:
+                results = twitter.search(q=query, result_type="mixed", include_entities="false", lang="en",
+                                         count='100')
+            else:
+                # search next page
+                results = twitter.search(q=query, result_type="mixed", include_entities="false", lang="en",
+                                         max_id=next_max_id)
+        except Exception as e:
+            print("\nERROR: {}".format(str(e)))
+            continue
 
         # keep tweets in mem
         for result in results['statuses']:
@@ -65,7 +59,6 @@ def sync_tweets(keyword: str) -> None:
             print("Retweets {}...".format(retweets))
 
             # save it if retweets is greater than threshold
-            # TODO: if same created day and retweet count, skip
             if retweets >= TWITTER_RETWEETS_THRESHOLD:
                 save_tweet(t=result, keyword=keyword)
 
@@ -75,6 +68,7 @@ def sync_tweets(keyword: str) -> None:
             # print("\nNext results: {}".format(next_results_url_params))
             next_max_id = next_results_url_params.split('max_id=')[1].split('&')[0]
         except:
+            print("\nNO MORE RESULTS!")
             break
 
         print("\nTweets count: {}".format(tweets_count))
@@ -84,13 +78,7 @@ def sync_tweets(keyword: str) -> None:
 
 
 def save_tweet(t: dict, keyword: str) -> None:
-    conn = pymysql.connect(host=DB_HOST,
-                           port=int(DB_PORT),
-                           user=DB_USER,
-                           passwd=DB_PASSWORD,
-                           db="ada",
-                           connect_timeout=30,
-                           use_unicode=True)
+    conn = get_mysql_conn()
 
     cursor = conn.cursor()
 
@@ -119,10 +107,9 @@ def save_tweet(t: dict, keyword: str) -> None:
         conn.rollback()
 
     cursor.close()
-    conn.close()
     return
 
 
 # search by keyword
-for k in AD_TECH_KEYWORDS:
+for k in TWITTER_KEYWORDS:
     sync_tweets(keyword=k)

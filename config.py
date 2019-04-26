@@ -2,10 +2,11 @@
 DATA_FOLDER = "./data"
 
 # Content Discovery
+FACEBOOK_SHARES_THRESHOLD = 500  # min shares a link should have
 TWITTER_RETWEETS_THRESHOLD = 10  # min retweets a tweet should have
 TWITTER_WAIT_REQUESTS = 1  # wait seconds between requests
-TWITTER_HISTORY_COUNT = 500  # how many tweets in the past we will consider
-AD_TECH_KEYWORDS = ['martech',
+TWITTER_HISTORY_COUNT = 1000  # how many tweets in the past we will consider
+TWITTER_KEYWORDS = ['martech',
                     '"ad tech"',
                     'adtech',
                     '"performance marketing"',
@@ -45,3 +46,46 @@ AD_TECH_KEYWORDS = ['martech',
                     '"data analytics for marketers"',
                     '"data analytics marketing"',
                     '"customers engagement"']
+
+# '"meme of the day"',
+# '"joke of the day"',
+# '"cat memes"',
+# '"love memes"',
+# '"dank memes"',
+# '"anime memes"',
+# '"i love you memes"',
+# '"happy birthday memes"',
+# '"dirty memes"',
+# '"best memes"',
+# '"funny videos"',
+# '"funny quotes"',
+# '"funny pictures"',
+# '"yo mama jokes"',
+# '"corny jokes"',
+# '"dirty jokes"',
+# '"jokes for kids"',
+# '"knock knock jokes"',
+# '"math jokes"',
+# '"funny sex jokes"',
+# '"fat jokes"',
+# '"dumb jokes"',
+# '"birthday jokes"',
+# '"asian jokes"',
+# '"cat jokes"',
+# '"gay jokes"',
+# '"mama jokes"',
+# '"dog jokes"',
+# '"little johnny jokes"',
+# '"sex jokes"',
+# '"one line"',
+# '"april fool jokes"',
+# '"halloween jokes"',
+# '"christmas jokes"',
+# '"silly jokes"',
+# '"clean jokes"',
+# '"bad jokes"',
+# '"short jokes"',
+# '"adult jokes"',
+# '"stupid jokes"',
+# '"one liner jokes"'
+# '"mexican jokes"'
