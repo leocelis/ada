@@ -8,7 +8,7 @@ from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import Rule, CrawlSpider
 
 sys.path.append(os.path.dirname(os.getcwd()))
-from utils import get_sites, get_domains
+from links_extractor.spiders.utils import get_sites, get_domains
 
 # Links already added
 processed_links = list()
