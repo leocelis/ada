@@ -2,8 +2,6 @@ import os
 
 import pymysql
 
-# global gmysql_conn
-
 # mysql vars
 DB_HOST = os.environ.get('DB_HOST')
 DB_PORT = os.environ.get('DB_PORT')
