@@ -4,7 +4,7 @@ import sys
 import facebook
 
 sys.path.append(os.path.dirname(os.getcwd()))
-from ada.content_analyzer.utils import get_all_site_links, save_link_fb_shares
+from ada.content_analyzer.utils import get_all_site_links, save_link_fb_shares, check_link_exists, update_link_fb_shares
 
 APP_ID = os.environ.get('APP_ID')
 APP_SECRET = os.environ.get('APP_SECRET')
@@ -14,6 +14,7 @@ graph = facebook.GraphAPI(version=API_VERSION)
 token = graph.get_app_access_token(app_id=APP_ID, app_secret=APP_SECRET, offline=True)
 
 # get all site links
+# site_links = get_all_site_links(domain="rd.com", keyword="jokes")
 site_links = get_all_site_links()
 
 for s in site_links:
@@ -22,7 +23,7 @@ for s in site_links:
     args = dict()
     args["access_token"] = token
     args["id"] = link
-    args["fields"] = "engagement"
+    args["fields"] = "engagement,og_object"
     method = "/"
 
     try:
@@ -32,13 +33,15 @@ for s in site_links:
         print("\nERROR: {}".format(str(e)))
         continue
 
-    title = str(r.get('og_object', {}).get('title', ''))
-    shares = int(r.get('share', {}).get('share_count', 0))
+    site_link_title = str(r.get('og_object', {}).get('title', ''))
+    fb_shares = int(r.get('engagement', {}).get('share_count', 0))
 
-    print(r)
+    if site_link_title and fb_shares >= 1:
+        shares_prettified = format(fb_shares, "8,.0f")
+        print("--> Saving {} ({}): {} shares on Facebook\n".format(site_link_title, link, shares_prettified))
 
-    if title and shares >= 1:
-        shares_prettified = format(shares, "8,.0f")
-        print("\n--> Saving {} ({}): {} shares on Facebook\n".format(title, link, shares_prettified))
-
-        save_link_fb_shares(link, r)
+        # if it exists update shares
+        if check_link_exists(link):
+            update_link_fb_shares(link, r)
+        else:
+            save_link_fb_shares(link, r)
