@@ -10,7 +10,8 @@ from ada.email_analyzer.utils import get_top_opens, get_top_open_rate
 
 PLOTLY_USERNAME = os.environ.get('PLOTLY_USERNAME')
 PLOTLY_API_KEY = os.environ.get('PLOTLY_API_KEY')
-plotly.tools.set_credentials_file(username=PLOTLY_USERNAME, api_key=PLOTLY_API_KEY)
+#plotly.tools.set_credentials_file(username=PLOTLY_USERNAME, api_key=PLOTLY_API_KEY)
+plotly.plotly.sign_in(username=PLOTLY_USERNAME, api_key=PLOTLY_API_KEY)
 
 # top opens
 top_opens = get_top_opens(limit=5)
@@ -72,5 +73,7 @@ layout2 = go.Layout(
 fig2 = go.Figure(data=data2, layout=layout2)
 
 # update charts
+print("Refreshing Top Opens chart...\n")
 py.plot(fig, filename='Top 5 Posts by Email Opens')
+print("Refreshing Top Open Rate chart...\n")
 py.plot(fig2, filename='Top 5 Posts by Open Rate')

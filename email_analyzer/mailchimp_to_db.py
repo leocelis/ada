@@ -17,7 +17,7 @@ headers = requests.utils.default_headers()
 client = MailChimp(mc_api=MAILCHIMP_API, timeout=60.0, request_headers=headers)
 
 # get all reports for a given list
-r = client.reports.all(get_all=False)  # True will pull all the reports
+r = client.reports.all(get_all=True)  # True will pull all the reports
 reports = r.get('reports', list())
 
 for item in reports:
