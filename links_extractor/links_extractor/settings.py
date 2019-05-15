@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+import os
+
+SCRAPY_PROXIES = os.environ.get('SCRAPY_PROXIES')
 
 # Scrapy settings for links_extractor project
 #
@@ -21,12 +24,13 @@ NEWSPIDER_MODULE = 'links_extractor.spiders'
 ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-CONCURRENT_REQUESTS = 128
+CONCURRENT_REQUESTS = 32
 
 # Configure a delay for requests for the same website (default: 0)
 # See https://doc.scrapy.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
 # DOWNLOAD_DELAY = 3
+
 # The download delay setting will honor only one of:
 # CONCURRENT_REQUESTS_PER_DOMAIN = 16
 # CONCURRENT_REQUESTS_PER_IP = 16
@@ -47,7 +51,7 @@ CONCURRENT_REQUESTS = 128
 # See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 SPIDER_MIDDLEWARES = {
     # 'links_extractor.middlewares.LinksExtractorSpiderMiddleware': 543,
-    'scrapy_deltafetch.DeltaFetch': 100,
+    'scrapy_deltafetch.DeltaFetch': 1,
 }
 DELTAFETCH_ENABLED = True
 
@@ -92,13 +96,14 @@ DELTAFETCH_ENABLED = True
 
 # Retry many times since proxies often fail
 RETRY_TIMES = 1
+
 # Retry on most error codes since proxies fail for different reasons
 RETRY_HTTP_CODES = [500, 503, 504, 400, 403, 404, 408]
 
 DOWNLOADER_MIDDLEWARES = {
     'scrapy.downloadermiddlewares.retry.RetryMiddleware': 90,
-    'scrapy_proxies.RandomProxy': 100,
-    'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 110,
+    #    'scrapy_proxies.RandomProxy': 100,
+    #   'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 110,
 }
 
 # Proxy list containing entries like
@@ -106,13 +111,13 @@ DOWNLOADER_MIDDLEWARES = {
 # http://username:password@host2:port
 # http://host3:port
 # ...
-PROXY_LIST = '/home/ada/ada/links_extractor/proxy_list.txt'
+# PROXY_LIST = SCRAPY_PROXIES
 
 # Proxy mode
 # 0 = Every requests have different proxy
 # 1 = Take only one proxy from the list and assign it to every requests
 # 2 = Put a custom proxy to use in the settings
-PROXY_MODE = 0
+# PROXY_MODE = 0
 
 # If proxy mode is 2 uncomment this sentence :
 # CUSTOM_PROXY = "http://host1:port"

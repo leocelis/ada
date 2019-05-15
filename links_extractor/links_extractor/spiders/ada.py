@@ -19,11 +19,11 @@ class AdaSpider(CrawlSpider):
     name = "ada"
 
     # The domains that are allowed (links to other domains are skipped)
-    allowed_domains = get_domains()
+    allowed_domains = get_domains(category='rent')
 
     # The URLs to start with
     # start_urls = ["https://chiefmartec.com/"]
-    start_urls = get_sites()
+    start_urls = get_sites(category='rent')
 
     # This spider has one rule: extract all (unique and canonicalized) links, follow them and
     # parse them using the parse_items method

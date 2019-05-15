@@ -10,7 +10,9 @@ from ada.domain_analyzer.utils import get_all_sitemaps, check_link_exists, save_
 hdr = {'User-Agent': 'Mozilla/5.0'}
 
 # Get all sitemaps
-sitemaps_urls = get_all_sitemaps()
+sitemaps_urls = get_all_sitemaps(category='rent')
+# sitemaps_urls = get_all_sitemaps()
+
 sitemaps_collected = {}
 
 for sm in sitemaps_urls:

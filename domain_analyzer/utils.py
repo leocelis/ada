@@ -1,11 +1,12 @@
 import os
 import sys
+from datetime import datetime
 
 sys.path.append(os.path.dirname(os.getcwd()))
-from ada.conn import get_mysql_conn, dictfecth
+from ada.utils.conn import get_mysql_conn, dictfecth
 
 
-def get_all_sitemaps():
+def get_all_sitemaps(category: str = None):
     """
     Get all the sitemaps
     :return:
@@ -17,7 +18,10 @@ def get_all_sitemaps():
     SELECT site_url, sitemap_url FROM scrapy_sites
     """
 
-    cursor.execute(sql)
+    if category:
+        sql += " WHERE category=%s"
+
+    cursor.execute(sql, category)
 
     conn.commit()
     rows = dictfecth(cursor)
@@ -26,18 +30,21 @@ def get_all_sitemaps():
     return rows
 
 
-def save_site_link(site_url: str, site_link: str, lastmod: str) -> None:
+def save_site_link(site_url: str, site_link: str, title: str = "", lastmod: str = None) -> None:
     conn = get_mysql_conn()
-
     cursor = conn.cursor()
 
+    # current time
+    if not lastmod:
+        lastmod = str(datetime.utcnow())
+
     sql = """
-    INSERT INTO scrapy_sites_links(site_url, site_link, lastmod)
-    VALUES (%s, %s, %s)
+    INSERT INTO scrapy_sites_links(site_url, site_link, title, lastmod)
+    VALUES (%s, %s, %s, %s)
     """
 
     try:
-        cursor.execute(sql, (site_url, site_link, lastmod))
+        cursor.execute(sql, (site_url, site_link, title, lastmod))
         conn.commit()
     except Exception as e:
         print("\nERROR! ({})".format(str(e)))
@@ -49,7 +56,6 @@ def save_site_link(site_url: str, site_link: str, lastmod: str) -> None:
 
 def check_link_exists(site_link: str) -> bool:
     conn = get_mysql_conn()
-
     cursor = conn.cursor()
 
     r = 0

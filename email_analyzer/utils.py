@@ -3,7 +3,7 @@ import sys
 import ujson
 
 sys.path.append(os.path.dirname(os.getcwd()))
-from ada.conn import get_mysql_conn, dictfecth
+from ada.utils.conn import get_mysql_conn, dictfecth
 
 
 def save_campaign_report(r: dict) -> None:

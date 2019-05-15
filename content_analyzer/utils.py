@@ -3,9 +3,10 @@ import sys
 import ujson
 
 sys.path.append(os.path.dirname(os.getcwd()))
-from ada.conn import get_mysql_conn, dictfecth
+from ada.utils.conn import get_mysql_conn, dictfecth
 
 
+# Domains
 def get_all_site_links(domain: str = None, keyword: str = None):
     conn = get_mysql_conn()
     cursor = conn.cursor()
@@ -34,6 +35,7 @@ def get_all_site_links(domain: str = None, keyword: str = None):
     return rows
 
 
+# Facebook
 def save_link_fb_shares(site_link: str, r: dict) -> None:
     conn = get_mysql_conn()
     cursor = conn.cursor()
@@ -109,6 +111,119 @@ def update_link_fb_shares(site_link: str, r: dict):
         conn.commit()
     except Exception as e:
         print("ERROR! ({})\n".format(str(e)))
+        conn.rollback()
+
+    cursor.close()
+    return
+
+
+# Twitter
+def check_retweet_exists(tweet_id: str) -> bool:
+    conn = get_mysql_conn()
+    cursor = conn.cursor()
+
+    r = 0
+    sql = """
+    SELECT tweet_id FROM twitter_most_retweeted WHERE tweet_id = "{}"
+    """.format(tweet_id)
+
+    try:
+        r = cursor.execute(sql)
+        conn.commit()
+    except Exception as e:
+        print("\nERROR! ({})".format(str(e)))
+        conn.rollback()
+
+    cursor.close()
+
+    if r > 0:
+        return True
+
+    return False
+
+
+def save_link_retweets(query: str, t: dict) -> None:
+    conn = get_mysql_conn()
+    cursor = conn.cursor()
+
+    retweet_count = int(t.get('retweet_count', 0))
+    created_at = t['created_at']
+    tweet_id = t['id_str']
+    tweet = t['text']
+    user_id = t['user']['id_str']
+    user_name = t['user']['screen_name']
+    blob = ujson.dumps(t)
+    tweet_link = "https://twitter.com/{}/status/{}".format(user_name, tweet_id)
+
+    sql = """
+    INSERT INTO twitter_most_retweeted(created_at, tweet_id, retweet_count, tweet, user_id, user_name,
+    tweet_blob, tweet_link, query)
+    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+    """
+
+    print("\nSaving tweet: {}...".format(tweet_link))
+
+    try:
+        cursor.execute(sql, (created_at, tweet_id, retweet_count, tweet, user_id, user_name, blob, tweet_link, query))
+        conn.commit()
+    except Exception as e:
+        print("\nERROR! ({})".format(str(e)))
+        conn.rollback()
+
+    cursor.close()
+    return
+
+
+def update_link_retweets(query: str, t: dict):
+    conn = get_mysql_conn()
+    cursor = conn.cursor()
+
+    retweet_count = int(t.get('retweet_count', 0))
+    tweet_id = t['id_str']
+    user_name = t['user']['screen_name']
+    blob = ujson.dumps(t)
+    tweet_link = "https://twitter.com/{}/status/{}".format(user_name, tweet_id)
+
+    sql = """
+    UPDATE twitter_most_retweeted
+    SET retweet_count = %s,
+    tweet_blob = "%s"
+    WHERE tweet_id = "%s"
+    """
+
+    print("Updating retweets for: {}...\n".format(tweet_link))
+
+    try:
+        cursor.execute(sql, (retweet_count, blob))
+        conn.commit()
+    except Exception as e:
+        print("ERROR! ({})\n".format(str(e)))
+        conn.rollback()
+
+    cursor.close()
+    return
+
+
+# ShareThis
+def save_link_stats(link: str, t: dict) -> None:
+    conn = get_mysql_conn()
+    cursor = conn.cursor()
+
+    total = int(t.get('total', 0))
+    blob = ujson.dumps(t)
+
+    sql = """
+    INSERT INTO sharethis_stats(site_link, total, response_blob)
+    VALUES (%s, %s, %s)
+    """
+
+    print("\nSaving stats: {}...".format(link))
+
+    try:
+        cursor.execute(sql, (link, total, blob))
+        conn.commit()
+    except Exception as e:
+        print("\nERROR! ({})".format(str(e)))
         conn.rollback()
 
     cursor.close()
