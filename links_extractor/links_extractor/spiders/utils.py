@@ -1,48 +1,17 @@
 import os
 from urllib.parse import urlsplit
 
-import pymysql
-
 # mysql vars
 DB_HOST = os.environ.get('DB_HOST')
 DB_PORT = os.environ.get('DB_PORT')
 DB_USER = os.environ.get('DB_USER')
 DB_PASSWORD = os.environ.get('DB_PASSWORD')
 
-
-def get_mysql_conn():
-    """
-    Get MySQL connection object
-    :return:
-    """
-    # if if set up already, return it
-    # global gmysql_conn
-    # if gmysql_conn:
-    #    return get_mysql_conn
-
-    # connect to the server
-    gmysql_conn = pymysql.connect(host=DB_HOST,
-                                  port=int(DB_PORT),
-                                  user=DB_USER,
-                                  passwd=DB_PASSWORD,
-                                  db="ada",
-                                  connect_timeout=30,
-                                  use_unicode=True)
-    return gmysql_conn
+os.path.abspath(os.path.join(os.getcwd(), os.pardir))
+from utils.conn import get_mysql_conn, dictfecth
 
 
-def dictfecth(cursor):
-    """
-    Convert cursor to dict
-
-    :param cursor:
-    :return:
-    """
-    desc = cursor.description
-    return [dict(zip([col[0] for col in desc], row)) for row in cursor.fetchall()]
-
-
-def get_all_sites():
+def get_all_sites(category: str = None):
     """
     Get all site urls
     :return:
@@ -51,10 +20,13 @@ def get_all_sites():
     cursor = conn.cursor()
 
     sql = """
-    SELECT site_url, sitemap_url FROM scrapy_sites HAVING sitemap_url IS NULL
+    SELECT site_url, sitemap_url FROM scrapy_sites
     """
 
-    cursor.execute(sql)
+    if category:
+        sql += " WHERE category=%s"
+
+    cursor.execute(sql, category)
 
     conn.commit()
     rows = dictfecth(cursor)
@@ -63,13 +35,13 @@ def get_all_sites():
     return rows
 
 
-def get_sites():
+def get_sites(category: str = None):
     """
     Return domains to crawl
     :return:
     """
     sites = []
-    rows = get_all_sites()
+    rows = get_all_sites(category=category)
 
     for r in rows:
         sites.append(r['site_url'])
@@ -79,13 +51,13 @@ def get_sites():
     return sites
 
 
-def get_domains():
+def get_domains(category: str = None):
     """
     Return domains to crawl
     :return:
     """
     domains = []
-    rows = get_all_sites()
+    rows = get_all_sites(category=category)
 
     for r in rows:
         splitted_url = urlsplit(r['site_url'])

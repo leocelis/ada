@@ -12,7 +12,7 @@ from twython import Twython
 # add parent dir
 sys.path.append(os.path.dirname(os.getcwd()))
 from ada.config import TWITTER_RETWEETS_THRESHOLD, TWITTER_WAIT_REQUESTS, TWITTER_HISTORY_COUNT, TWITTER_KEYWORDS
-from ada.conn import get_mysql_conn
+from ada.utils.conn import get_mysql_conn
 
 # mysql vars
 DB_HOST = os.environ.get('DB_HOST')

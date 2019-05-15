@@ -10,7 +10,7 @@ from ada.email_analyzer.utils import get_top_opens, get_top_open_rate
 
 PLOTLY_USERNAME = os.environ.get('PLOTLY_USERNAME')
 PLOTLY_API_KEY = os.environ.get('PLOTLY_API_KEY')
-plotly.tools.set_credentials_file(username=PLOTLY_USERNAME, api_key=PLOTLY_API_KEY)
+plotly.plotly.sign_in(username=PLOTLY_USERNAME, api_key=PLOTLY_API_KEY)
 
 # top opens
 top_opens = get_top_opens(limit=5)
