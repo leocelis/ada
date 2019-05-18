@@ -35,6 +35,23 @@ def get_all_site_links(domain: str = None, keyword: str = None):
     return rows
 
 
+# Domains
+def get_site_links_by_category(category: str):
+    conn = get_mysql_conn()
+    cursor = conn.cursor()
+
+    sql = "SELECT A.site_link as site_link FROM scrapy_sites_links as A " \
+          "INNER JOIN scrapy_sites as B ON A.site_url = B.site_url " \
+          "WHERE B.category = '{}'".format(category)
+
+    cursor.execute(sql)
+    conn.commit()
+    rows = dictfecth(cursor)
+    cursor.close()
+
+    return rows
+
+
 # Facebook
 def save_link_fb_shares(site_link: str, r: dict) -> None:
     conn = get_mysql_conn()
