@@ -35,7 +35,6 @@ def get_all_site_links(domain: str = None, keyword: str = None):
     return rows
 
 
-# Domains
 def get_site_links_by_category(category: str):
     conn = get_mysql_conn()
     cursor = conn.cursor()
@@ -211,7 +210,7 @@ def update_link_retweets(query: str, t: dict):
     print("Updating retweets for: {}...\n".format(tweet_link))
 
     try:
-        cursor.execute(sql, (retweet_count, blob))
+        cursor.execute(sql, (retweet_count, blob, tweet_id))
         conn.commit()
     except Exception as e:
         print("ERROR! ({})\n".format(str(e)))
@@ -222,6 +221,30 @@ def update_link_retweets(query: str, t: dict):
 
 
 # ShareThis
+def check_link_stats(site_link: str) -> bool:
+    conn = get_mysql_conn()
+    cursor = conn.cursor()
+
+    r = 0
+    sql = """
+    SELECT site_link FROM sharethis_stats WHERE site_link = "{}"
+    """.format(site_link)
+
+    try:
+        r = cursor.execute(sql)
+        conn.commit()
+    except Exception as e:
+        print("\nERROR! ({})".format(str(e)))
+        conn.rollback()
+
+    cursor.close()
+
+    if r > 0:
+        return True
+
+    return False
+
+
 def save_link_stats(link: str, t: dict) -> None:
     conn = get_mysql_conn()
     cursor = conn.cursor()
@@ -241,6 +264,33 @@ def save_link_stats(link: str, t: dict) -> None:
         conn.commit()
     except Exception as e:
         print("\nERROR! ({})".format(str(e)))
+        conn.rollback()
+
+    cursor.close()
+    return
+
+
+def update_link_stats(link: str, t: dict) -> None:
+    conn = get_mysql_conn()
+    cursor = conn.cursor()
+
+    total = int(t.get('total', 0))
+    blob = ujson.dumps(t)
+
+    sql = """
+    UPDATE sharethis_stats
+    SET total = %s,
+    response_blob = "%s"
+    WHERE site_link = "%s"
+    """
+
+    print("Updating ShareThis stats for: {}...\n".format(blob))
+
+    try:
+        cursor.execute(sql, (total, blob, blob))
+        conn.commit()
+    except Exception as e:
+        print("ERROR! ({})\n".format(str(e)))
         conn.rollback()
 
     cursor.close()
