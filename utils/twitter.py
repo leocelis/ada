@@ -47,6 +47,8 @@ def search_tweets(query: str, retweets: bool = False, result_type: str = 'mixed'
                 results = twitter.search(q=query, result_type=result_type, include_entities="false", lang="en",
                                          max_id=next_max_id)
             sleep(TWITTER_WAIT_REQUESTS)
+
+            print(".", end="", flush=True)
         except Exception as e:
             print("\nERROR: {}".format(str(e)))
             continue
