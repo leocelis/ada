@@ -6,7 +6,7 @@ SHARETHIS_THRESHOLD = 2  # min total actions in Share This
 FACEBOOK_SHARES_THRESHOLD = 2  # min shares a link should have
 TWITTER_RETWEETS_THRESHOLD = 2  # min retweets a tweet should have
 TWITTER_WAIT_REQUESTS = 2  # wait seconds between requests
-TWITTER_HISTORY_COUNT = 500  # how many tweets in the past we will consider
+TWITTER_HISTORY_COUNT = 200  # how many tweets in the past we will consider
 TWITTER_KEYWORDS = ['martech',
                     '"ad tech"',
                     'adtech',

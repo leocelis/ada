@@ -10,15 +10,16 @@ from ada.config import SHARETHIS_THRESHOLD
 import requests
 
 sys.path.append(os.path.dirname(os.getcwd()))
-from ada.content_analyzer.utils import save_link_stats, get_site_links_by_category, check_link_stats, update_link_stats
+from ada.content_analyzer.utils import save_link_stats, get_site_links_by_category, check_link_stats, \
+    update_link_stats, get_all_site_links
 
 # ShareThis API endpoint
 sharethis_endpoint = 'https://count-server.sharethis.com/v2.0/get_counts'
 
 # get all site links
-# site_links = get_all_site_links(domain="chiefmartec.com")
+site_links = get_all_site_links(domain="leocelis.com")
 # site_links = get_all_site_links()
-site_links = get_site_links_by_category(category='rent')
+# site_links = get_site_links_by_category(category='rent')
 
 for s in site_links:
     link = s["site_link"]
