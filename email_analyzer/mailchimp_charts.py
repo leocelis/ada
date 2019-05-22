@@ -46,7 +46,7 @@ top_open_rate = get_top_open_rate(limit=5)
 x = []
 y = []
 for o in top_open_rate:
-    open_rate = "{}%".format(int(o.get('open_rate', 0) * 100))
+    open_rate = "{}%".format(int(o.get('open_rate', 0)))
     x.append(o.get('email_subject'))
     y.append(open_rate)
 
