@@ -46,7 +46,8 @@ TWITTER_KEYWORDS = ['martech',
                     'socialcode',
                     '"data analytics for marketers"',
                     '"data analytics marketing"',
-                    '"customers engagement"']
+                    '"customers engagement"',
+                    '"growth hacking"']
 
 # '"meme of the day"',
 # '"joke of the day"',
