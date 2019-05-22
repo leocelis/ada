@@ -13,7 +13,7 @@ def save_campaign_report(r: dict) -> None:
     email_subject = r.get('subject_line', 'No subject')
     emails_sent = r.get('emails_sent', 0)
     unique_opens = r.get('opens', {}).get('unique_opens', 0)
-    open_rate = r.get('opens', {}).get('open_rate', 0)
+    open_rate = round(r.get('opens', {}).get('open_rate', 0) * 100, 2)
     response_object = ujson.dumps(r)
 
     sql = """
@@ -64,22 +64,21 @@ def update_campaign_report(email_subject: str, r: dict) -> None:
 
     emails_sent = r.get('emails_sent', 0)
     unique_opens = r.get('opens', {}).get('unique_opens', 0)
-    open_rate = r.get('opens', {}).get('open_rate', 0)
+    open_rate = round(r.get('opens', {}).get('open_rate', 0) * 100, 2)
     response_object = ujson.dumps(r)
 
-    sql = """
-    UPDATE mailchimp_reports
-    SET unique_opens = %s,
-    open_rate = %s,
-    emails_sent = %s,
-    response_object = "%s"
-    WHERE email_subject = "%s"
-    """
-
+    sql = """UPDATE mailchimp_reports 
+    SET unique_opens = {},
+    open_rate = {},
+    emails_sent = {},
+    response_object = '{}' 
+    WHERE email_subject = "{}"
+    """.format(unique_opens, open_rate, emails_sent, response_object, email_subject)
+    
     print("Updating report for: {}...\n".format(email_subject))
 
     try:
-        cursor.execute(sql, (unique_opens, open_rate, emails_sent, response_object, email_subject))
+        cursor.execute(sql)
         conn.commit()
     except Exception as e:
         print("ERROR! ({})\n".format(str(e)))
