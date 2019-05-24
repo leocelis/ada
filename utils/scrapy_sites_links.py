@@ -41,7 +41,7 @@ def get_all_site_links(domain: str = None, keyword: str = None, limit: int = Non
     conn = get_mysql_conn()
     cursor = conn.cursor()
 
-    select = "SELECT site_link, title FROM scrapy_sites_links"
+    select = "SELECT site_link FROM scrapy_sites_links"
 
     where = None
     if domain:

@@ -1,6 +1,3 @@
-# get top 100 fb most shared
-# get top 100 twitter most shared
-# get top 100 ShareThis
 import os
 import sys
 
@@ -16,7 +13,7 @@ from ada.utils.sharethis_stats import get_sharethis_stats_by_domain
 
 sites = get_all_sites(category='rent')
 count_limit = 100000
-share_threshold = 1
+share_threshold = 0
 
 # #################################
 # LINKS COUNT

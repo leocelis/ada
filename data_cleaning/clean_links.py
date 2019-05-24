@@ -7,7 +7,7 @@ import pandas as pd
 sys.path.append(os.path.dirname(os.getcwd()))
 from ada.utils.scrapy_sites_links import get_all_site_links
 
-links = get_all_site_links(domain="adweek.com", limit=400)
+links = get_all_site_links(domain="adweek.com", limit=1000)
 
 # Initial dataset
 for l in links:
@@ -15,25 +15,25 @@ for l in links:
 
 df = pd.DataFrame(links)
 
-# Remove empty values
+# # Remove empty values
 df['site_link'].replace('', np.nan, inplace=True)
 df.dropna(subset=['site_link'], inplace=True)
 
-# Drop duplicates, keep the first
+# # Drop duplicates, keep the first
 df_no_dupes = df.drop_duplicates(subset="site_link", keep='first')
 
 
 # Irrelevant observations
 def is_irrelevant(link):
     if len(link.split("-")) < 5:
-        return False
-    return True
+        return True
+    return False
 
 
 df_no_dupes['is_irrelevant'] = df['site_link'].apply(is_irrelevant)
 
 # remove irrelevant rows
-df_no_irrelevant = df_no_dupes[df_no_dupes.is_irrelevant == True]
+df_no_irrelevant = df_no_dupes[df_no_dupes.is_irrelevant == False]
 
 
 # Data normalization
