@@ -7,35 +7,6 @@ sys.path.append(os.path.dirname(os.getcwd()))
 from ada.utils.conn import get_mysql_conn, dictfecth
 
 
-# Domains
-def get_all_site_links(domain: str = None, keyword: str = None):
-    conn = get_mysql_conn()
-    cursor = conn.cursor()
-
-    select = "SELECT site_link FROM scrapy_sites_links"
-
-    where = None
-    if domain:
-        where = "WHERE site_url like '%{}%' ".format(domain)
-
-    if keyword:
-        if not where:
-            where = "WHERE site_link like '%{}%'".format(keyword)
-        else:
-            where += "AND site_link like '%{}%'".format(keyword)
-
-    order = "ORDER BY idscrapy_sites_links DESC"
-
-    sql = "{} {} {}".format(select, where, order)
-
-    cursor.execute(sql)
-    conn.commit()
-    rows = dictfecth(cursor)
-    cursor.close()
-
-    return rows
-
-
 def get_site_links_by_category(category: str):
     conn = get_mysql_conn()
     cursor = conn.cursor()
