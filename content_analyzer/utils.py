@@ -1,5 +1,6 @@
 import os
 import sys
+
 import ujson
 
 sys.path.append(os.path.dirname(os.getcwd()))
@@ -114,16 +115,14 @@ def update_link_fb_shares(site_link: str, r: dict):
 
     sql = """
     UPDATE facebook_most_shared
-    SET fb_shares = %s,
-    fb_updated_time = "%s",
-    fb_graph_object = "%s"
-    WHERE site_link = "%s"
-    """
-
-    print("Updating fb shares for: {}...\n".format(site_link))
+    SET fb_shares = {},
+    fb_updated_time = '{}',
+    fb_graph_object = '{}'
+    WHERE site_link = '{}'
+    """.format(fb_shares, fb_updated_time, fb_graph_object, site_link)
 
     try:
-        cursor.execute(sql, (fb_shares, fb_updated_time, fb_graph_object, site_link))
+        cursor.execute(sql)
         conn.commit()
     except Exception as e:
         print("ERROR! ({})\n".format(str(e)))
@@ -202,15 +201,13 @@ def update_link_retweets(query: str, t: dict):
 
     sql = """
     UPDATE twitter_most_retweeted
-    SET retweet_count = %s,
-    tweet_blob = "%s"
-    WHERE tweet_id = "%s"
-    """
-
-    print("Updating retweets for: {}...\n".format(tweet_link))
+    SET retweet_count = {},
+    tweet_blob = '{}'
+    WHERE tweet_id = '{}'
+    """.format(retweet_count, blob, tweet_id)
 
     try:
-        cursor.execute(sql, (retweet_count, blob, tweet_id))
+        cursor.execute(sql)
         conn.commit()
     except Exception as e:
         print("ERROR! ({})\n".format(str(e)))
@@ -257,8 +254,6 @@ def save_link_stats(link: str, t: dict) -> None:
     VALUES (%s, %s, %s)
     """
 
-    print("\nSaving stats: {}...".format(link))
-
     try:
         cursor.execute(sql, (link, total, blob))
         conn.commit()
@@ -279,15 +274,13 @@ def update_link_stats(link: str, t: dict) -> None:
 
     sql = """
     UPDATE sharethis_stats
-    SET total = %s,
-    response_blob = "%s"
-    WHERE site_link = "%s"
-    """
-
-    print("Updating ShareThis stats for: {}...\n".format(blob))
+    SET total = {},
+    response_blob = '{}'
+    WHERE site_link = '{}'
+    """.format(total, blob, blob)
 
     try:
-        cursor.execute(sql, (total, blob, blob))
+        cursor.execute(sql)
         conn.commit()
     except Exception as e:
         print("ERROR! ({})\n".format(str(e)))

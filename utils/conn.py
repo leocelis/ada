@@ -25,7 +25,7 @@ def get_mysql_conn():
                                       user=DB_USER,
                                       passwd=DB_PASSWORD,
                                       db="ada",
-                                      connect_timeout=120,
+                                      connect_timeout=300,
                                       use_unicode=True,
                                       autocommit=True)
     return gmysql_conn

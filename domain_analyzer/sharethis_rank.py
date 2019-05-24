@@ -1,7 +1,7 @@
 import os
 import sys
-import ujson
 
+import ujson
 from pygments import highlight, lexers, formatters
 
 import requests

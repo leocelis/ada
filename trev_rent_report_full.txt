@@ -1,0 +1,143 @@
+
+
+Total Links by Domain
+
++----------------+-------------+
+|     Domain     | Links total |
++================+=============+
+| www.peerby.com | 72878       |
++----------------+-------------+
+| omni.co        | 331         |
++----------------+-------------+
+| fatllama.com   | 111         |
++----------------+-------------+
+
+
+www.peerby.com - Facebook Shares Report
+
++-----------------------------------+---------------------------------+--------+
+|               Link                |              Title              | Shares |
++===================================+=================================+========+
+| https://www.peerby.com/nl/product | Ik ben lid geworden van Peerby! | 28071  |
+| en/feest/id-TPqGSoGg-frietpan     |                                 |        |
++-----------------------------------+---------------------------------+--------+
+| https://www.peerby.com/nl/product | Ik ben lid geworden van Peerby! | 28071  |
+| en/klussen%20en%20doe-het-        |                                 |        |
+| zelf/id-Hisp6mTe-betonschaar      |                                 |        |
++-----------------------------------+---------------------------------+--------+
+| https://www.peerby.com/settings   | I just joined Peerby!           | 24690  |
++-----------------------------------+---------------------------------+--------+
+| https://www.peerby.com/about      | I just joined Peerby!           | 24688  |
++-----------------------------------+---------------------------------+--------+
+| https://www.peerby.com/nl/product | I just joined Peerby!           | 24687  |
+| en/Verhuizen                      |                                 |        |
++-----------------------------------+---------------------------------+--------+
+| https://www.peerby.com/nl/product | I just joined Peerby!           | 24687  |
+| en/vakantie-reizen                |                                 |        |
++-----------------------------------+---------------------------------+--------+
+| https://www.peerby.com/contact    | I just joined Peerby!           | 24687  |
++-----------------------------------+---------------------------------+--------+
+| https://www.peerby.com/terms-and- | I just joined Peerby!           | 24687  |
+| conditions                        |                                 |        |
++-----------------------------------+---------------------------------+--------+
+| https://www.peerby.com/rules      | I just joined Peerby!           | 24687  |
++-----------------------------------+---------------------------------+--------+
+| https://www.peerby.com/products   | I just joined Peerby!           | 24687  |
++-----------------------------------+---------------------------------+--------+
+| https://www.peerby.com/request-   | I just joined Peerby!           | 24687  |
+| password                          |                                 |        |
++-----------------------------------+---------------------------------+--------+
+| https://www.peerby.com/signup     | https://www.peerby.com/one      | 258    |
++-----------------------------------+---------------------------------+--------+
+| https://www.peerby.com/privacy    | https://www.peerby.com/one      | 258    |
++-----------------------------------+---------------------------------+--------+
+| https://www.peerby.com/one        | https://www.peerby.com/one      | 258    |
++-----------------------------------+---------------------------------+--------+
+| https://www.peerby.com/start      | https://www.peerby.com/one      | 258    |
++-----------------------------------+---------------------------------+--------+
+
+
+omni.co - Facebook Shares Report
+
++----------------------------------+----------------------------------+--------+
+|               Link               |              Title               | Shares |
++==================================+==================================+========+
+| https://omni.co/blog/omni-       | Hello, New York City, and Los    | 188    |
+| launches-in-new-york-and-los-    | Angeles!                         |        |
+| angeles/                         |                                  |        |
++----------------------------------+----------------------------------+--------+
+| https://omni.co/                 | Omni | Rent Items Instantly      | 127    |
++----------------------------------+----------------------------------+--------+
+| https://omni.co/blog/            | Omni | Live Lighter Blog         | 106    |
++----------------------------------+----------------------------------+--------+
+
+
+fatllama.com - Facebook Shares Report
+
++--------------------------------------------------+------------------+--------+
+|                       Link                       |      Title       | Shares |
++==================================================+==================+========+
+| https://fatllama.com/browse-items                | Buy. Sell. Rent. | 2227   |
++--------------------------------------------------+------------------+--------+
+| https://fatllama.com/lp/london-dj-equipment-hire | Buy. Sell. Rent. | 2227   |
++--------------------------------------------------+------------------+--------+
+| https://fatllama.com/lp/london-bike-hire         | Buy. Sell. Rent. | 2227   |
++--------------------------------------------------+------------------+--------+
+| https://fatllama.com/lp/glasgow-baby-equipment-  | Buy. Sell. Rent. | 2227   |
+| hire                                             |                  |        |
++--------------------------------------------------+------------------+--------+
+| https://fatllama.com/lp/london-camera-hire       | Buy. Sell. Rent. | 2227   |
++--------------------------------------------------+------------------+--------+
+| https://fatllama.com/lp/london-musical-          | Buy. Sell. Rent. | 2227   |
+| instrument-hire                                  |                  |        |
++--------------------------------------------------+------------------+--------+
+| https://fatllama.com/lp/london-drone-hire        | Buy. Sell. Rent. | 2227   |
++--------------------------------------------------+------------------+--------+
+| https://fatllama.com/my-items                    | Buy. Sell. Rent. | 2227   |
++--------------------------------------------------+------------------+--------+
+| https://fatllama.com/rentals/london/hire-vw-     | Buy. Sell. Rent. | 2227   |
+| classic-campervan-for-hire--misty-09937611       |                  |        |
++--------------------------------------------------+------------------+--------+
+| https://fatllama.com/rentals/london/hire-vw-     | Buy. Sell. Rent. | 2227   |
+| camper-2007-lhd-danbury-rio-43513827             |                  |        |
++--------------------------------------------------+------------------+--------+
+| https://fatllama.com/lp/london-guitar-hire       | Buy. Sell. Rent. | 2227   |
++--------------------------------------------------+------------------+--------+
+| https://fatllama.com/lp/london-audio-visual-     | Buy. Sell. Rent. | 2227   |
+| equipment-hire                                   |                  |        |
++--------------------------------------------------+------------------+--------+
+| https://fatllama.com/lp/london-lens-hire         | Buy. Sell. Rent. | 2227   |
++--------------------------------------------------+------------------+--------+
+| https://fatllama.com/lp/london-dji-drone-hire    | Buy. Sell. Rent. | 2227   |
++--------------------------------------------------+------------------+--------+
+| https://fatllama.com/lp/london-recording-        | Buy. Sell. Rent. | 2227   |
+| equipment-hire                                   |                  |        |
++--------------------------------------------------+------------------+--------+
+| https://fatllama.com/lp/london-campervan-        | Buy. Sell. Rent. | 2227   |
+| motorhome-hire                                   |                  |        |
++--------------------------------------------------+------------------+--------+
+| https://fatllama.com/lp/london-photography-      | Buy. Sell. Rent. | 2227   |
+| studio-hire                                      |                  |        |
++--------------------------------------------------+------------------+--------+
+| https://fatllama.com/about                       | Buy. Sell. Rent. | 2226   |
++--------------------------------------------------+------------------+--------+
+| https://fatllama.com/requests                    | Buy. Sell. Rent. | 2225   |
++--------------------------------------------------+------------------+--------+
+| https://fatllama.com/create-item                 | Buy. Sell. Rent. | 2225   |
++--------------------------------------------------+------------------+--------+
+| https://fatllama.com/invite                      | Buy. Sell. Rent. | 2225   |
++--------------------------------------------------+------------------+--------+
+| https://fatllama.com/how-it-works                | Buy. Sell. Rent. | 2225   |
++--------------------------------------------------+------------------+--------+
+| https://fatllama.com/guarantee                   | Buy. Sell. Rent. | 2225   |
++--------------------------------------------------+------------------+--------+
+| https://fatllama.com/terms-of-service            | Buy. Sell. Rent. | 2225   |
++--------------------------------------------------+------------------+--------+
+| https://fatllama.com/sitemaps                    | Buy. Sell. Rent. | 2225   |
++--------------------------------------------------+------------------+--------+
+| https://fatllama.com/privacy-policy              | Buy. Sell. Rent. | 2225   |
++--------------------------------------------------+------------------+--------+
+| https://fatllama.com/contact-us                  | Buy. Sell. Rent. | 2225   |
++--------------------------------------------------+------------------+--------+
+| https://fatllama.com/lend                        | Buy. Sell. Rent. | 2225   |
++--------------------------------------------------+------------------+--------+
