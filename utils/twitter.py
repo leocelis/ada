@@ -17,7 +17,7 @@ twitter = Twython(TWITTER_APP_KEY, TWITTER_APP_SECRET)
 auth = twitter.get_authentication_tokens()
 
 
-def search_tweets(query: str, retweets: bool = False, result_type: str = 'mixed') -> list:
+def search_tweets(query: str, retweets: bool = False, result_type: str = 'mixed', threshold: bool = True) -> list:
     """
     Search tweets. Only return tweets with retweets >= threshold
 
@@ -32,10 +32,9 @@ def search_tweets(query: str, retweets: bool = False, result_type: str = 'mixed'
 
     # include retweets?
     if not retweets:
-        query = "{} -filter:retweets".format(query)  # no retweets
+        query = "{} -filter:retweets".format(query)
 
     print("\nRetrieving tweets for: {}".format(query))
-
     while tweets_count <= TWITTER_HISTORY_COUNT:
         try:
             # get first 100
@@ -61,9 +60,15 @@ def search_tweets(query: str, retweets: bool = False, result_type: str = 'mixed'
             user_name = r['user']['screen_name']
             tweet_link = "https://twitter.com/{}/status/{}".format(user_name, tweet_id)
 
-            if retweets >= TWITTER_RETWEETS_THRESHOLD:
-                print("\n{} - {} - Retweets {}...".format(r['text'], tweet_link, retweets))
+            # if retweets threshold is on
+            if threshold:
+                if retweets >= TWITTER_RETWEETS_THRESHOLD:
+                    tweets.append(r)
+            else:
+                # return all tweets
                 tweets.append(r)
+
+            print("\n{} - {} - Retweets {}...".format(r['text'], tweet_link, retweets))
 
         # get next page
         try:

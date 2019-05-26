@@ -78,7 +78,7 @@ def update_domain_sharethis_total(domain: str, r: dict):
     return
 
 
-def update_domain_retweets(domain: str, retweets: int, r: dict):
+def update_domain_retweets(domain: str, tweets: int, retweets: int, r: dict):
     conn = get_mysql_conn()
     cursor = conn.cursor()
 
@@ -90,7 +90,7 @@ def update_domain_retweets(domain: str, retweets: int, r: dict):
     twitter_tweets = {},
     twitter_object = '{}'
     WHERE domain = '{}'
-    """.format(retweets, len(r), blob, domain)
+    """.format(retweets, tweets, blob, domain)
 
     try:
         cursor.execute(sql)
