@@ -11,9 +11,9 @@ from ada.utils.facebook_most_shared import get_fb_shares_by_domain
 from ada.utils.twitter_most_retweeted import get_retweets_by_domain
 from ada.utils.sharethis_stats import get_sharethis_stats_by_domain
 
-sites = get_all_sites(category='rent')
+sites = get_all_sites(domain='leocelis')
 count_limit = 100000
-share_threshold = 0
+share_threshold = 1
 
 # #################################
 # LINKS COUNT
@@ -98,7 +98,7 @@ for s in sites:
     domain = get_domain(site_url)
     stotal = get_sharethis_stats_by_domain(domain=domain, threshold=share_threshold, limit=count_limit)
 
-    for st in tretweets:
+    for st in stotal:
         row = [st['site_link'], st['total']]
         rows.append(row)
 

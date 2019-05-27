@@ -6,7 +6,7 @@ sys.path.append(os.path.dirname(os.getcwd()))
 from ada.utils.conn import get_mysql_conn, dictfecth
 
 
-def get_all_sites(category: str = None):
+def get_all_sites(category: str = None, domain: str = None):
     """
     Get all site urls
     :return:
@@ -19,9 +19,12 @@ def get_all_sites(category: str = None):
     """
 
     if category:
-        sql += " WHERE category=%s"
+        sql += " WHERE category='{}'".format(category)
 
-    cursor.execute(sql, category)
+    if domain:
+        sql += " WHERE site_url LIKE '%{}%'".format(domain)
+
+    cursor.execute(sql)
 
     conn.commit()
     rows = dictfecth(cursor)
