@@ -15,36 +15,26 @@ class Charts:
         plot.title('CPA by Country')
         plot.ylabel('CPA')
         plot.xlabel('Country')
-        # plot.show()
-        plot.savefig('reports/cpa_by_country.png')
+        plot.show()
+        # plot.savefig('reports/cpa_by_country.png')
 
         # show results by country
-        self.country_dataset.plot.bar(y='Results', x='Country', rot=0)
+        self.country_dataset.plot.bar(y='Leads (Form)', x='Country', rot=0)
         plot.title('Results by Country')
-        plot.ylabel('Results')
+        plot.ylabel('Leads (Form)')
         plot.xlabel('Country')
-        # plot.show()
-        plot.savefig('reports/results_by_country.png')
+        plot.show()
+        # plot.savefig('reports/results_by_country.png')
 
         fig, ax = plot.subplots()
         x = self.country_dataset['Country']
         y = self.country_dataset['Cost per 1,000 People Reached']
-        y_1 = self.country_dataset['Cost per Result']
-
-        line1, = ax.plot(x, y, linestyle='--')
-        line2, = ax.plot(x, y_1, linestyle='--')
-
-        ax.legend()
-        # plot.show()
-        plot.savefig('reports/cost_per_reach.png')
-
-        # show cost per reach daily variation
-        self.day_dataset.plot.bar(y='Cost per 1,000 People Reached', x='Day', rot=0)
-        plot.title('Cost per reach daily variation')
-        plot.ylabel('Cost per 1,000 People Reached')
-        plot.xlabel('Day')
-        # plot.show()
-        plot.savefig('reports/reach_daily_variation.png')
+        y_1 = self.country_dataset['Cost per Lead (Form)']
+        ax.plot(x, y, linestyle='--')
+        ax.plot(x, y_1, linestyle='--')
+        ax.set_title("Cost per 1,000 People Reached vs. Cost per Lead")
+        plot.show()
+        # plot.savefig('reports/cost_per_reach.png')
 
     def day_generate_charts(self):
         # show cost per reach daily variation
@@ -55,8 +45,8 @@ class Charts:
         plot.xticks(self.day_dataset.index, self.day_dataset['Day'], rotation=90)  # rotate x legends
         ax = plot.gca()
         ax.invert_xaxis()  # invert x orientation
-        # plot.show()
-        plot.savefig('reports/reach_daily_variation.png')
+        plot.show()
+        # plot.savefig('reports/reach_daily_variation.png')
 
 
 c = Charts()

@@ -17,7 +17,7 @@ class Insight:
     def load_country_insights(self):
         c = Country()
         dataset = c.dataset
-        self.results_max = dataset.loc[dataset["Results"].idxmax()]
+        self.results_max = dataset.loc[dataset["Leads (Form)"].idxmax()]
         self.cpa_min = dataset.loc[dataset["cpa"].idxmin()]
         self.cpa_max = dataset.loc[dataset["cpa"].idxmax()]
         self.reach_delta = dataset.loc[dataset["reach_delta"].idxmin()]
@@ -28,7 +28,7 @@ class Insight:
         c = self.cpr_max
         country = c['Country']
         cppr = locale.currency(c['Cost per 1,000 People Reached'], grouping=True)
-        msg = "\nThe country {} has the most expensive cost per 1,000 people reach of {}" \
+        msg = "The country {} has the most expensive cost per 1,000 people reach of {}" \
               "".format(country, cppr)
         print(msg)
         print()
@@ -36,9 +36,9 @@ class Insight:
         # Most expensive to reach vs. cpa
         c = self.reach_delta
         country = c['Country']
-        cpr = locale.currency(c['Cost per Result'], grouping=True)
+        cpr = locale.currency(c['Cost per Lead (Form)'], grouping=True)
         cppr = locale.currency(c['Cost per 1,000 People Reached'], grouping=True)
-        msg = "\nThe country {} has the biggest delta between CPA ({}) and reaching 1,000 people ({})" \
+        msg = "The country {} has the biggest delta between CPA ({}) and reaching 1,000 people ({})" \
               "".format(country, cpr, cppr)
         print(msg)
         print()
@@ -46,16 +46,16 @@ class Insight:
         # Most expensive CPA
         c = self.cpa_max
         country = c['Country']
-        cpr = locale.currency(c['Cost per Result'], grouping=True)
-        msg = "\nThe country {} has the most expensive CPA of {}".format(country, cpr)
+        cpr = locale.currency(c['Cost per Lead (Form)'], grouping=True)
+        msg = "The country {} has the most expensive CPA of {}".format(country, cpr)
         print(msg)
         print()
 
         # Least expensive CPA
         c = self.cpa_min
         country = c['Country']
-        cpr = locale.currency(c['Cost per Result'], grouping=True)
-        msg = "\nThe country {} has the least expensive CPA of {}".format(country, cpr)
+        cpr = locale.currency(c['Cost per Lead (Form)'], grouping=True)
+        msg = "The country {} has the least expensive CPA of {}".format(country, cpr)
         print(msg)
         print()
 
