@@ -1,6 +1,7 @@
 import os
 import sys
 
+import pandas as pd
 import texttable as tt
 
 sys.path.append(os.path.dirname(os.getcwd()))
@@ -11,9 +12,10 @@ from ada.utils.facebook_most_shared import get_fb_shares_by_domain
 from ada.utils.twitter_most_retweeted import get_retweets_by_domain
 from ada.utils.sharethis_stats import get_sharethis_stats_by_domain
 
-sites = get_all_sites(domain='leocelis')
-count_limit = 100000
-share_threshold = 1
+# sites = get_all_sites(domain='leocelis')
+sites = get_all_sites(category='fun')
+count_limit = 100
+share_threshold = 50
 
 # #################################
 # LINKS COUNT
@@ -44,6 +46,10 @@ s = tab.draw()
 print("\n\nTotal Links by Domain\n")
 print(s)
 
+# # csv
+# df = pd.DataFrame.from_dict(sites)
+# df.to_csv("reports/domains_links.csv")
+
 # #################################
 # FACEBOOK SHARES
 # #################################
@@ -65,6 +71,10 @@ for s in sites:
         s = tab.draw()
         print("\n\n{} - Facebook Shares Report\n".format(domain))
         print(s)
+
+        # csv
+        df = pd.DataFrame.from_dict(fbshares)
+        df.to_csv("reports/{}_facebook_shares.csv".format(domain))
 
 # #################################
 # TWITTER RETWEETS
@@ -88,6 +98,10 @@ for s in sites:
         print("\n\n{} - Twitter Retweets Report\n".format(domain))
         print(s)
 
+        # csv
+        df = pd.DataFrame.from_dict(tretweets)
+        df.to_csv("reports/{}_twitter_retweets.csv".format(domain))
+
 # #################################
 # SHARE THIS
 # #################################
@@ -109,3 +123,7 @@ for s in sites:
         s = tab.draw()
         print("\n\n{} - ShareThis Total Actions Report\n".format(domain))
         print(s)
+
+        # csv
+        df = pd.DataFrame.from_dict(stotal)
+        df.to_csv("reports/{}_twitter_retweets.csv".format(domain))
