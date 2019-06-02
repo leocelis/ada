@@ -63,7 +63,10 @@ def update_link_fb_shares(site_link: str, r: dict):
     fb_updated_time = '{}',
     fb_graph_object = '{}'
     WHERE site_link = '{}'
-    """.format(fb_shares, fb_updated_time, fb_graph_object, site_link)
+    """.format(fb_shares,
+               fb_updated_time,
+               fb_graph_object.replace("'", r"\'"),
+               site_link)
 
     try:
         cursor.execute(sql)
@@ -89,12 +92,17 @@ def save_link_fb_shares(site_link: str, r: dict) -> None:
 
     sql = """
     INSERT INTO facebook_most_shared(site_link, site_link_title, fb_description, fb_type, fb_shares, fb_updated_time,
-    fb_graph_object) VALUES (%s, %s, %s, %s, %s, %s, %s)
-    """
+    fb_graph_object) VALUES ('{}', '{}', '{}', '{}', {}, '{}', '{}')
+    """.format(site_link,
+               site_link_title.replace("'", r"\'"),
+               fb_description.replace("'", r"\'"),
+               fb_type,
+               fb_shares,
+               fb_updated_time,
+               fb_graph_object.replace("'", r"\'"))
 
     try:
-        cursor.execute(sql, (site_link, site_link_title, fb_description, fb_type, fb_shares, fb_updated_time,
-                             fb_graph_object))
+        cursor.execute(sql)
         conn.commit()
     except Exception as e:
         print("\nERROR! ({})".format(str(e)))

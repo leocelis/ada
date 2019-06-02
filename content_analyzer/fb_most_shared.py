@@ -19,7 +19,7 @@ token = graph.get_app_access_token(app_id=APP_ID, app_secret=APP_SECRET, offline
 # get all site links
 # site_links = get_all_site_links(domain="rd.com", keyword="jokes")
 # site_links = get_all_site_links()
-site_links = get_all_site_links(domain="leocelis.com")
+site_links = get_all_site_links(domain="rd.com")
 # site_links = get_site_links_by_category(category='rent')
 
 for s in site_links:
