@@ -1,4 +1,4 @@
-# Ada Predictive Performance Analytics
+# Ada
 
 ## Installation
 
