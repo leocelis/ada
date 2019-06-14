@@ -1,4 +1,4 @@
-# Ada Content Performance Analytics
+# Ada Predictive Performance Analytics
 
 ## Installation
 
