@@ -7,7 +7,7 @@ from flask_restful import Resource, Api
 app = Flask(__name__)
 api = Api(app)
 CORS(app,
-     origins="http://localhost:3000",
+     origins=["http://localhost:3000", "https://dashboard.leocelis.com"],
      allow_headers=["Access-Control-Allow-Credentials"])
 
 
@@ -33,4 +33,4 @@ api.add_resource(HealthCheck, '/')
 api.add_resource(MailChimp, '/mailchimp/<report>/<count>')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)
