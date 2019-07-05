@@ -1,5 +1,6 @@
 import os
 import sys
+
 import ujson
 
 sys.path.append(os.path.dirname(os.getcwd()))
@@ -74,7 +75,7 @@ def update_campaign_report(email_subject: str, r: dict) -> None:
     response_object = '{}' 
     WHERE email_subject = "{}"
     """.format(unique_opens, open_rate, emails_sent, response_object, email_subject)
-    
+
     print("Updating report for: {}...\n".format(email_subject))
 
     try:
@@ -93,7 +94,8 @@ def get_top_opens(limit: int = 10):
     cursor = conn.cursor()
 
     sql = """
-    select * from mailchimp_reports where emails_sent > 100 order by unique_opens desc limit 0,{};
+    select email_subject, unique_opens, open_rate, emails_sent
+    from mailchimp_reports where emails_sent > 100 order by unique_opens desc limit 0,{};
     """.format(limit)
 
     cursor.execute(sql)
@@ -110,7 +112,8 @@ def get_top_open_rate(limit: int = 10):
     cursor = conn.cursor()
 
     sql = """
-    select * from mailchimp_reports where emails_sent > 100 order by open_rate desc limit 0,{};
+    select email_subject, unique_opens, open_rate, emails_sent
+    from mailchimp_reports where emails_sent > 100 order by open_rate desc limit 0,{};
     """.format(limit)
 
     cursor.execute(sql)
