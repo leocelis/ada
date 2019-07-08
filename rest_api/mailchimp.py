@@ -18,11 +18,15 @@ class HealthCheck(Resource):
 
 class MailChimp(Resource):
     def get(self, report, count=10):
-        if report == "emailopens":
-            rows = get_top_opens(limit=count)
+        # TODO: do this with more style
+        try:
+            if report == "emailopens":
+                rows = get_top_opens(limit=count)
 
-        if report == "openrate":
-            rows = get_top_open_rate(limit=count)
+            if report == "openrate":
+                rows = get_top_open_rate(limit=count)
+        except:
+            return {'status': 'FAIL'}, 500
 
         output = ujson.loads(ujson.dumps(rows))
 
@@ -34,4 +38,3 @@ api.add_resource(MailChimp, '/mailchimp/<report>/<count>')
 
 if __name__ == '__main__':
     app.run(debug=True, ssl_context='adhoc')
-
