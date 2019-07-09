@@ -25,8 +25,8 @@ class MailChimp(Resource):
 
             if report == "openrate":
                 rows = get_top_open_rate(limit=count)
-        except:
-            return {'status': 'FAIL'}, 500
+        except Exception as e:
+            return {'error': str(e)}, 500
 
         output = ujson.loads(ujson.dumps(rows))
 
