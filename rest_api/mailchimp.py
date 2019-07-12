@@ -1,7 +1,6 @@
 import ujson
 from email_analyzer.utils import get_top_opens, get_top_open_rate
 from flask import Flask
-from flask import request
 from flask_cors import CORS
 from flask_restful import Resource, Api
 
@@ -32,9 +31,10 @@ class MailChimp(Resource):
                 rows = get_top_open_rate(limit=count)
         except Exception as e:
             log.error(str(e))
+
             return {'status': 'ERROR'}, 500
 
-        log.info("Request from {}".format(str(request.remote_addr)))
+        log.info("Request with count {}".format(count))
         output = ujson.loads(ujson.dumps(rows))
 
         return output, 200
