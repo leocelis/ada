@@ -1,8 +1,11 @@
 import ujson
 from email_analyzer.utils import get_top_opens, get_top_open_rate
 from flask import Flask
+from flask import request
 from flask_cors import CORS
 from flask_restful import Resource, Api
+
+from config import log
 
 app = Flask(__name__)
 api = Api(app)
@@ -18,6 +21,8 @@ class HealthCheck(Resource):
 
 class MailChimp(Resource):
     def get(self, report, count=10):
+        rows = dict()
+
         # TODO: do this with more style
         try:
             if report == "emailopens":
@@ -26,8 +31,10 @@ class MailChimp(Resource):
             if report == "openrate":
                 rows = get_top_open_rate(limit=count)
         except Exception as e:
-            return {'error': str(e)}, 500
+            log.error(str(e))
+            return {'status': 'ERROR'}, 500
 
+        log.info("Request from {}".format(str(request.remote_addr)))
         output = ujson.loads(ujson.dumps(rows))
 
         return output, 200

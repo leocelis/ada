@@ -1,0 +1,33 @@
+version: 1
+
+formatters:
+  default:
+    format: 't=%(asctime)s l=%(levelname)s pid=%(process)d tid=%(thread)d msg=%(message)s'
+    datefmt: '%Y-%m-%d %H:%M:%S'
+
+handlers:
+  console:
+    class: logging.StreamHandler
+    level: DEBUG
+    formatter: default
+    stream: ext://sys.stdout
+  file:
+    class: logging.handlers.RotatingFileHandler
+    level: DEBUG
+    formatter: default
+    filename: ada.log
+    maxBytes: 104857600
+    backupCount: 20
+
+loggers:
+  log_console:
+    level: DEBUG
+    handlers: [console]
+    propagate: no
+  boto3:
+    handlers: [file]
+    level: WARNING
+
+root:
+  level: INFO
+  handlers: [file]
