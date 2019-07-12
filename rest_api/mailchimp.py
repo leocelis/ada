@@ -1,10 +1,15 @@
+import os
+import sys
+
 import ujson
 from email_analyzer.utils import get_top_opens, get_top_open_rate
 from flask import Flask
+from flask import request
 from flask_cors import CORS
 from flask_restful import Resource, Api
 
-from config import log
+sys.path.append(os.path.dirname(os.getcwd()))
+from ada.config import log
 
 app = Flask(__name__)
 api = Api(app)
@@ -34,7 +39,7 @@ class MailChimp(Resource):
 
             return {'status': 'ERROR'}, 500
 
-        log.info("Request with count {}".format(count))
+        log.info("Request with count {}".format(str(request.remote_addr)))
         output = ujson.loads(ujson.dumps(rows))
 
         return output, 200
