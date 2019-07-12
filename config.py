@@ -60,4 +60,5 @@ with open(log_yaml_file, 'r') as f:
     log_config_dict = yaml.safe_load(f)
     f.close()
 
-log = logging.config.dictConfig(log_config_dict)
+logging.config.dictConfig(log_config_dict)
+log = logging.getLogger(__name__)
