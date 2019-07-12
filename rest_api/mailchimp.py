@@ -37,4 +37,4 @@ api.add_resource(HealthCheck, '/')
 api.add_resource(MailChimp, '/mailchimp/<report>/<count>')
 
 if __name__ == '__main__':
-    app.run(debug=True, ssl_context='adhoc')
+    app.run(ssl_context='adhoc')
