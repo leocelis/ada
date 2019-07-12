@@ -39,7 +39,8 @@ class MailChimp(Resource):
 
             return {'status': 'ERROR'}, 500
 
-        log.info("Request with count {}".format(str(request.remote_addr)))
+        remote_address = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
+        log.info("Request from {}".format(remote_address))
         output = ujson.loads(ujson.dumps(rows))
 
         return output, 200
