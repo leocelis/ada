@@ -28,6 +28,10 @@ def get_mysql_conn():
                                       connect_timeout=300,
                                       use_unicode=True,
                                       autocommit=True)
+
+    # if the connection was lost, then it reconnects
+    gmysql_conn.ping(reconnect=True)
+
     return gmysql_conn
 
 
