@@ -206,3 +206,21 @@ def get_top_open_rate(limit: int = 10):
     cursor.close()
 
     return rows
+
+
+def get_members_by_country():
+    conn = get_mysql_conn()
+    cursor = conn.cursor()
+
+    sql = """
+    SELECT country_code as country, COUNT(*) as total
+    from mailchimp_members WHERE country_code <> '' GROUP BY country_code;
+    """
+
+    cursor.execute(sql)
+
+    conn.commit()
+    rows = dictfecth(cursor)
+    cursor.close()
+
+    return rows

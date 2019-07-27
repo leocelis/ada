@@ -2,28 +2,15 @@ import os
 import sys
 
 import ujson
-from email_analyzer.utils import get_top_opens, get_top_open_rate
-from flask import Flask
 from flask import request
-from flask_cors import CORS
-from flask_restful import Resource, Api
+from flask_restful import Resource
 
 sys.path.append(os.path.dirname(os.getcwd()))
 from ada.config import log
-
-app = Flask(__name__)
-api = Api(app)
-CORS(app,
-     origins=["http://localhost:3000", "https://dashboard.leocelis.com"],
-     allow_headers=["Access-Control-Allow-Credentials"])
+from ada.email_analyzer.utils import get_top_opens, get_top_open_rate, get_members_by_country
 
 
-class HealthCheck(Resource):
-    def get(self):
-        return {'status': 'OK'}, 200
-
-
-class MailChimp(Resource):
+class MailChimpReports(Resource):
     def get(self, report, count=10):
         rows = dict()
 
@@ -46,8 +33,17 @@ class MailChimp(Resource):
         return output, 200
 
 
-api.add_resource(HealthCheck, '/')
-api.add_resource(MailChimp, '/mailchimp/<report>/<count>')
+class MailChimpMembers(Resource):
+    def get(self):
+        try:
+            rows = get_members_by_country()
+        except Exception as e:
+            log.error(str(e))
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', ssl_context='adhoc')
+            return {'status': 'ERROR'}, 500
+
+        remote_address = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
+        log.info("Request from {}".format(remote_address))
+        output = ujson.loads(ujson.dumps(rows))
+
+        return output, 200

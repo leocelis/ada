@@ -1,4 +1,4 @@
-from rest_api.mailchimp import app
+from rest_api.api import app
 
 if __name__ == "__main__":
     app.run()
