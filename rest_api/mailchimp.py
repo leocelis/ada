@@ -7,7 +7,7 @@ from flask_restful import Resource
 
 sys.path.append(os.path.dirname(os.getcwd()))
 from ada.config import log
-from ada.email_analyzer.utils import get_top_opens, get_top_open_rate, get_members_by_country, get_engagement_by_country
+from ada.email_analyzer.utils import get_top_opens, get_top_open_rate, get_members_by_country, get_open_rate_by_country
 
 
 class MailChimpReports(Resource):
@@ -41,8 +41,8 @@ class MailChimpMembers(Resource):
             if report == "members_by_country":
                 rows = get_members_by_country()
 
-            if report == "engagement_by_country":
-                rows = get_engagement_by_country()
+            if report == "open_rate_by_country":
+                rows = get_open_rate_by_country()
 
         except Exception as e:
             log.error(str(e))

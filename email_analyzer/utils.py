@@ -226,13 +226,13 @@ def get_members_by_country():
     return rows
 
 
-def get_engagement_by_country():
+def get_open_rate_by_country():
     conn = get_mysql_conn()
     cursor = conn.cursor()
 
     sql = """
-    select country_code as country, (SUM(open_rate) + SUM(click_rate)) as total
-    from mailchimp_members WHERE country_code <> '' GROUP BY country_code ;
+    select country_code as country, AVG(open_rate) as total from mailchimp_members
+    WHERE country_code <> '' GROUP BY country_code;
     """
 
     cursor.execute(sql)
