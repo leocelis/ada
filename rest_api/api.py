@@ -22,7 +22,7 @@ class HealthCheck(Resource):
 
 api.add_resource(HealthCheck, '/')
 api.add_resource(MailChimpReports, '/mailchimp/<report>/<count>')
-api.add_resource(MailChimpMembers, '/membersbycountry')
+api.add_resource(MailChimpMembers, '/mailchimp/members/<report>')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', ssl_context='adhoc')
