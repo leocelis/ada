@@ -1,10 +1,8 @@
 import os
 import sys
 
-import ujson
 from apiclient.discovery import build
 from oauth2client.service_account import ServiceAccountCredentials
-from pygments import highlight, lexers, formatters
 
 sys.path.append(os.path.dirname(os.getcwd()))
 from ada.content_analyzer.utils import save_ga_report, check_ga_report_exists, update_ga_report
@@ -79,10 +77,6 @@ def get_results(service, profile_id, dimensions, metrics, start_date):
 
 
 def save_results(results, start_date):
-    item_json = ujson.dumps(results, sort_keys=True, indent=4)
-    item_json_pretty = highlight(item_json, lexers.JsonLexer(), formatters.TerminalFormatter())
-    print(item_json_pretty)  # remove to print everything
-
     # iterate through rows
     for r in results.get('rows', {}):
         title = r[0]
