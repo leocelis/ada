@@ -74,3 +74,4 @@ __pycache__
 venv/*
 ada.log
 client_secrets.json
+.idea/

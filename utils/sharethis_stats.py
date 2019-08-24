@@ -54,7 +54,7 @@ def save_link_stats(link: str, t: dict) -> None:
     cursor = conn.cursor()
 
     total = int(t.get('total', 0))
-    blob = ujson.dumps(t)
+    blob = ujson.dumps(t).replace("'", r"\'")
 
     sql = """
     INSERT INTO sharethis_stats(site_link, total, response_blob)
@@ -77,7 +77,7 @@ def update_link_stats(link: str, t: dict) -> None:
     cursor = conn.cursor()
 
     total = int(t.get('total', 0))
-    blob = ujson.dumps(t)
+    blob = ujson.dumps(t).replace("'", r"\'")
 
     sql = """
     UPDATE sharethis_stats

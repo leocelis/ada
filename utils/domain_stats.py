@@ -33,7 +33,7 @@ def update_domain_fb_shares(domain: str, r: dict):
     cursor = conn.cursor()
 
     fb_shares = r.get('engagement', {}).get('share_count', 0)
-    fb_graph_object = ujson.dumps(r)
+    fb_graph_object = ujson.dumps(r).replace("'", r"\'")
 
     sql = """
     UPDATE domain_stats
@@ -58,7 +58,7 @@ def update_domain_sharethis_total(domain: str, r: dict):
     cursor = conn.cursor()
 
     total = int(r.get('total', 0))
-    blob = ujson.dumps(r)
+    blob = ujson.dumps(r).replace("'", r"\'")
 
     sql = """
     UPDATE domain_stats
@@ -82,7 +82,7 @@ def update_domain_retweets(domain: str, tweets: int, retweets: int, r: dict):
     conn = get_mysql_conn()
     cursor = conn.cursor()
 
-    blob = ujson.dumps(r)
+    blob = ujson.dumps(r).replace("'", r"\'")
 
     sql = """
     UPDATE domain_stats

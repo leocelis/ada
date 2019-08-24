@@ -59,7 +59,7 @@ def save_link_retweets(query: str, t: dict) -> None:
     tweet = t['text']
     user_id = t['user']['id_str']
     user_name = t['user']['screen_name']
-    blob = ujson.dumps(t)
+    blob = ujson.dumps(t).replace("'", r"\'")
     tweet_link = "https://twitter.com/{}/status/{}".format(user_name, tweet_id)
 
     sql = """
@@ -88,7 +88,7 @@ def update_link_retweets(query: str, t: dict):
     retweet_count = int(t.get('retweet_count', 0))
     tweet_id = t['id_str']
     user_name = t['user']['screen_name']
-    blob = ujson.dumps(t)
+    blob = ujson.dumps(t).replace("'", r"\'")
     tweet_link = "https://twitter.com/{}/status/{}".format(user_name, tweet_id)
 
     sql = """

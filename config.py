@@ -1,3 +1,7 @@
+import logging.config
+
+import yaml
+
 # Facebook Ads Optimization
 DATA_FOLDER = "./data"
 
@@ -48,3 +52,12 @@ TWITTER_KEYWORDS = ['martech',
                     '"data analytics marketing"',
                     '"customers engagement"',
                     '"growth hacking"']
+# logging
+log_yaml_file = 'logger.yaml'
+
+with open(log_yaml_file, 'r') as f:
+    log_config_dict = yaml.safe_load(f)
+    f.close()
+
+logging.config.dictConfig(log_config_dict)
+log = logging.getLogger(__name__)
