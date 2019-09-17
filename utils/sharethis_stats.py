@@ -1,6 +1,6 @@
 import os
-import sys
 
+import sys
 import ujson
 
 sys.path.append(os.path.dirname(os.getcwd()))

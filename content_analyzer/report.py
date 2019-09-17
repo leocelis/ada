@@ -1,7 +1,7 @@
 import os
-import sys
 
 import pandas as pd
+import sys
 import texttable as tt
 
 sys.path.append(os.path.dirname(os.getcwd()))
@@ -12,10 +12,10 @@ from ada.utils.facebook_most_shared import get_fb_shares_by_domain
 from ada.utils.twitter_most_retweeted import get_retweets_by_domain
 from ada.utils.sharethis_stats import get_sharethis_stats_by_domain
 
-# sites = get_all_sites(domain='leocelis')
-sites = get_all_sites(category='fun')
-count_limit = 100
-share_threshold = 50
+sites = get_all_sites(domain='leocelis')
+# sites = get_all_sites(category='fun')
+count_limit = 20
+share_threshold = 1
 
 # #################################
 # LINKS COUNT

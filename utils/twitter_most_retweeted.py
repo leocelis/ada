@@ -1,10 +1,28 @@
 import os
-import sys
 
+import sys
 import ujson
 
 sys.path.append(os.path.dirname(os.getcwd()))
 from ada.utils.conn import get_mysql_conn, dictfecth
+
+
+def get_top_tweets(retweet_threshold: int = 5, limit: int = 100):
+    conn = get_mysql_conn()
+    cursor = conn.cursor()
+
+    sql = """
+    SELECT * FROM twitter_most_retweeted
+    WHERE retweet_count > {} ORDER BY retweet_count DESC LIMIT 0,{};
+    """.format(retweet_threshold, limit)
+
+    cursor.execute(sql)
+
+    conn.commit()
+    rows = dictfecth(cursor)
+    cursor.close()
+
+    return rows
 
 
 def get_retweets_by_domain(domain: str, threshold: int = 10, limit: int = 10):

@@ -1,7 +1,7 @@
 import os
+
 import sys
 from time import sleep
-
 from twython import Twython
 
 # add parent dir
