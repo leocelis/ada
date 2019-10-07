@@ -1,11 +1,11 @@
 import os
-import sys
 
 import numpy as np
 import pandas as pd
+import sys
 
 sys.path.append(os.path.dirname(os.getcwd()))
-from ada.utils.scrapy_sites_links import get_all_site_links
+from ada.content_analyzer.utils import get_all_site_links
 
 links = get_all_site_links(domain="adweek.com", limit=1000)
 

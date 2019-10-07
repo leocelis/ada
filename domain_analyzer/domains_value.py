@@ -1,11 +1,11 @@
 import os
-import sys
 
 import pandas as pd
+import sys
 import texttable as tt
 
 sys.path.append(os.path.dirname(os.getcwd()))
-from ada.utils.domain_stats import get_domains
+from ada.content_analyzer.utils import get_domains
 
 # get all domains
 domains = get_domains()

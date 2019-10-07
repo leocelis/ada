@@ -6,8 +6,8 @@ import sys
 sys.path.append(os.path.dirname(os.getcwd()))
 # from ada.content_analyzer.utils import save_link_fb_shares, check_link_exists, update_link_fb_shares, \
 #    get_all_site_links
-from ada.utils.scrapy_sites_links import get_site_links_by_category
-from ada.utils.facebook_most_shared import check_link_exists, update_link_fb_shares, save_link_fb_shares
+from ada.content_analyzer.utils import get_site_links_by_category, check_link_exists, update_link_fb_shares, \
+    save_link_fb_shares
 
 # from ada.utils.scrapy_sites_links import get_site_links_by_category
 

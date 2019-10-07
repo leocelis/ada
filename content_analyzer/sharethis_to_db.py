@@ -10,8 +10,7 @@ from ada.config import SHARETHIS_THRESHOLD
 import requests
 
 sys.path.append(os.path.dirname(os.getcwd()))
-from ada.utils.scrapy_sites_links import get_site_links_by_category
-from ada.utils.sharethis_stats import check_link_stats, update_link_stats, save_link_stats
+from ada.content_analyzer.utils import get_site_links_by_category, check_link_stats, update_link_stats, save_link_stats
 
 # from ada.utils.scrapy_sites_links import get_site_links_by_category
 

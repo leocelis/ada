@@ -1,7 +1,7 @@
 import os
-import sys
 from urllib.request import Request, urlopen
 
+import sys
 from bs4 import BeautifulSoup
 
 sys.path.append(os.path.dirname(os.getcwd()))

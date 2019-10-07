@@ -6,11 +6,8 @@ import texttable as tt
 
 sys.path.append(os.path.dirname(os.getcwd()))
 from ada.utils.utils import get_domain
-from ada.content_analyzer.scrapy_sites import get_all_sites
-from ada.content_analyzer.scrapy_sites_links import get_links_count
-from ada.content_analyzer.utils.facebook_most_shared import get_fb_shares_by_domain
-from ada.content_analyzer.twitter_most_retweeted import get_retweets_by_domain
-from ada.content_analyzer.sharethis_stats import get_sharethis_stats_by_domain
+from ada.content_analyzer.utils import get_all_sites, get_links_count, get_fb_shares_by_domain, get_retweets_by_domain, \
+    get_sharethis_stats_by_domain
 
 # sites = get_all_sites(domain='leocelis')
 sites = get_all_sites(category='adtech')

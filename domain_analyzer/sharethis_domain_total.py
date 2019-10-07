@@ -1,10 +1,10 @@
 import os
-import sys
 
 import requests
+import sys
 
 sys.path.append(os.path.dirname(os.getcwd()))
-from ada.utils.domain_stats import get_domains, update_domain_sharethis_total
+from ada.content_analyzer.utils import get_domains, update_domain_sharethis_total
 
 # ShareThis API endpoint
 sharethis_endpoint = 'https://count-server.sharethis.com/v2.0/get_counts'

@@ -9,7 +9,7 @@ import sys
 from urlextract import URLExtract
 
 sys.path.append(os.path.dirname(os.getcwd()))
-from ada.utils.twitter_most_retweeted import get_top_tweets
+from ada.content_analyzer.utils import get_top_tweets
 
 tweets = get_top_tweets(retweet_threshold=10, limit=1000)
 extractor = URLExtract()

@@ -1,10 +1,10 @@
 import os
-import sys
 
 import facebook
+import sys
 
 sys.path.append(os.path.dirname(os.getcwd()))
-from ada.utils.domain_stats import get_domains, update_domain_fb_shares
+from ada.content_analyzer.utils import get_domains, update_domain_fb_shares
 
 APP_ID = os.environ.get('APP_ID')
 APP_SECRET = os.environ.get('APP_SECRET')

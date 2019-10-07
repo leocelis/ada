@@ -1,9 +1,10 @@
 import os
+
 import sys
 
 sys.path.append(os.path.dirname(os.getcwd()))
-from ada.utils.twitter import search_tweets
-from ada.utils.domain_stats import get_domains, update_domain_retweets
+from ada.content_discovery.twitter import search_tweets
+from ada.content_analyzer.utils import get_domains, update_domain_retweets
 
 # get all domains
 domains = get_domains()
