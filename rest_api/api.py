@@ -1,6 +1,6 @@
 import os
-import sys
 
+import sys
 from flask import Flask
 from flask_cors import CORS
 from flask_restful import Resource, Api
