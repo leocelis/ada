@@ -72,5 +72,7 @@ layout2 = go.Layout(
 fig2 = go.Figure(data=data2, layout=layout2)
 
 # update charts
+print("Refreshing Top Opens chart...\n")
 py.plot(fig, filename='Top 5 Posts by Email Opens')
+print("Refreshing Top Open Rate chart...\n")
 py.plot(fig2, filename='Top 5 Posts by Open Rate')
