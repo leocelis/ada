@@ -50,8 +50,8 @@ CONCURRENT_REQUESTS = 32
 # Enable or disable spider middlewares
 # See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 SPIDER_MIDDLEWARES = {
-    # 'links_extractor.middlewares.LinksExtractorSpiderMiddleware': 543,
-    'scrapy_deltafetch.DeltaFetch': 1,
+    'links_extractor.middlewares.LinksExtractorSpiderMiddleware': 543,
+    #'scrapy_deltafetch.DeltaFetch': 1,
 }
 DELTAFETCH_ENABLED = True
 

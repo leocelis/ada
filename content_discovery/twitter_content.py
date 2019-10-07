@@ -3,10 +3,10 @@ Twitter Search Tweets API reference:
 https://developer.twitter.com/en/docs/tweets/search/api-reference/get-search-tweets.html
 """
 import os
+
 import sys
 import ujson
 from time import sleep
-
 from twython import Twython
 
 # add parent dir

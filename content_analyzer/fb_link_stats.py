@@ -1,8 +1,8 @@
 import os
-import sys
 
 import facebook
 import pandas as pd
+import sys
 
 sys.path.append(os.path.dirname(os.getcwd()))
 from ada.config import FACEBOOK_SHARES_THRESHOLD

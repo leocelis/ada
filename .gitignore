@@ -75,3 +75,4 @@ venv/*
 ada.log
 client_secrets.json
 .idea/
+*.csv

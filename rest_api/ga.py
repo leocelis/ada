@@ -1,6 +1,6 @@
 import os
-import sys
 
+import sys
 import ujson
 from flask import request
 from flask_restful import Resource

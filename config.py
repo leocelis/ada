@@ -8,7 +8,7 @@ DATA_FOLDER = "./data"
 # Content Discovery
 SHARETHIS_THRESHOLD = 2  # min total actions in Share This
 FACEBOOK_SHARES_THRESHOLD = 2  # min shares a link should have
-TWITTER_RETWEETS_THRESHOLD = 1  # min retweets a tweet should have
+TWITTER_RETWEETS_THRESHOLD = 5  # min retweets a tweet should have
 TWITTER_WAIT_REQUESTS = 2  # wait seconds between requests
 TWITTER_HISTORY_COUNT = 400  # how many tweets in the past we will consider
 TWITTER_KEYWORDS = ['martech',
@@ -18,10 +18,10 @@ TWITTER_KEYWORDS = ['martech',
                     '"growth marketing"',
                     '"martech stack"',
                     '"conversion metrics"',
-                    '"affiliating marketing"',
+                    # '"affiliating marketing"',
                     '"customer acquisition cost"',
                     '"customer cost of acquisition"',
-                    '"viral loop"',
+                    # '"viral loop"',
                     '"life cycle marketing"',
                     '"predict growth"',
                     '"mobile attribution partners"',
@@ -47,7 +47,7 @@ TWITTER_KEYWORDS = ['martech',
                     '"marketing tech conferences"',
                     '"marketing automation conference"',
                     '"analytics for marketers"',
-                    'socialcode',
+                    # 'socialcode',
                     '"data analytics for marketers"',
                     '"data analytics marketing"',
                     '"customers engagement"',
