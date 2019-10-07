@@ -10,7 +10,7 @@ from ada.config import SHARETHIS_THRESHOLD
 import requests
 
 sys.path.append(os.path.dirname(os.getcwd()))
-from ada.utils.scrapy_sites_links import get_all_site_links
+from ada.utils.scrapy_sites_links import get_site_links_by_category
 from ada.utils.sharethis_stats import check_link_stats, update_link_stats, save_link_stats
 
 # from ada.utils.scrapy_sites_links import get_site_links_by_category
@@ -19,9 +19,9 @@ from ada.utils.sharethis_stats import check_link_stats, update_link_stats, save_
 sharethis_endpoint = 'https://count-server.sharethis.com/v2.0/get_counts'
 
 # get all site links
-site_links = get_all_site_links(domain="leocelis.com")
+# site_links = get_all_site_links(domain="leocelis.com")
 # site_links = get_all_site_links()
-# site_links = get_site_links_by_category(category='fun')
+site_links = get_site_links_by_category(category='adtech')
 
 for s in site_links:
     link = s["site_link"]
