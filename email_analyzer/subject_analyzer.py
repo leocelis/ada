@@ -1,9 +1,16 @@
+import os
+import sys
+
 import pandas as pd
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 
+sys.path.append(os.path.dirname(os.getcwd()))
+from ada.email_analyzer.utils import get_subjects_open_rate
+
 # dataset
-dataset = pd.read_csv("email_analyzer/subject_training_data.csv", index_col=None)
+# dataset = pd.read_csv("email_analyzer/subject_training_data.csv", index_col=None)
+dataset = pd.DataFrame(get_subjects_open_rate())
 
 # subject length feature
 dataset['email_subject_length'] = dataset["email_subject"].apply(lambda x: len(x))
@@ -44,9 +51,7 @@ df = pd.DataFrame({'Actual Results': y_test, 'Predicted Results': y_pred})
 # predict new dataset
 new_dataset = pd.DataFrame({'email_subject': ['This is a subject test',
                                               'This is a really long subject that you should not read',
-                                              'Too short',
-                                              'A',
-                                              '',
+                                              'Creative Performance Dashboards are broken',
                                               'How about this super long and boring subject line?']})
 new_dataset['email_subject_length'] = new_dataset["email_subject"].apply(lambda x: len(x))
 X_new = new_dataset[['email_subject_length']]

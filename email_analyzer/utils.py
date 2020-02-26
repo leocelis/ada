@@ -242,3 +242,25 @@ def get_open_rate_by_country():
     cursor.close()
 
     return rows
+
+
+def get_subjects_open_rate():
+    """
+    Get all the email subjects and their open rates
+
+    :return:
+    """
+    conn = get_mysql_conn()
+    cursor = conn.cursor()
+
+    sql = """
+    select email_subject, open_rate from mailchimp_reports
+    """
+
+    cursor.execute(sql)
+
+    conn.commit()
+    rows = dictfecth(cursor)
+    cursor.close()
+
+    return rows
