@@ -4,16 +4,34 @@ import sys
 import pandas as pd
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
+from textblob import TextBlob
 
 sys.path.append(os.path.dirname(os.getcwd()))
 from ada.email_analyzer.utils import get_subjects_open_rate
 
-# dataset
-# dataset = pd.read_csv("email_analyzer/subject_training_data.csv", index_col=None)
+# ===================================
+# DATA CLEANING
+# ===================================
+# dataset = pd.read_csv("email_analyzer/subject_training_data.csv", index_col=None) # read from CSV file
 dataset = pd.DataFrame(get_subjects_open_rate())
 
+# lower case
+dataset['email_subject'] = dataset['email_subject'].apply(lambda x: " ".join(x.lower() for x in x.split()))
+
+# remove punctuation
+dataset['email_subject'] = dataset['email_subject'].str.replace('[^\w\s]', '')
+
+# spelling check
+dataset['email_subject'] = dataset['email_subject'].apply(lambda x: str(TextBlob(x).correct()))
+
+# bigrams
+# dataset['email_subject'] = dataset['email_subject'].apply(lambda x: str(TextBlob(x).ngrams(2)))
+
+# ===================================
+# FEATURE EXTRACTION
+# ===================================
 # subject length feature
-dataset['email_subject_length'] = dataset["email_subject"].apply(lambda x: len(x))
+dataset['email_subject_length'] = dataset['email_subject'].apply(lambda x: len(x))
 # print("Training Dataset")
 # print("================")
 # print(dataset)
