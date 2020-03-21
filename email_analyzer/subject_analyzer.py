@@ -1,27 +1,40 @@
 """
+Problem: For a given industry, what are the key features to predict open rate?
 
-Goal: get the expected open rate of a given email subject
-
-Problem:
-What are the main drivers of people openning emails?
-
+Features:
 - Subject length
-- Words used
--
+- Words count
+- Words weight (*)
 
-Highlights:
-- Avg. open rate is 19% (US)
+(*) Words weight
 
-References:
-- https://www.superoffice.com/blog/email-open-rates/
+Assumption: a subject that has most-used words will increase open rate.
 
-TODOs:
+Collect data:
+Collect link titles of top-ranked websites for a given industry
+Collect the published time, and filter by the past 24 months
+Remove the common words
+Find the root word
+Count the words ocurrences
 
-- Create a clean up function
+Use data:
+Remove the common words
+Find the root words
+For each word, add a value (count of words occurrences)
+Sum all the values to create a new feature
 
-Ideas:
-- Collect ad tech blog post titles, and create a wordcloud to use as a training dataset
+Example:
+adtech = 150
+innovation = 50
+fraud = 10
 
+Subjects:
+Ad Tech reshaping the world = 150
+Innovation in Ad Tech = 200
+How to prevent ad tech fraud through innovation = 210
+
+Target:
+- Open rate
 """
 import os
 import sys
@@ -47,8 +60,9 @@ dataset['email_subject'] = dataset['email_subject'].apply(lambda x: " ".join(x.l
 dataset['email_subject'] = dataset['email_subject'].str.replace('[^\w\s]', '')
 
 # spelling check
-dataset['email_subject'] = dataset['email_subject'].apply(
-    lambda x: str(TextBlob(x).correct()))  # ===================================
+dataset['email_subject'] = dataset['email_subject'].apply(lambda x: str(TextBlob(x).correct()))
+
+# ===================================
 # FEATURE EXTRACTION
 # ===================================
 # subject length feature
@@ -57,21 +71,10 @@ dataset['email_subject_length'] = dataset['email_subject'].apply(lambda x: len(x
 # words count
 dataset['email_subject_words_count'] = dataset['email_subject'].apply(lambda x: len(x.split()))
 
-# words used?
-
 print("Training Dataset")
 print("================")
 print(dataset)
 # exit()
-
-# ===================================
-# CORRELATION
-# ===================================
-
-# correlation matrix
-# print("\nCorrelation Matrix")
-# print("==================")
-# print(dataset.corr())
 
 # ===================================
 # PREDICTION
@@ -104,11 +107,12 @@ new_dataset = pd.DataFrame({'email_subject': ['This is a subject test',
                                               'abc is for you!',
                                               'a b c']})
 
+# data cleaning
 new_dataset['email_subject_length'] = new_dataset["email_subject"].apply(lambda x: len(x))
 new_dataset['email_subject_words_count'] = new_dataset["email_subject"].apply(lambda x: len(x.split()))
-X_new = new_dataset[['email_subject_length', 'email_subject_words_count']]
 
 # predict!
+X_new = new_dataset[['email_subject_length', 'email_subject_words_count']]
 new_pred = regressor.predict(X_new)
 new_dataset['open_rate_pred'] = new_pred
 
