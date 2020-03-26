@@ -106,6 +106,7 @@ CREATE TABLE `twitter_most_retweeted` (
 ```
 1. >cd links_extractor/
 2. >scrapy crawl ada -o links.csv -t csv
+3. >cd .. & python3 utils/csv_to_mysql.py
 ```
 
 #### Facebook Links Open Graph data

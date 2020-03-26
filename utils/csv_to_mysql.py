@@ -8,7 +8,7 @@ sys.path.append(os.path.dirname(os.getcwd()))
 from ada.domain_analyzer.utils import check_link_exists, save_site_link
 
 # csv file
-file_location = "./links_extractor/adtech.csv"
+file_location = "./links_extractor/links.csv"
 dataset = pd.read_csv(file_location, index_col=None)  # ignore index column
 
 # iterate through each link
