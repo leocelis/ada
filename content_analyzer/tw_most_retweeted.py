@@ -5,10 +5,8 @@ import sys
 # add parent dir
 sys.path.append(os.path.dirname(os.getcwd()))
 from ada.content_analyzer.utils import check_retweet_exists, save_link_retweets, \
-    update_link_retweets
+    update_link_retweets, get_site_links_by_category
 from ada.content_discovery.twitter import search_tweets
-
-from ada.utils.scrapy_sites_links import get_site_links_by_category
 
 links = dict()
 # get all site links
