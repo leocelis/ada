@@ -1,6 +1,6 @@
 import os
-
 import sys
+
 import ujson
 
 sys.path.append(os.path.dirname(os.getcwd()))
@@ -115,7 +115,6 @@ def get_top_page_time(limit: int = 10):
 
 
 # Facebook
-
 def get_fb_shares_by_domain(domain: str, threshold: int = 1, limit: int = 10):
     conn = get_mysql_conn()
     cursor = conn.cursor()
@@ -671,3 +670,27 @@ def update_link_retweets(query: str, t: dict):
 
     cursor.close()
     return
+
+
+def get_title_by_link(link: str):
+    conn = get_mysql_conn()
+    cursor = conn.cursor()
+
+    sql = """
+    SELECT title FROM scrapy_sites_links
+    WHERE site_link = "{}";
+    """.format(link)
+
+    print(sql)
+    r = cursor.execute(sql)
+
+    if r > 0:
+        conn.commit()
+        rows = dictfecth(cursor)
+        cursor.close()
+        title = rows[0]["title"]
+        print(title)
+        return title
+    else:
+        cursor.close()
+        return ""

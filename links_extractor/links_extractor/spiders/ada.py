@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import os
+import sys
 
 import scrapy
-import sys
 from links_extractor.items import LinksExtractorItem
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import Rule, CrawlSpider
@@ -29,7 +29,7 @@ class AdaSpider(CrawlSpider):
     # parse them using the parse_items method
     rules = [Rule(
         LinkExtractor(canonicalize=True, unique=True),
-        follow=True,
+        follow=False,
         callback="parse_items"
     )
     ]

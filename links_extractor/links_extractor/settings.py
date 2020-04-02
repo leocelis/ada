@@ -51,7 +51,7 @@ CONCURRENT_REQUESTS = 32
 # See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 SPIDER_MIDDLEWARES = {
     'links_extractor.middlewares.LinksExtractorSpiderMiddleware': 543,
-    #'scrapy_deltafetch.DeltaFetch': 1,
+    # 'scrapy_deltafetch.DeltaFetch': 1,
 }
 DELTAFETCH_ENABLED = True
 
@@ -88,11 +88,11 @@ DELTAFETCH_ENABLED = True
 
 # Enable and configure HTTP caching (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html#httpcache-middleware-settings
-# HTTPCACHE_ENABLED = True
+HTTPCACHE_ENABLED = True
 # HTTPCACHE_EXPIRATION_SECS = 0
-# HTTPCACHE_DIR = 'httpcache'
-# HTTPCACHE_IGNORE_HTTP_CODES = []
-# HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+HTTPCACHE_DIR = 'httpcache'
+HTTPCACHE_IGNORE_HTTP_CODES = [500, 503, 504, 400, 403, 404, 408]
+HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
 # Retry many times since proxies often fail
 RETRY_TIMES = 1

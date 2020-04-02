@@ -1,40 +1,21 @@
 """
-Problem: For a given industry, what are the key features to predict open rate?
+(c) leocelis.com
+
+Predicts Email Open Rate
+
+Source: MailChimp
 
 Features:
 - Subject length
 - Words count
-- Words weight (*)
-
-(*) Words weight
-
-Assumption: a subject that has most-used words will increase open rate.
-
-Collect data:
-Collect link titles of top-ranked websites for a given industry
-Collect the published time, and filter by the past 24 months
-Remove the common words
-Find the root word
-Count the words ocurrences
-
-Use data:
-Remove the common words
-Find the root words
-For each word, add a value (count of words occurrences)
-Sum all the values to create a new feature
-
-Example:
-adtech = 150
-innovation = 50
-fraud = 10
-
-Subjects:
-Ad Tech reshaping the world = 150
-Innovation in Ad Tech = 200
-How to prevent ad tech fraud through innovation = 210
+- Words value (*)
 
 Target:
 - Open rate
+
+(*) Assumption: subject lines that use most-shared words will have a higher open rate
+
+TODO: add how efficient is the ml algo
 """
 import os
 import sys
@@ -45,22 +26,35 @@ from sklearn.model_selection import train_test_split
 
 sys.path.append(os.path.dirname(os.getcwd()))
 from ada.email_analyzer.utils import get_subjects_open_rate
-from textblob import TextBlob
+
+from ada.predictions.utils import lower_case, remove_punctuation, spelling_check, remove_common_words
 
 # ===================================
 # DATA CLEANING
 # ===================================
-# dataset = pd.read_csv("email_analyzer/subject_training_data.csv", index_col=None) # read from CSV file
 dataset = pd.DataFrame(get_subjects_open_rate())
 
 # lower case
-dataset['email_subject'] = dataset['email_subject'].apply(lambda x: " ".join(x.lower() for x in x.split()))
+dataset['email_subject'] = dataset['email_subject'].apply(lambda x: lower_case(x))
 
 # remove punctuation
-dataset['email_subject'] = dataset['email_subject'].str.replace('[^\w\s]', '')
+# dataset['email_subject'] = dataset['email_subject'].str.replace('[^\w\s]', '')
+dataset['email_subject'] = dataset['email_subject'].apply(lambda x: remove_punctuation(x))
 
 # spelling check
-dataset['email_subject'] = dataset['email_subject'].apply(lambda x: str(TextBlob(x).correct()))
+dataset['email_subject'] = dataset['email_subject'].apply(lambda x: spelling_check(x))
+
+# remove common words
+
+dataset['email_subject'] = dataset['email_subject'].apply(lambda x: remove_common_words(x))
+
+# word shares
+# TODO: take each word, get the shares value, sum all the words values to create a new feature
+#
+# print("Training Dataset")
+# print("================")
+# print(dataset)
+# exit()
 
 # ===================================
 # FEATURE EXTRACTION
@@ -71,9 +65,9 @@ dataset['email_subject_length'] = dataset['email_subject'].apply(lambda x: len(x
 # words count
 dataset['email_subject_words_count'] = dataset['email_subject'].apply(lambda x: len(x.split()))
 
-print("Training Dataset")
-print("================")
-print(dataset)
+# print("Training Dataset")
+# print("================")
+# print(dataset)
 # exit()
 
 # ===================================

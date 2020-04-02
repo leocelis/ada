@@ -76,3 +76,4 @@ ada.log
 client_secrets.json
 .idea/
 *.csv
+links_extractor/.scrapy/*
