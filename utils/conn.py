@@ -8,31 +8,26 @@ DB_PORT = os.environ.get('DB_PORT')
 DB_USER = os.environ.get('DB_USER')
 DB_PASSWORD = os.environ.get('DB_PASSWORD')
 
-global gmysql_conn
-gmysql_conn = None
-
 
 def get_mysql_conn():
     """
     Get MySQL connection object
     :return:
     """
-    global gmysql_conn
-    if not gmysql_conn:
-        # connect to the server
-        gmysql_conn = pymysql.connect(host=DB_HOST,
-                                      port=int(DB_PORT),
-                                      user=DB_USER,
-                                      passwd=DB_PASSWORD,
-                                      db="ada",
-                                      connect_timeout=300,
-                                      use_unicode=True,
-                                      autocommit=True)
+    # connect to the server
+    mysql_conn = pymysql.connect(host=DB_HOST,
+                                 port=int(DB_PORT),
+                                 user=DB_USER,
+                                 passwd=DB_PASSWORD,
+                                 db="ada",
+                                 connect_timeout=600,
+                                 use_unicode=True,
+                                 autocommit=True)
 
     # if the connection was lost, then it reconnects
-    gmysql_conn.ping(reconnect=True)
+    mysql_conn.ping(reconnect=True)
 
-    return gmysql_conn
+    return mysql_conn
 
 
 def dictfecth(cursor):

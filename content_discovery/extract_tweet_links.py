@@ -2,10 +2,10 @@
 Extract links from tweets
 """
 import os
+import sys
 from urllib.parse import urlparse
 
 import requests
-import sys
 from urlextract import URLExtract
 
 sys.path.append(os.path.dirname(os.getcwd()))

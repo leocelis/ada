@@ -115,14 +115,17 @@ def get_top_page_time(limit: int = 10):
 
 
 # Facebook
-def get_fb_shares_by_domain(domain: str, threshold: int = 1, limit: int = 10):
+def get_fb_shares_by_domain(domain: str, threshold: int = 1, limit: int = 0):
     conn = get_mysql_conn()
     cursor = conn.cursor()
 
     sql = """
     SELECT site_link, site_link_title, fb_shares FROM facebook_most_shared
-    WHERE site_link LIKE "%{}%" AND fb_shares > {} ORDER BY fb_shares DESC LIMIT 0,{};
-    """.format(domain, threshold, limit)
+    WHERE site_link LIKE "%{}%" AND fb_shares > {} ORDER BY fb_shares
+    """.format(domain, threshold)
+
+    if limit > 0:
+        sql += " LIMIT 0,{}".format(limit)
 
     cursor.execute(sql)
 

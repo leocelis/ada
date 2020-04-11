@@ -3,10 +3,10 @@ Twitter Search Tweets API reference:
 https://developer.twitter.com/en/docs/tweets/search/api-reference/get-search-tweets.html
 """
 import os
-
 import sys
-import ujson
 from time import sleep
+
+import ujson
 from twython import Twython
 
 # add parent dir
@@ -90,6 +90,7 @@ def save_tweet(t: dict, keyword: str) -> None:
     user_name = t['user']['screen_name']
     blob = ujson.dumps(t)
     tweet_link = "https://twitter.com/{}/status/{}".format(user_name, tweet_id)
+    # TODO: add a site_link field and extract the link from the tweet
 
     sql = """
     INSERT INTO twitter_most_retweeted(created_at, tweet_id, retweet_count, tweet, user_id, user_name,
