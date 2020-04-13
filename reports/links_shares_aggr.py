@@ -27,12 +27,14 @@ for s in sites:
 
     for f in fbshares:
         # check if it is the same link, and increase the shares
+        # {'site_link': 'https://neilpatel.com/privacy/', 'site_link_title': 'Privacy Policy', 'fb_shares': 1}
+        # add last_updated with NOW() in the summary table
         print(f)
         exit()
 
-    # twitter - use the links extract from the most retweetd tweets found by keywords
-    # for the same link in different tweets, sum up the retweets
+        # twitter - use the links extract from the most retweetd tweets found by keywords
+        # for the same link in different tweets, sum up the retweets
 
-    # sharethis
+        # sharethis
 
-    # sum up all the columns, and create a new total_shares column
+        # sum up all the columns, and create a new total_shares column

@@ -6,11 +6,11 @@ import yaml
 DATA_FOLDER = "./data"
 
 # Content Discovery
-SHARETHIS_THRESHOLD = 2  # min total actions in Share This
-FACEBOOK_SHARES_THRESHOLD = 2  # min shares a link should have
-TWITTER_RETWEETS_THRESHOLD = 5  # min retweets a tweet should have
-TWITTER_WAIT_REQUESTS = 2  # wait seconds between requests
-TWITTER_HISTORY_COUNT = 400  # how many tweets in the past we will consider
+SHARETHIS_THRESHOLD = 10  # min total actions in Share This
+FACEBOOK_SHARES_THRESHOLD = 10  # min shares a link should have
+TWITTER_RETWEETS_THRESHOLD = 10  # min retweets a tweet should have
+TWITTER_WAIT_REQUESTS = 5  # wait seconds between requests
+TWITTER_HISTORY_COUNT = 100  # how many tweets in the past we will consider
 TWITTER_KEYWORDS = ['martech',
                     '"ad tech"',
                     'adtech',
