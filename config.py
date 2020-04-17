@@ -6,6 +6,7 @@ import yaml
 DATA_FOLDER = "./data"
 
 # Content Discovery
+SUMMARY_THRESHOLD = 100  # min total shares to make it in the summary table
 SHARETHIS_THRESHOLD = 10  # min total actions in Share This
 FACEBOOK_SHARES_THRESHOLD = 10  # min shares a link should have
 TWITTER_RETWEETS_THRESHOLD = 10  # min retweets a tweet should have

@@ -13,28 +13,54 @@ import os
 import sys
 
 sys.path.append(os.path.dirname(os.getcwd()))
-from ada.content_analyzer.utils import get_all_sites, get_fb_shares_by_domain
-from ada.utils.utils import get_domain
+from ada.content_analyzer.utils import get_all_sites, get_fb_shares_by_domain, get_retweets_by_domain, \
+    get_sharethis_stats_by_domain, get_title_by_link, link_shares_update_or_insert
+from ada.utils.utils import get_domain, clean_link
+from ada.config import SUMMARY_THRESHOLD
 
 # get all the sites
 sites = get_all_sites(category='adtech')
 
+# store links and shares
+links_shares = dict()
+
 for s in sites:
+    print(".", end="", flush=True)
     d = get_domain(s['site_url'])
 
-    # get links and Facebook shares
-    fbshares = get_fb_shares_by_domain(domain=d, threshold=0)
-
+    # facebook shares
+    fbshares = get_fb_shares_by_domain(domain=d, threshold=SUMMARY_THRESHOLD, limit=0)
     for f in fbshares:
-        # check if it is the same link, and increase the shares
-        # {'site_link': 'https://neilpatel.com/privacy/', 'site_link_title': 'Privacy Policy', 'fb_shares': 1}
-        # add last_updated with NOW() in the summary table
-        print(f)
-        exit()
+        print(".", end="", flush=True)
+        l = clean_link(f['site_link'])
+        if l in links_shares:
+            links_shares[l] += int(f['fb_shares'])
+        else:
+            links_shares[l] = int(f['fb_shares'])
 
-        # twitter - use the links extract from the most retweetd tweets found by keywords
-        # for the same link in different tweets, sum up the retweets
+    # twitter retweets
+    tretweets = get_retweets_by_domain(domain=d, threshold=SUMMARY_THRESHOLD, limit=0)
+    for t in tretweets:
+        print(".", end="", flush=True)
+        l = clean_link(t['query'])
+        if l in links_shares:
+            links_shares[l] += t['retweet_count']
+        else:
+            links_shares[l] = t['retweet_count']
 
-        # sharethis
+    # sharethis
+    sharethis = get_sharethis_stats_by_domain(domain=d, threshold=SUMMARY_THRESHOLD, limit=0)
+    for st in sharethis:
+        print(".", end="", flush=True)
+        l = clean_link(st['site_link'])
+        if l in links_shares:
+            links_shares[l] += st['total']
+        else:
+            links_shares[l] = st['total']
 
-        # sum up all the columns, and create a new total_shares column
+# update summary table
+for key, value in links_shares.items():
+    # get the title
+    title = get_title_by_link(link=key)
+    if title:
+        link_shares_update_or_insert(key, title, value)

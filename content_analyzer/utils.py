@@ -115,7 +115,7 @@ def get_top_page_time(limit: int = 10):
 
 
 # Facebook
-def get_fb_shares_by_domain(domain: str, threshold: int = 1, limit: int = 0):
+def get_fb_shares_by_domain(domain: str, threshold: int = 1, limit: int = 10):
     conn = get_mysql_conn()
     cursor = conn.cursor()
 
@@ -462,15 +462,17 @@ def update_domain_retweets(domain: str, tweets: int, retweets: int, r: dict):
 
 
 # ShareThis
-
 def get_sharethis_stats_by_domain(domain: str, threshold: int = 10, limit: int = 10):
     conn = get_mysql_conn()
     cursor = conn.cursor()
 
     sql = """
     SELECT * FROM sharethis_stats
-    WHERE site_link LIKE "%{}%" AND total > {} ORDER BY total DESC LIMIT 0,{};
-    """.format(domain, threshold, limit)
+    WHERE site_link LIKE "%{}%" AND total > {} ORDER BY total DESC
+    """.format(domain, threshold)
+
+    if limit > 0:
+        sql += " LIMIT 0,{}".format(limit)
 
     cursor.execute(sql)
 
@@ -579,8 +581,11 @@ def get_retweets_by_domain(domain: str, threshold: int = 10, limit: int = 10):
 
     sql = """
     SELECT * FROM twitter_most_retweeted
-    WHERE query LIKE "%{}%" AND retweet_count > {} ORDER BY retweet_count DESC LIMIT 0,{};
-    """.format(domain, threshold, limit)
+    WHERE query LIKE "%{}%" AND retweet_count > {} ORDER BY retweet_count DESC
+    """.format(domain, threshold)
+
+    if limit > 0:
+        sql += " LIMIT 0,{}".format(limit)
 
     cursor.execute(sql)
 
@@ -684,7 +689,6 @@ def get_title_by_link(link: str):
     WHERE site_link = "{}";
     """.format(link)
 
-    print(sql)
     r = cursor.execute(sql)
 
     if r > 0:
@@ -692,8 +696,65 @@ def get_title_by_link(link: str):
         rows = dictfecth(cursor)
         cursor.close()
         title = rows[0]["title"]
-        print(title)
         return title
     else:
         cursor.close()
         return ""
+
+
+# Links shares
+def link_shares_update_or_insert(link, title, shares):
+    conn = get_mysql_conn()
+    cursor = conn.cursor()
+
+    # check if the link exists
+    sql = """
+    SELECT idlinks_shares FROM links_shares
+    WHERE link_url = "{}";
+    """.format(link)
+
+    r = cursor.execute(sql)
+
+    if r > 0:
+        conn.commit()
+        rows = dictfecth(cursor)
+
+        # update shares
+        id = rows[0]["idlinks_shares"]
+        sql = """
+        UPDATE links_shares
+        SET shares_total = {}
+        WHERE idlinks_shares = '{}'
+        """.format(shares, id)
+
+        try:
+            cursor.execute(sql)
+            print("{} shares updated.".format(link))
+            conn.commit()
+        except Exception as e:
+            print("ERROR! ({})\n".format(str(e)))
+            conn.rollback()
+            return False
+
+        cursor.close()
+        return True
+    else:
+        # insert new link with shares
+        sql = """
+        INSERT INTO links_shares(link_url, link_title, shares_total)
+        VALUES (%s, %s, %s)
+        """.format()
+
+        try:
+            cursor.execute(sql, (link, title, shares))
+            print("{} shares inserted.".format(link))
+            conn.commit()
+        except Exception as e:
+            print("\nERROR! ({})".format(str(e)))
+            conn.rollback()
+            return False
+
+        cursor.close()
+        return True
+
+    return False

@@ -51,7 +51,7 @@ sklearn==0.0
 soupsieve==1.9.1
 textblob==0.15.3
 texttable==1.6.1
-Twisted==19.7.0
+Twisted>=20.3.0
 twython==3.7.0
 ujson==1.35
 uritools==2.2.0
