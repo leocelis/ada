@@ -1,11 +1,10 @@
 import os
 import sys
 
+import requests
 import ujson
 from mailchimp3 import MailChimp
 from pygments import highlight, lexers, formatters
-
-import requests
 
 sys.path.append(os.path.dirname(os.getcwd()))
 from ada.email_analyzer.utils import save_campaign_report, check_report_exists, update_campaign_report
