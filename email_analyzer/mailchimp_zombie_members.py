@@ -5,7 +5,6 @@ import requests
 from mailchimp3 import MailChimp
 
 sys.path.append(os.path.dirname(os.getcwd()))
-from ada.email_analyzer.utils import save_member, check_member_exists, update_member
 
 MAILCHIMP_API = os.environ.get('MAILCHIMP_API')
 MAILCHIMP_LIST_ID = os.environ.get('MAILCHIMP_LIST_ID')
@@ -17,11 +16,14 @@ r = client.lists.members.all(MAILCHIMP_LIST_ID, get_all=True)
 items = r.get('members', list())
 
 for item in items:
-    # only subscribers
-    if item.get('status') != "unsubscribed":
-        email = item.get('email_address')
+    email_address = item['email_address']
+    rating = item['member_rating']
+    avg_open_rate = item['stats']['avg_open_rate']
 
-        if not check_member_exists(email):
-            save_member(item)
-        else:
-            update_member(email, item)
+    print("==========================")
+    if rating <= 1 and avg_open_rate == 0:
+        print("---> Zombie! <---")
+    print("Email: {}".format(email_address))
+    print("Rating: {}".format(rating))
+    print("Avg. open rate: {}".format(avg_open_rate))
+    print("==========================\n\n")
