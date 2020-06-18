@@ -8,6 +8,8 @@ import nltk
 
 from nltk.corpus import stopwords
 
+nltk.download('wordnet')
+
 w_tokenizer = nltk.tokenize.WhitespaceTokenizer()
 lemmatizer = nltk.stem.WordNetLemmatizer()
 from textblob import TextBlob
