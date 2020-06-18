@@ -1,7 +1,7 @@
 import os
 import sys
-
 import ujson
+
 from apiclient.discovery import build
 from oauth2client.service_account import ServiceAccountCredentials
 
@@ -139,6 +139,14 @@ def get_top_page_time(limit: int = 10):
 
 # Facebook
 def get_fb_shares_by_domain(domain: str, threshold: int = 1, limit: int = 10):
+    """
+    Get links and shares for a given domain
+
+    :param domain:
+    :param threshold:
+    :param limit:
+    :return:
+    """
     conn = get_mysql_conn()
     cursor = conn.cursor()
 
@@ -301,8 +309,6 @@ def get_domains(category: str = None):
     for r in rows:
         splitted_url = urlsplit(r['site_url'])
         domains.append(splitted_url.netloc)
-
-    print("\nDomain found: {}".format(domains))
 
     return domains
 

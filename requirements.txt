@@ -1,3 +1,4 @@
+aniso8601==8.0.0
 appdirs==1.4.3
 asn1crypto==0.24.0
 attrs==19.1.0
@@ -9,11 +10,15 @@ cachetools==4.1.0
 certifi==2019.3.9
 cffi==1.12.3
 chardet==3.0.4
+click==7.1.2
 constantly==15.1.0
 cryptography==2.7
 cssselect==1.1.0
 cycler==0.10.0
 facebook-sdk==3.1.0
+Flask==1.1.2
+Flask-Cors==3.0.8
+Flask-RESTful==0.3.8
 google-api-core==1.17.0
 google-api-python-client==1.8.2
 google-auth==1.14.2
@@ -23,10 +28,13 @@ httplib2==0.17.3
 hyperlink==19.0.0
 idna==2.8
 incremental==17.5.0
+itsdangerous==1.1.0
+Jinja2==2.11.2
 joblib==0.13.2
 kiwisolver==1.1.0
 lxml==4.3.3
 mailchimp3==3.0.14
+MarkupSafe==1.1.1
 matplotlib==3.1.0
 nltk==3.4.5
 numpy==1.16.3
@@ -72,4 +80,5 @@ uritools==2.2.0
 urlextract==0.13.0
 urllib3==1.25.2
 w3lib==1.21.0
+Werkzeug==1.0.1
 zope.interface==4.6.0
