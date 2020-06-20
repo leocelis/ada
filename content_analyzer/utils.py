@@ -138,7 +138,7 @@ def get_top_page_time(limit: int = 10):
 
 
 # Facebook
-def get_fb_shares_by_domain(domain: str, threshold: int = 1, limit: int = 10):
+def get_fb_shares_by_domain(domain: str, threshold: int = 1, limit: int = 0):
     """
     Get links and shares for a given domain
 
@@ -338,7 +338,7 @@ def get_links_count(site_url: str):
     return count
 
 
-def get_all_site_links(domain: str = None, keyword: str = None, limit: int = None):
+def get_all_site_links(domain: str = None, keyword: str = None, limit: int = 0):
     """
     Get all links for a given domain
 
@@ -363,10 +363,8 @@ def get_all_site_links(domain: str = None, keyword: str = None, limit: int = Non
 
     order = "ORDER BY idscrapy_sites_links DESC "
 
-    if limit:
+    if limit > 0:
         limit = "LIMIT 0,{}".format(limit)
-    else:
-        limit = ""
 
     sql = "{} {} {} {}".format(select, where, order, limit)
 
@@ -491,7 +489,7 @@ def update_domain_retweets(domain: str, tweets: int, retweets: int, r: dict):
 
 
 # ShareThis
-def get_sharethis_stats_by_domain(domain: str, threshold: int = 10, limit: int = 10):
+def get_sharethis_stats_by_domain(domain: str, threshold: int = 10, limit: int = 0):
     conn = get_mysql_conn()
     cursor = conn.cursor()
 
@@ -585,7 +583,6 @@ def update_link_stats(link: str, t: dict) -> None:
 
 
 # Twitter
-
 def get_top_tweets(retweet_threshold: int = 5, limit: int = 100):
     conn = get_mysql_conn()
     cursor = conn.cursor()
@@ -604,7 +601,7 @@ def get_top_tweets(retweet_threshold: int = 5, limit: int = 100):
     return rows
 
 
-def get_retweets_by_domain(domain: str, threshold: int = 10, limit: int = 10):
+def get_retweets_by_domain(domain: str, threshold: int = 10, limit: int = 0):
     conn = get_mysql_conn()
     cursor = conn.cursor()
 
@@ -789,7 +786,7 @@ def link_shares_update_or_insert(link, title, shares):
     return False
 
 
-def get_shares_by_domain(domain: str, threshold: int = 1, limit: int = 10):
+def get_shares_by_domain(domain: str, threshold: int = 1, limit: int = 0):
     """
     Get total shares for a given domain
     """
