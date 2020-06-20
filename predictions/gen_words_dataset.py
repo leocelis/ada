@@ -49,7 +49,6 @@ for s in sites:
         stotal = get_sharethis_stats_by_domain(domain=domain, threshold=share_threshold)
         st_df_tmp = pd.DataFrame.from_dict(stotal)
         st_df = pd.concat([st_df_tmp, st_df])
-        break
     except  Exception as e:
         print("type error: " + str(e))
         print(traceback.format_exc())
