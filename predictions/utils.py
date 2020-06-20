@@ -75,7 +75,7 @@ def words_value(words, df, shares_field):
             else:
                 words[w] = row[shares_field]
 
-            print("{} {}".format(w, words[w]))
+            print("Word {} - {} shares".format(w, words[w]))
 
     return words
 

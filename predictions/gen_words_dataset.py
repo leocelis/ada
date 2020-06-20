@@ -66,13 +66,10 @@ st_df["site_link_title"] = st_df["site_link_title"].apply(lambda x: clean_all(x)
 
 # Words value = social shares per word
 wv = dict()
-wv1 = dict()
-wv2 = dict()
-wv3 = dict()
-wv1 = words_value(wv, fb_df, "fb_shares")
-wv2 = words_value(wv1, tw_df, "retweet_count")
-wv3 = words_value(wv2, st_df, "total")
+wv.update(words_value(wv, fb_df, "fb_shares"))
+wv.update(words_value(wv, tw_df, "retweet_count"))
+wv.update(words_value(wv, st_df, "total"))
 
 # save results
-for k, v in wv3.items():
+for k, v in wv.items():
     word_shares_upsert(k, v)
