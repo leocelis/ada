@@ -78,3 +78,4 @@ client_secrets.json
 *.csv
 links_extractor/.scrapy/*
 .env
+links_extractor/links.csv
