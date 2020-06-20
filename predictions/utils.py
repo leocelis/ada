@@ -48,13 +48,13 @@ def clean_text(text):
     :param text:
     :return:
     """
-    print("Dirty {}".format(text))
+    print("Dirty: '{}'".format(text))
     text = lower_case(text)
     text = remove_punctuation(text)
     # text = spelling_check(text)
-    # text = remove_common_words(text)
+    text = remove_common_words(text)
     text = lemmatize_text(text)
-    print("Cleaned {}".format(text))
+    print("Cleaned: {}".format(text))
 
     return text
 
