@@ -51,7 +51,7 @@ def clean_all(text):
     text = lower_case(text)
     text = remove_punctuation(text)
     # text = spelling_check(text)
-    text = remove_common_words(text)
+    # text = remove_common_words(text)
     text = lemmatize_text(text)
 
     return text
@@ -173,12 +173,12 @@ def get_shares_by_word(word):
     return 0
 
 
-def get_avg_shares():
+def get_max_shares():
     conn = get_mysql_conn()
     cursor = conn.cursor()
 
     sql = """
-    SELECT AVG(shares) as average_shares  FROM prediction_blog_titles
+    SELECT MAX(shares) as max_shares  FROM prediction_blog_titles
     """
 
     r = cursor.execute(sql)
@@ -187,6 +187,6 @@ def get_avg_shares():
         conn.commit()
         rows = dictfecth(cursor)
 
-        return rows[0]["average_shares"]
+        return rows[0]["max_shares"]
 
     return 0
