@@ -19,7 +19,7 @@ def lower_case(text):
 
 
 def remove_punctuation(text):
-    return text.replace('[^\w\s]', '')
+    return text.replace('[^\w\s]', '').replace('"', '')
 
 
 def spelling_check(text):
@@ -41,7 +41,7 @@ def lemmatize_text(text):
     return [lemmatizer.lemmatize(w) for w in w_tokenizer.tokenize(text)]
 
 
-def clean_all(text):
+def clean_text(text):
     """
     Sanitize text
 
