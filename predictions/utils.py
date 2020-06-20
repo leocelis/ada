@@ -59,7 +59,7 @@ def clean_all(text):
     return text
 
 
-def words_value(words, df, shares_field):
+def words_value(df, shares_field):
     """
     Add shares per word
 
@@ -68,6 +68,8 @@ def words_value(words, df, shares_field):
     :param shares_field:
     :return: dict
     """
+    words = dict()
+
     for index, row in df.iterrows():
         for w in row["site_link_title"]:
             if w in words:

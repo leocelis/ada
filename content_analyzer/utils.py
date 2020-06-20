@@ -787,3 +787,27 @@ def link_shares_update_or_insert(link, title, shares):
         return True
 
     return False
+
+
+def get_shares_by_domain(domain: str, threshold: int = 1, limit: int = 10):
+    """
+    Get total shares for a given domain
+    """
+    conn = get_mysql_conn()
+    cursor = conn.cursor()
+
+    sql = """
+    SELECT link_url, link_title, shares_total FROM links_shares
+    WHERE link_url LIKE "%{}%" AND shares_total > {} ORDER BY shares_total
+    """.format(domain, threshold)
+
+    if limit > 0:
+        sql += " LIMIT 0,{}".format(limit)
+
+    cursor.execute(sql)
+
+    conn.commit()
+    rows = dictfecth(cursor)
+    cursor.close()
+
+    return rows
