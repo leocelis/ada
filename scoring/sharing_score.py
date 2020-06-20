@@ -6,7 +6,7 @@ sys.path.append(os.path.dirname(os.getcwd()))
 from ada.predictions.utils import clean_all, get_shares_by_word, get_avg_shares
 
 # input title
-test_title = "COVID-19 Ads"
+test_title = "How Ad Tech can help to prevent COVID-19"
 
 # normalize words
 test_title_cleaned = clean_all(test_title)

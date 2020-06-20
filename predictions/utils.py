@@ -50,9 +50,9 @@ def clean_all(text):
     """
     text = lower_case(text)
     text = remove_punctuation(text)
-    text = spelling_check(text)
-    # text = remove_common_words(text)
-    # text = lemmatize_text(text)
+    # text = spelling_check(text)
+    text = remove_common_words(text)
+    text = lemmatize_text(text)
 
     return text
 
