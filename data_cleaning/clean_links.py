@@ -1,8 +1,8 @@
 import os
+import sys
 
 import numpy as np
 import pandas as pd
-import sys
 
 sys.path.append(os.path.dirname(os.getcwd()))
 from ada.content_analyzer.utils import get_all_site_links

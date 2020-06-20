@@ -1,12 +1,11 @@
 import os
 import sys
 
+import nltk
+from nltk.corpus import stopwords
+
 sys.path.append(os.path.dirname(os.getcwd()))
 from ada.utils.conn import get_mysql_conn, dictfecth
-
-import nltk
-
-from nltk.corpus import stopwords
 
 nltk.download('wordnet')
 
@@ -52,7 +51,7 @@ def clean_all(text):
     text = lower_case(text)
     text = remove_punctuation(text)
     text = spelling_check(text)
-    text = remove_common_words(text)
+    #text = remove_common_words(text)
     text = lemmatize_text(text)
 
     return text
@@ -130,3 +129,64 @@ def word_shares_upsert(word, shares):
 
         cursor.close()
         return True
+
+
+def get_words_shares():
+    """
+    Get words and shares
+
+    :return:
+    """
+    conn = get_mysql_conn()
+    cursor = conn.cursor()
+
+    sql = """
+    select word, shares from prediction_blog_titles
+    """
+
+    cursor.execute(sql)
+
+    conn.commit()
+    rows = dictfecth(cursor)
+    cursor.close()
+
+    return rows
+
+
+def get_shares_by_word(word):
+    conn = get_mysql_conn()
+    cursor = conn.cursor()
+
+    sql = """
+    select shares from prediction_blog_titles
+    WHERE word = "{}";
+    """.format(word)
+
+    r = cursor.execute(sql)
+
+    if r > 0:
+        conn.commit()
+        rows = dictfecth(cursor)
+
+        return rows[0]["shares"]
+
+    return 0
+
+
+def get_max_shares():
+    conn = get_mysql_conn()
+    cursor = conn.cursor()
+
+    sql = """
+    SELECT shares FROM prediction_blog_titles ORDER BY shares DESC limit 0,1
+    """
+
+    r = cursor.execute(sql)
+
+    if r > 0:
+        conn.commit()
+        rows = dictfecth(cursor)
+
+        return rows[0]["shares"]
+
+    return 0
