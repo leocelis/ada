@@ -59,7 +59,7 @@ def clean_all(text):
     return text
 
 
-def words_value(df, shares_field):
+def words_value(df):
     """
     Add shares per word
 
@@ -71,11 +71,11 @@ def words_value(df, shares_field):
     words = dict()
 
     for index, row in df.iterrows():
-        for w in row["site_link_title"]:
+        for w in row["link_title"]:
             if w in words:
-                words[w] += row[shares_field]
+                words[w] += row["shares_total"]
             else:
-                words[w] = row[shares_field]
+                words[w] = row["shares_total"]
 
             print("Word {} - {} shares".format(w, words[w]))
 

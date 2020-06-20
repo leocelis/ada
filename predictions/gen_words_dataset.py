@@ -38,7 +38,7 @@ for s in sites:
 df["link_title"] = df["link_title"].apply(lambda x: clean_all(x))
 
 # calculate shares by word
-wv = words_value(df, "fb_shares")
+wv = words_value(df)
 
 # save results
 for k, v in wv.items():
