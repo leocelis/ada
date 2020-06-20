@@ -48,11 +48,13 @@ def clean_all(text):
     :param text:
     :return:
     """
+    print("Dirty {}".format(text))
     text = lower_case(text)
     text = remove_punctuation(text)
     # text = spelling_check(text)
     # text = remove_common_words(text)
     text = lemmatize_text(text)
+    print("Cleaned {}".format(text))
 
     return text
 
@@ -72,6 +74,8 @@ def words_value(words, df, shares_field):
                 words[w] += row[shares_field]
             else:
                 words[w] = row[shares_field]
+
+            print("{} {}".format(w, words[w]))
 
     return words
 
@@ -102,7 +106,7 @@ def word_shares_upsert(word, shares):
 
         try:
             cursor.execute(sql)
-            print("{} shares updated.".format(word))
+            print("{} = {} shares updated.".format(word, shares))
             conn.commit()
         except Exception as e:
             print("ERROR! ({})\n".format(str(e)))
@@ -120,7 +124,7 @@ def word_shares_upsert(word, shares):
 
         try:
             cursor.execute(sql, (word, shares))
-            print("{} shares inserted.".format(word))
+            print("{} = {} shares inserted.".format(word, shares))
             conn.commit()
         except Exception as e:
             print("\nERROR! ({})".format(str(e)))
@@ -174,11 +178,15 @@ def get_shares_by_word(word):
 
 
 def get_max_shares():
+    """
+    Get post with max shares
+    :return:
+    """
     conn = get_mysql_conn()
     cursor = conn.cursor()
 
     sql = """
-    SELECT MAX(shares) as max_shares  FROM prediction_blog_titles
+    SELECT MAX(shares_total) as max_shares FROM links_shares
     """
 
     r = cursor.execute(sql)

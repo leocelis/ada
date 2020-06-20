@@ -30,6 +30,8 @@ for s in sites:
         site_url = s['site_url']
         domain = get_domain(site_url)  # extract domain
 
+        print("Domain: {}".format(domain))
+
         # Facebook: get link shares
         # fbshares = get_fb_shares_by_domain(domain=domain, threshold=share_threshold, limit=count_limit)
         fbshares = get_fb_shares_by_domain(domain=domain, threshold=share_threshold)
@@ -47,6 +49,7 @@ for s in sites:
         stotal = get_sharethis_stats_by_domain(domain=domain, threshold=share_threshold)
         st_df_tmp = pd.DataFrame.from_dict(stotal)
         st_df = pd.concat([st_df_tmp, st_df])
+        break
     except  Exception as e:
         print("type error: " + str(e))
         print(traceback.format_exc())
@@ -64,10 +67,13 @@ st_df["site_link_title"] = st_df["site_link_title"].apply(lambda x: clean_all(x)
 
 # Words value = social shares per word
 wv = dict()
-wv = words_value(wv, fb_df, "fb_shares")
-wv = words_value(wv, tw_df, "retweet_count")
-wv = words_value(wv, st_df, "total")
+wv1 = dict()
+wv2 = dict()
+wv3 = dict()
+wv1 = words_value(wv, fb_df, "fb_shares")
+wv2 = words_value(wv1, tw_df, "retweet_count")
+wv3 = words_value(wv2, st_df, "total")
 
 # save results
-for k, v in wv.items():
+for k, v in wv3.items():
     word_shares_upsert(k, v)
