@@ -5,7 +5,7 @@ sys.path.append(os.path.dirname(os.getcwd()))
 from ada.predictions.utils import clean_text, get_shares_by_word, get_max_shares
 
 # input title
-test_title = "Why is Ad Tech important?"
+test_title = "How Creative Agencies use Salesforce"
 
 # normalize words
 test_title_cleaned = clean_text(test_title)
