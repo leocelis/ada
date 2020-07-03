@@ -6,6 +6,9 @@ from ada.predictions.utils import clean_text, get_shares_by_word, get_max_shares
 
 
 def get_sharing_score(title=None):
+    # default score
+    final_score = 0
+
     # normalize words
     title_cleaned = clean_text(title)
 
@@ -25,23 +28,24 @@ def get_sharing_score(title=None):
     max_shares = get_max_shares()  # post title max shares
     print("Max shares: {}".format(max_shares))
 
-    title_shares = s / len(title_cleaned)
-    print("Title shares: {}".format(title_shares))
+    if title_cleaned:
+        title_shares = s / len(title_cleaned)
+        print("Title shares: {}".format(title_shares))
 
-    score = (title_shares * 100) / float(max_shares)
-    if score >= 100:
-        score = 100
-    print("Score: {}".format(score))
+        score = (title_shares * 100) / float(max_shares)
+        if score >= 100:
+            score = 100
+        print("Score: {}".format(score))
 
-    # score_formatted = Decimal(score).quantize(0, ROUND_HALF_UP)
-    score_formatted = round(score, 2)
-    print("Score (rounded): {}".format(score_formatted))
+        # score_formatted = Decimal(score).quantize(0, ROUND_HALF_UP)
+        final_score = round(score, 2)
+        print("Score (rounded): {}".format(final_score))
 
-    return score_formatted
+    return final_score
 
 
 def main():
-    get_sharing_score("This is a test title")
+    get_sharing_score("this is a title")
 
 
 if __name__ == "__main__":
