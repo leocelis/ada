@@ -15,6 +15,7 @@ from ada.config import ALLOWED_URLS
 app = Flask(__name__)
 api = Api(app)
 CORS(app,
+     send_wildcard=True,
      origins=ALLOWED_URLS,
      allow_headers=["Access-Control-Allow-Credentials"])
 
