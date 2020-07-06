@@ -9,7 +9,7 @@ $ python3 content_discovery/google_trends.py
 from pytrends.request import TrendReq
 
 # parameters
-category = 12  # business
+category = 25  # "Advertising & Marketing"
 geo = 'US'
 timeframe = 'today 1-m'  # 30 days ago, try "today 5-y"
 gprop = ''  # default to web searches
@@ -25,14 +25,17 @@ print("\n\n=================================")
 print("Related queries:")
 print("=================================")
 r = pytrends.related_queries()
+print(type(r))
 print(r)
 print("\n\n=================================")
 print("Related topics:")
 print("=================================")
 r = pytrends.related_topics()
+print(type(r))
 print(r)
 print("\n\n=================================")
 print("Suggestions:")
 print("=================================")
 r = pytrends.suggestions(keyword)
+print(type(r))
 print(r)
