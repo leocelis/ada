@@ -3,7 +3,8 @@ import logging.config
 import yaml
 
 # allowed URLS
-ALLOWED_URLS = ["http://localhost:3000", "https://dashboard.leocelis.com", "https://ada.leocelis.com"]
+ALLOWED_URLS = ["http://localhost:3000", "https://dashboard.leocelis.com", "https://ada.leocelis.com",
+                "https://www.leocelis.com", "https://leocelis.com"]
 
 # Facebook Ads Optimization
 DATA_FOLDER = "./data"
