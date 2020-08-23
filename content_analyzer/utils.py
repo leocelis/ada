@@ -361,10 +361,10 @@ def get_all_site_links(domain: str = None, keyword: str = None, limit: int = 0):
         else:
             where += "AND site_link like '%{}%'".format(keyword)
 
-    order = "ORDER BY idscrapy_sites_links DESC "
+    order = " ORDER BY idscrapy_sites_links DESC"
 
     if limit > 0:
-        limit = "LIMIT 0,{}".format(limit)
+        limit = " LIMIT 0,{}".format(limit)
 
     sql = "{} {} {} {}".format(select, where, order, limit)
 
