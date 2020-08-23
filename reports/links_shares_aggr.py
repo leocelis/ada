@@ -19,7 +19,8 @@ from ada.utils.utils import get_domain, clean_link
 from ada.config import SUMMARY_THRESHOLD
 
 # get all the sites
-sites = get_all_sites(category='adtech')
+# sites = get_all_sites(category='adtech')
+sites = get_all_sites()
 
 # store links and shares
 links_shares = dict()

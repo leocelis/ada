@@ -15,7 +15,8 @@ share_threshold = 10  # min shares
 category = "adtech"
 
 # get websites by category
-sites = get_all_sites(category=category)
+# sites = get_all_sites(category=category)
+sites = get_all_sites()
 
 # for each site
 df = pd.DataFrame()

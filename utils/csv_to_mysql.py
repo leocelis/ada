@@ -1,8 +1,8 @@
 import os
+import sys
 from urllib.parse import urlparse
 
 import pandas as pd
-import sys
 
 sys.path.append(os.path.dirname(os.getcwd()))
 from ada.domain_analyzer.utils import check_link_exists, save_site_link
