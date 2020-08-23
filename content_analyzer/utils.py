@@ -338,7 +338,7 @@ def get_links_count(site_url: str):
     return count
 
 
-def get_all_site_links(domain: str = None, keyword: str = None, limit: int = 0):
+def get_all_site_links(domain: str = None, keyword: str = None, limit: str = ""):
     """
     Get all links for a given domain
 
@@ -351,9 +351,9 @@ def get_all_site_links(domain: str = None, keyword: str = None, limit: int = 0):
 
     select = "SELECT site_link FROM scrapy_sites_links"
 
-    where = None
+    where = ""
     if domain:
-        where = "WHERE site_url like '%{}%' ".format(domain)
+        where = "WHERE site_url like '%{}%'".format(domain)
 
     if keyword:
         if not where:
@@ -361,12 +361,13 @@ def get_all_site_links(domain: str = None, keyword: str = None, limit: int = 0):
         else:
             where += "AND site_link like '%{}%'".format(keyword)
 
-    order = " ORDER BY idscrapy_sites_links DESC"
+    order = "ORDER BY idscrapy_sites_links DESC"
 
-    if limit > 0:
+    if limit != "":
         limit = " LIMIT 0,{}".format(limit)
 
     sql = "{} {} {} {}".format(select, where, order, limit)
+    print(sql)
 
     cursor.execute(sql)
     conn.commit()
