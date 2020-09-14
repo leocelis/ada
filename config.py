@@ -4,7 +4,8 @@ import yaml
 
 # allowed URLS
 ALLOWED_URLS = ["http://localhost:3000", "https://dashboard.leocelis.com", "https://ada.leocelis.com",
-                "https://www.leocelis.com", "https://leocelis.com"]
+                "https://www.leocelis.com", "https://leocelis.com", "https://api.ada-tool.com",
+                "https://www.ada-tool.com"]
 
 # Facebook Ads Optimization
 DATA_FOLDER = "./data"
