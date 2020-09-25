@@ -11,11 +11,11 @@ ALLOWED_URLS = ["http://localhost:3000", "https://dashboard.leocelis.com", "http
 DATA_FOLDER = "./data"
 
 # Content Discovery
-SUMMARY_THRESHOLD = 100  # min total shares to make it in the summary table
-SHARETHIS_THRESHOLD = 10  # min total actions in Share This
-FACEBOOK_SHARES_THRESHOLD = 10  # min shares a link should have
-TWITTER_RETWEETS_THRESHOLD = 10  # min retweets a tweet should have
-TWITTER_WAIT_REQUESTS = 5  # wait seconds between requests
+SUMMARY_THRESHOLD = 5  # min total shares to make it in the summary table
+SHARETHIS_THRESHOLD = 5  # min total actions in Share This
+FACEBOOK_SHARES_THRESHOLD = 5  # min shares a link should have
+TWITTER_RETWEETS_THRESHOLD = 5  # min retweets a tweet should have
+TWITTER_WAIT_REQUESTS = 30  # wait seconds between requests
 TWITTER_HISTORY_COUNT = 100  # how many tweets in the past we will consider
 TWITTER_KEYWORDS = ['martech',
                     '"ad tech"',
