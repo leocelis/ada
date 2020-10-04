@@ -1,7 +1,6 @@
+import facebook
 import os
 import sys
-
-import facebook
 
 sys.path.append(os.path.dirname(os.getcwd()))
 # from ada.content_analyzer.utils import save_link_fb_shares, check_link_exists, update_link_fb_shares, \
