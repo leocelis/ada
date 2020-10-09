@@ -23,9 +23,9 @@ cursor = 1
 page = 1
 while cursor:
     if cursor == 1:
-        streams = twitch.get_streams(first=1)
+        streams = twitch.get_streams(first=100)
     else:
-        streams = twitch.get_streams(after=cursor, first=1)
+        streams = twitch.get_streams(after=cursor, first=100)
 
     for stream in streams.get('data', {}):
         print(stream)
