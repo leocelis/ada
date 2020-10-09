@@ -23,9 +23,9 @@ cursor = 1
 page = 1
 while cursor:
     if cursor == 1:
-        streams = twitch.get_streams(first=100)
+        streams = twitch.get_streams(first=1)
     else:
-        streams = twitch.get_streams(after=cursor, first=100)
+        streams = twitch.get_streams(after=cursor, first=1)
 
     for stream in streams.get('data', {}):
         print(stream)
@@ -42,7 +42,7 @@ while cursor:
 
             insert_top_stream_stats(stream, last_viewer_count)
 
-    cursor = stream.get('pagination', {}).get('cursor', None)
+    cursor = streams.get('pagination', {}).get('cursor', None)
     page += 1
 
     if page == MAX_PAGES:
