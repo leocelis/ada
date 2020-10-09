@@ -14,7 +14,7 @@ echo '
     \  \:\         \__\/        \  \:\
      \__\/                       \__\/
 
-  Leo Celis (c) 2020 - GPLv3 - www.ada-tools.com
+  Leo Celis (c) 2020 - GPLv3 - ada-tool.com
 '
 # load env vars
 source .env
