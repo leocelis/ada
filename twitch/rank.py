@@ -19,7 +19,7 @@ from asciimatics.screen import Screen
 from twitchAPI.twitch import Twitch
 
 # SETTINGS
-COUNTDOWN = 30  # seconds
+COUNTDOWN = 15  # seconds
 COLOUR_BLACK = 0
 COLOUR_RED = 1
 COLOUR_GREEN = 2
@@ -59,9 +59,9 @@ def print_games(games, screen, x, y):
     pos = 1
 
     for game in games:
-        screen.print_at(u'{}. {} {}'.format(pos,
-                                            game.get("name", "N/A"),
-                                            decide_emoji(pos)),
+        screen.print_at(u'{}. {} {}                 '.format(pos,
+                                                             game.get("name", "N/A"),
+                                                             decide_emoji(pos)),
                         x,
                         y,
                         COLOUR_WHITE)
@@ -80,7 +80,7 @@ def print_streams(streams, screen, x, y):
     for stream in streams:
         t = "{} ({:,})".format(stream.get("user_name", "N/A"),
                                stream.get("viewer_count", 0))
-        screen.print_at(u'{}. {} {}'.format(pos, t, decide_emoji(pos)),
+        screen.print_at(u'{}. {} {}                 '.format(pos, t, decide_emoji(pos)),
                         x,
                         y,
                         COLOUR_WHITE)
@@ -131,16 +131,16 @@ def rank(screen):
                         COLOUR_CYAN)
 
         # Top games
-        x = 25
+        x = 10
         y = 5
-        screen.print_at(u'{}TOP 20 GAMES'.format(emoji.emojize(':trophy:')), x, y, COLOUR_WHITE, A_BOLD)
+        screen.print_at(u'{} TOP 20 GAMES'.format(emoji.emojize(':trophy:')), x, y, COLOUR_WHITE, A_BOLD)
         screen.print_at('-----------------------------------', x, y + 1, COLOUR_YELLOW)
         print_games(games, screen, x, y + 2)
 
         # Top streams
-        x = 80
+        x = 64
         y = 5
-        screen.print_at(u'{}TOP 20 STREAMS'.format(emoji.emojize(':trophy:')), x, y, COLOUR_WHITE, A_BOLD)
+        screen.print_at(u'{} TOP 20 STREAMS'.format(emoji.emojize(':trophy:')), x, y, COLOUR_WHITE, A_BOLD)
         screen.print_at('-----------------------------------', x, y + 1, COLOUR_YELLOW)
         print_streams(streams, screen, x, y + 2)
 
