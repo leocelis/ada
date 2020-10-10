@@ -59,7 +59,7 @@ def print_games(games, screen, x, y):
     pos = 1
 
     for game in games:
-        screen.print_at(u'{}. {} {}                 '.format(pos,
+        screen.print_at(u'{}. {} {}                         '.format(pos,
                                                              game.get("name", "N/A"),
                                                              decide_emoji(pos)),
                         x,
@@ -80,7 +80,7 @@ def print_streams(streams, screen, x, y):
     for stream in streams:
         t = "{} ({:,})".format(stream.get("user_name", "N/A"),
                                stream.get("viewer_count", 0))
-        screen.print_at(u'{}. {} {}                 '.format(pos, t, decide_emoji(pos)),
+        screen.print_at(u'{}. {} {}                           '.format(pos, t, decide_emoji(pos)),
                         x,
                         y,
                         COLOUR_WHITE)
