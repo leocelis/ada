@@ -1,3 +1,5 @@
+# TODO: archive old data to s3
+
 import os
 import sys
 

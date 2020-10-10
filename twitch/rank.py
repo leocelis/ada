@@ -1,18 +1,25 @@
 # TODO: Add the last updated time
 # TODO: add refresh time, should match the cron job
 # TODO: add newsfeed section with games, streamers (new value, prev value, and delta)
-# TODO: replace the powered by, with "ada-tool.com/twitch" url
+# TODO: replace the powered by, with "ada-tool.com/?industry" url
 # TODO: show games total viewers
-# TODO: add countdown until next sync
+# TODO: add countdown until next sync for 10 sec
+# TODO: pull the data directly from Twitch
+# TODO: remove the ada tool until have advanced analytics
+# TODO: Put the timezone in the hour
+# TODO: fatest jumper: relation between start at and delta increase
 
+import os
 import sys
 import time
 
 import emoji
 from asciimatics.exceptions import ResizeScreenError
 from asciimatics.screen import Screen
+from twitchAPI.twitch import Twitch
 
-# colors
+# SETTINGS
+COUNTDOWN = 30  # seconds
 COLOUR_BLACK = 0
 COLOUR_RED = 1
 COLOUR_GREEN = 2
@@ -21,62 +28,121 @@ COLOUR_BLUE = 4
 COLOUR_MAGENTA = 5
 COLOUR_CYAN = 6
 COLOUR_WHITE = 7
-
-# style
 A_BOLD = 1
 A_NORMAL = 2
 A_REVERSE = 3
 A_UNDERLINE = 4
+POWERED_BY_ADA = "more stats in ada-tool.com/twitch"
 
-# Ada related
-POWERED_BY_ADA = "powered by ada-tool.com"
+# TWITCH
+MAX_RESULTS = 20
+TWITCH_CLIENT_ID = os.environ.get('TWITCH_CLIENT_ID')
+TWITCH_CLIENT_SECRET = os.environ.get('TWITCH_CLIENT_SECRET')
+twitch = Twitch(TWITCH_CLIENT_ID, TWITCH_CLIENT_SECRET)
+twitch.authenticate_app([])
 
 
-def demo(screen):
+def decide_emoji(pos):
+    e = ""
+    if pos == 1:
+        e = emoji.emojize(':star:', use_aliases=True)
+    return e
+
+
+def get_top_games():
+    global twitch
+    games = twitch.get_top_games(first=MAX_RESULTS)
+    return games.get('data', {})
+
+
+def print_games(games, screen, x, y):
+    pos = 1
+
+    for game in games:
+        screen.print_at(u'{}. {} {}'.format(pos,
+                                            game.get("name", "N/A"),
+                                            decide_emoji(pos)),
+                        x,
+                        y,
+                        COLOUR_WHITE)
+        pos += 1
+        y += 1
+
+
+def get_top_streams():
+    global twitch
+    streams = twitch.get_streams(first=MAX_RESULTS)
+    return streams.get('data', {})
+
+
+def print_streams(streams, screen, x, y):
+    pos = 1
+    for stream in streams:
+        t = "{} ({:,})".format(stream.get("user_name", "N/A"),
+                               stream.get("viewer_count", 0))
+        screen.print_at(u'{}. {} {}'.format(pos, t, decide_emoji(pos)),
+                        x,
+                        y,
+                        COLOUR_WHITE)
+        pos += 1
+        y += 1
+
+
+def rank(screen):
+    # countdown
+    global COUNTDOWN
+    counting = COUNTDOWN
+
     screen.clear()
+
+    # # ada message
+    # screen.print_at(POWERED_BY_ADA,
+    #                 int(screen.width / 2) - int(len(POWERED_BY_ADA) / 2),
+    #                 screen.height - 1,
+    #                 COLOUR_BLUE)
 
     i = 0
     while True:
-        # main interface
-        date = time.strftime("%m/%d/%Y %H:%M:%S")
-        screen.print_at(date,
-                        int(screen.width / 2) - int(len(date) / 2),
+        # twitch data
+        if counting == COUNTDOWN:
+            # get twitch data
+            games = get_top_games()
+            streams = get_top_streams()
+
+        # countdown
+        if counting == 0:
+            counting = COUNTDOWN
+        else:
+            counting -= 1
+
+        # countdown
+        refresh = "Refresh in {} ".format(counting)
+        screen.print_at(refresh,
+                        1,
                         1,
                         COLOUR_CYAN)
-        screen.print_at(POWERED_BY_ADA,
-                        int(screen.width / 2) - int(len(POWERED_BY_ADA) / 2),
-                        screen.height - 1,
-                        COLOUR_BLUE)
 
-        # Top 10 games
+        # hour
+        date = time.strftime("%m/%d/%Y %H:%M:%S")
+        screen.print_at(date,
+                        # int(screen.width / 2) - int(len(date) / 2),
+                        int(screen.width) - (len(date) + 1),
+                        1,
+                        COLOUR_CYAN)
+
+        # Top games
         x = 25
-        screen.print_at(u'{}TOP 10 STREAMS'.format(emoji.emojize(':trophy:')), x, 10, COLOUR_WHITE, A_BOLD)
-        screen.print_at('-----------------------------------', x, 11, COLOUR_YELLOW)
-        screen.print_at(u'1. Just Chatting {}'.format(emoji.emojize(':star:', use_aliases=True)), x, 12, COLOUR_WHITE)
-        screen.print_at('2. Just Chatting', x, 13, COLOUR_WHITE)
-        screen.print_at('3. Just Chatting', x, 14, COLOUR_WHITE)
-        screen.print_at('4. Just Chatting', x, 15, COLOUR_WHITE)
-        screen.print_at('5. Just Chatting', x, 16, COLOUR_WHITE)
-        screen.print_at('6. Just Chatting', x, 17, COLOUR_WHITE)
-        screen.print_at('7. Just Chatting', x, 18, COLOUR_WHITE)
-        screen.print_at('8. Just Chatting', x, 19, COLOUR_WHITE)
-        screen.print_at('9. Just Chatting', x, 20, COLOUR_WHITE)
-        screen.print_at('10. Just Chatting', x, 21, COLOUR_WHITE)
+        y = 5
+        screen.print_at(u'{}TOP 20 GAMES'.format(emoji.emojize(':trophy:')), x, y, COLOUR_WHITE, A_BOLD)
+        screen.print_at('-----------------------------------', x, y + 1, COLOUR_YELLOW)
+        print_games(games, screen, x, y + 2)
 
-        # Top 10 streams
+        # Top streams
         x = 80
-        screen.print_at(u'{}TOP 10 GAMES'.format(emoji.emojize(':trophy:')), x, 10, COLOUR_WHITE, A_BOLD)
-        screen.print_at('-----------------------------------', x, 11, COLOUR_YELLOW)
-        screen.print_at(u'1. Just Chatting {}'.format(emoji.emojize(':star:', use_aliases=True)), x, 12, COLOUR_WHITE)
-        screen.print_at('2. Just Chatting', x, 13, COLOUR_WHITE)
-        screen.print_at('3. Just Chatting', x, 14, COLOUR_WHITE)
-        screen.print_at('4. Just Chatting', x, 15, COLOUR_WHITE)
-        screen.print_at('5. Just Chatting', x, 16, COLOUR_WHITE)
-        screen.print_at('6. Just Chatting', x, 17, COLOUR_WHITE)
-        screen.print_at('7. Just Chatting', x, 18, COLOUR_WHITE)
-        screen.print_at('8. Just Chatting', x, 19, COLOUR_WHITE)
-        screen.print_at('9. Just Chatting', x, 20, COLOUR_WHITE)
-        screen.print_at('10. Just Chatting', x, 21, COLOUR_WHITE)
+        y = 5
+        screen.print_at(u'{}TOP 20 STREAMS'.format(emoji.emojize(':trophy:')), x, y, COLOUR_WHITE, A_BOLD)
+        screen.print_at('-----------------------------------', x, y + 1, COLOUR_YELLOW)
+        print_streams(streams, screen, x, y + 2)
 
         # i += 1
         # screen.print_at(str(i), 10, 10, COLOUR_WHITE, A_BOLD)
@@ -92,7 +158,7 @@ def demo(screen):
 
 while True:
     try:
-        Screen.wrapper(demo)
+        Screen.wrapper(rank)
         sys.exit()
     except ResizeScreenError:
         pass
