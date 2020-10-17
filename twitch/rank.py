@@ -47,6 +47,8 @@ twitch.authenticate_app([])
 POWERED_BY_ADA = "more stats in www.ada-tool.com/twitch"
 TOP_GAMES_TITLE = u'{} TOP {} GAMES LIVE'
 TOP_STREAMS_TITLE = u'{} TOP {} STREAMERS LIVE'
+TOP_STREAMER_RECORD = "STREAMER WORLD-RECORD: {} (concurrent viewers: {:,})"
+TOP_GAME_RECORD = "GAME WORLD-RECORD: {} (top 1 most times)"
 
 
 def decide_emoji(pos):
@@ -136,15 +138,15 @@ def rank(screen):
                         COLOUR_CYAN)
 
         # records
-        top_streamer, viewers = get_top_streamer()
-        title = "TOP CONCURRENT-VIEWERS RECORD: {} (viewers: {:,})".format(top_streamer, viewers)
+        top_game = get_top_game()
+        title = TOP_GAME_RECORD.format(top_game)
         screen.print_at(title,
                         10,
                         5,
                         COLOUR_CYAN)
 
-        top_game = get_top_game()
-        title = "TOP 1 MOST-TIMES RECORD: {}".format(top_game)
+        top_streamer, viewers = get_top_streamer()
+        title = TOP_STREAMER_RECORD.format(top_streamer, viewers)
         screen.print_at(title,
                         10,
                         7,
