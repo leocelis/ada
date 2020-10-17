@@ -121,14 +121,14 @@ def rank(screen):
             title = TOP_GAME_RECORD.format(top_game)
             screen.print_at(title,
                             10,
-                            5,
+                            7,
                             COLOUR_CYAN)
 
             top_streamer, viewers = get_top_streamer()
             title = TOP_STREAMER_RECORD.format(top_streamer, viewers)
             screen.print_at(title,
                             10,
-                            7,
+                            9,
                             COLOUR_CYAN)
 
         # countdown
@@ -154,14 +154,14 @@ def rank(screen):
 
         # Top games
         x = 10
-        y = 11
+        y = 13
         screen.print_at(TOP_GAMES_TITLE.format(emoji.emojize(':trophy:'), MAX_RESULTS), x, y, COLOUR_WHITE, A_BOLD)
         screen.print_at('-----------------------------------', x, y + 1, COLOUR_YELLOW)
         print_games(games, screen, x, y + 2)
 
         # Top streams
         x = 64
-        y = 11
+        y = 13
         screen.print_at(TOP_STREAMS_TITLE.format(emoji.emojize(':trophy:'), MAX_RESULTS), x, y, COLOUR_WHITE, A_BOLD)
         screen.print_at('-----------------------------------', x, y + 1, COLOUR_YELLOW)
         print_streams(streams, screen, x, y + 2)
