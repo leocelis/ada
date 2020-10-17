@@ -127,3 +127,54 @@ def insert_top_stream_stats(r, last_viewer_count):
 
     cursor.close()
     return
+
+
+def get_top_streamer():
+    """
+    Get the top streamer with most concurrent-viwers
+
+    :return:
+    """
+    conn = get_mysql_conn()
+    cursor = conn.cursor()
+
+    sql = """
+    SELECT user_name, viewer_count FROM twitch_top_streams ORDER BY viewer_count DESC LIMIT 0,1;
+    """
+
+    cursor.execute(sql)
+
+    conn.commit()
+    rows = dictfecth(cursor)
+    cursor.close()
+
+    if rows:
+        return rows[0]['user_name'], rows[0]['viewer_count']
+
+    return 0
+
+
+def get_top_game():
+    """
+    Get the game with most times in the Top 1 position
+
+    :return:
+    """
+    conn = get_mysql_conn()
+    cursor = conn.cursor()
+
+    sql = """
+    SELECT COUNT(*) as count_number, game_name FROM ada.twitch_top_games WHERE current_position = 1
+    GROUP BY game_name ORDER BY count_number DESC LIMIT 0,5;
+    """
+
+    cursor.execute(sql)
+
+    conn.commit()
+    rows = dictfecth(cursor)
+    cursor.close()
+
+    if rows:
+        return rows[0]['game_name']
+
+    return ""

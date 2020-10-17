@@ -18,8 +18,11 @@ from asciimatics.exceptions import ResizeScreenError
 from asciimatics.screen import Screen
 from twitchAPI.twitch import Twitch
 
+sys.path.append(os.path.dirname(os.getcwd()))
+from ada.twitch.utils import get_top_game, get_top_streamer
+
 # SETTINGS
-COUNTDOWN = 15  # seconds
+COUNTDOWN = 10  # seconds
 COLOUR_BLACK = 0
 COLOUR_RED = 1
 COLOUR_GREEN = 2
@@ -32,14 +35,18 @@ A_BOLD = 1
 A_NORMAL = 2
 A_REVERSE = 3
 A_UNDERLINE = 4
-POWERED_BY_ADA = "more stats in ada-tool.com/twitch"
 
 # TWITCH
-MAX_RESULTS = 20
+MAX_RESULTS = 10
 TWITCH_CLIENT_ID = os.environ.get('TWITCH_CLIENT_ID')
 TWITCH_CLIENT_SECRET = os.environ.get('TWITCH_CLIENT_SECRET')
 twitch = Twitch(TWITCH_CLIENT_ID, TWITCH_CLIENT_SECRET)
 twitch.authenticate_app([])
+
+# RANK
+POWERED_BY_ADA = "more stats in www.ada-tool.com/twitch"
+TOP_GAMES_TITLE = u'{} TOP {} GAMES LIVE'
+TOP_STREAMS_TITLE = u'{} TOP {} STREAMERS LIVE'
 
 
 def decide_emoji(pos):
@@ -59,9 +66,7 @@ def print_games(games, screen, x, y):
     pos = 1
 
     for game in games:
-        screen.print_at(u'{}. {} {}                         '.format(pos,
-                                                             game.get("name", "N/A"),
-                                                             decide_emoji(pos)),
+        screen.print_at(u'{}. {} {}'.format(pos, game.get("name", "N/A"), decide_emoji(pos)),
                         x,
                         y,
                         COLOUR_WHITE)
@@ -80,7 +85,7 @@ def print_streams(streams, screen, x, y):
     for stream in streams:
         t = "{} ({:,})".format(stream.get("user_name", "N/A"),
                                stream.get("viewer_count", 0))
-        screen.print_at(u'{}. {} {}                           '.format(pos, t, decide_emoji(pos)),
+        screen.print_at(u'{}. {} {}'.format(pos, t, decide_emoji(pos)),
                         x,
                         y,
                         COLOUR_WHITE)
@@ -130,17 +135,32 @@ def rank(screen):
                         1,
                         COLOUR_CYAN)
 
+        # records
+        top_streamer, viewers = get_top_streamer()
+        title = "TOP CONCURRENT-VIEWERS RECORD: {} (viewers: {:,})".format(top_streamer, viewers)
+        screen.print_at(title,
+                        10,
+                        5,
+                        COLOUR_CYAN)
+
+        top_game = get_top_game()
+        title = "TOP 1 MOST-TIMES RECORD: {}".format(top_game)
+        screen.print_at(title,
+                        10,
+                        7,
+                        COLOUR_CYAN)
+
         # Top games
         x = 10
-        y = 5
-        screen.print_at(u'{} TOP 20 GAMES'.format(emoji.emojize(':trophy:')), x, y, COLOUR_WHITE, A_BOLD)
+        y = 11
+        screen.print_at(TOP_GAMES_TITLE.format(emoji.emojize(':trophy:'), MAX_RESULTS), x, y, COLOUR_WHITE, A_BOLD)
         screen.print_at('-----------------------------------', x, y + 1, COLOUR_YELLOW)
         print_games(games, screen, x, y + 2)
 
         # Top streams
         x = 64
-        y = 5
-        screen.print_at(u'{} TOP 20 STREAMS'.format(emoji.emojize(':trophy:')), x, y, COLOUR_WHITE, A_BOLD)
+        y = 11
+        screen.print_at(TOP_STREAMS_TITLE.format(emoji.emojize(':trophy:'), MAX_RESULTS), x, y, COLOUR_WHITE, A_BOLD)
         screen.print_at('-----------------------------------', x, y + 1, COLOUR_YELLOW)
         print_streams(streams, screen, x, y + 2)
 
