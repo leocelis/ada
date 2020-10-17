@@ -65,3 +65,6 @@ MAILTO="leo@leocelis.com"
 
 # twitch
 */30 * * * * cd /home/ada/ada/ && $(which python3) twitch/collect.py >> /home/ada/cron.log 2>&1
+
+# delete log file
+0 0 * * * find /home/ada/ -name cron.log -size +1M -delete && touch /home/ada/cron.log

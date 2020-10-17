@@ -116,6 +116,21 @@ def rank(screen):
             games = get_top_games()
             streams = get_top_streams()
 
+            # records
+            top_game = get_top_game()
+            title = TOP_GAME_RECORD.format(top_game)
+            screen.print_at(title,
+                            10,
+                            5,
+                            COLOUR_CYAN)
+
+            top_streamer, viewers = get_top_streamer()
+            title = TOP_STREAMER_RECORD.format(top_streamer, viewers)
+            screen.print_at(title,
+                            10,
+                            7,
+                            COLOUR_CYAN)
+
         # countdown
         if counting == 0:
             counting = COUNTDOWN
@@ -135,21 +150,6 @@ def rank(screen):
                         # int(screen.width / 2) - int(len(date) / 2),
                         int(screen.width) - (len(date) + 1),
                         1,
-                        COLOUR_CYAN)
-
-        # records
-        top_game = get_top_game()
-        title = TOP_GAME_RECORD.format(top_game)
-        screen.print_at(title,
-                        10,
-                        5,
-                        COLOUR_CYAN)
-
-        top_streamer, viewers = get_top_streamer()
-        title = TOP_STREAMER_RECORD.format(top_streamer, viewers)
-        screen.print_at(title,
-                        10,
-                        7,
                         COLOUR_CYAN)
 
         # Top games
@@ -176,6 +176,8 @@ def rank(screen):
 
         time.sleep(1)
         screen.refresh()
+        screen.reset()
+
 
 
 while True:
