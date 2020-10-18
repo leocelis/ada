@@ -12,7 +12,7 @@ from ada.twitch.utils import get_top_game_last_entry, insert_top_game_stats, get
 # settings
 TWITCH_CLIENT_ID = os.environ.get('TWITCH_CLIENT_ID')
 TWITCH_CLIENT_SECRET = os.environ.get('TWITCH_CLIENT_SECRET')
-MAX_PAGES = 10  # times 100
+MAX_PAGES = 5  # times 100
 
 # create instance of twitch API
 twitch = Twitch(TWITCH_CLIENT_ID, TWITCH_CLIENT_SECRET)
