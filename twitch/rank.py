@@ -22,7 +22,7 @@ sys.path.append(os.path.dirname(os.getcwd()))
 from ada.twitch.utils import get_top_game, get_top_streamer
 
 # SETTINGS
-COUNTDOWN = 10  # seconds
+COUNTDOWN = 30  # seconds
 COLOUR_BLACK = 0
 COLOUR_RED = 1
 COLOUR_GREEN = 2
@@ -49,6 +49,7 @@ TOP_GAMES_TITLE = u'{} TOP {} GAMES LIVE'
 TOP_STREAMS_TITLE = u'{} TOP {} STREAMERS LIVE'
 TOP_STREAMER_RECORD = "STREAMER VIEWERS HIGH-SCORE: {} ({:,})"
 TOP_GAME_RECORD = "GAME TOP 1 HIGH-SCORE: {}"
+X_POS = 20
 
 
 def decide_emoji(pos):
@@ -125,13 +126,13 @@ def rank(screen):
             # records
             title = TOP_GAME_RECORD.format(top_game)
             screen.print_at(title,
-                            10,
+                            X_POS,
                             7,
                             COLOUR_CYAN)
 
             title = TOP_STREAMER_RECORD.format(top_streamer, viewers)
             screen.print_at(title,
-                            10,
+                            X_POS,
                             9,
                             COLOUR_CYAN)
 
@@ -157,14 +158,14 @@ def rank(screen):
                         COLOUR_CYAN)
 
         # Top games
-        x = 10
+        x = X_POS
         y = 13
         screen.print_at(TOP_GAMES_TITLE.format(emoji.emojize(':trophy:'), MAX_RESULTS), x, y, COLOUR_WHITE, A_BOLD)
         screen.print_at('-----------------------------------', x, y + 1, COLOUR_YELLOW)
         print_games(games, screen, x, y + 2)
 
         # Top streams
-        x = 64
+        x = X_POS + 54
         y = 13
         screen.print_at(TOP_STREAMS_TITLE.format(emoji.emojize(':trophy:'), MAX_RESULTS), x, y, COLOUR_WHITE, A_BOLD)
         screen.print_at('-----------------------------------', x, y + 1, COLOUR_YELLOW)
