@@ -44,11 +44,11 @@ twitch = Twitch(TWITCH_CLIENT_ID, TWITCH_CLIENT_SECRET)
 twitch.authenticate_app([])
 
 # RANK
-POWERED_BY_ADA = "more stats in www.ada-tool.com/twitch"
+POWERED_BY_ADA = "powered by www.ada-tool.com"
 TOP_GAMES_TITLE = u'{} TOP {} GAMES LIVE'
 TOP_STREAMS_TITLE = u'{} TOP {} STREAMERS LIVE'
-TOP_STREAMER_RECORD = "STREAMER CONCURRENT-VIEWERS WORLD-RECORD: {} ({:,})"
-TOP_GAME_RECORD = "GAME TOP 1 MOST-TIMES WORLD-RECORD: {}"
+TOP_STREAMER_RECORD = "STREAMER VIEWERS HIGH-SCORE: {} ({:,})"
+TOP_GAME_RECORD = "GAME TOP 1 HIGH-SCORE: {}"
 
 
 def decide_emoji(pos):
@@ -100,13 +100,8 @@ def rank(screen):
     global COUNTDOWN
     counting = COUNTDOWN
 
+    # clear screen
     screen.clear()
-
-    # # ada message
-    # screen.print_at(POWERED_BY_ADA,
-    #                 int(screen.width / 2) - int(len(POWERED_BY_ADA) / 2),
-    #                 screen.height - 1,
-    #                 COLOUR_BLUE)
 
     i = 0
     while True:
@@ -120,6 +115,12 @@ def rank(screen):
 
             # clean screen
             screen.clear()
+
+            # ada message
+            screen.print_at(POWERED_BY_ADA,
+                            int(screen.width / 2) - int(len(POWERED_BY_ADA) / 2),
+                            screen.height - 1,
+                            COLOUR_BLUE)
 
             # records
             title = TOP_GAME_RECORD.format(top_game)
