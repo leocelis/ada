@@ -44,7 +44,8 @@ twitch = Twitch(TWITCH_CLIENT_ID, TWITCH_CLIENT_SECRET)
 twitch.authenticate_app([])
 
 # RANK
-POWERED_BY_ADA = "(c) leocelis.com"
+#POWERED_BY_ADA = "(c) leocelis.com"
+POWERED_BY_ADA = ""
 TOP_GAMES_TITLE = u'{} TOP {} GAMES LIVE'
 TOP_STREAMS_TITLE = u'{} TOP {} STREAMERS LIVE'
 TOP_STREAMER_RECORD = "STREAMER CONCURRENT-VIEWERS HIGH-SCORE: {} ({:,})"
