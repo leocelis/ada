@@ -20,11 +20,11 @@ def get_all_sites(category: str = None):
     cursor = conn.cursor()
 
     sql = """
-    SELECT site_url, sitemap_url FROM scrapy_sites
+    SELECT site_url, sitemap_url FROM scrapy_sites WHERE active = 1
     """
 
     if category:
-        sql += " WHERE category=%s"
+        sql += " AND category=%s"
 
     cursor.execute(sql, category)
 
