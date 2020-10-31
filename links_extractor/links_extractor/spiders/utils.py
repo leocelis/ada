@@ -68,6 +68,7 @@ def get_domains(category: str = None):
     domains.append('linkedin.com')
     domains.append('twitter.com')
     domains.append('twitch.com')
+    domains.append('whatsapp.com')
 
     print("\nDomain found: {}".format(domains))
 

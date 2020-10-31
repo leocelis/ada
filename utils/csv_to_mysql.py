@@ -6,6 +6,7 @@ import pandas as pd
 
 sys.path.append(os.path.dirname(os.getcwd()))
 from ada.domain_analyzer.utils import check_link_exists, save_site_link
+from ada.config import IGNORE_DOMAINS
 
 # csv file
 file_location = "./links_extractor/adtech.csv"
@@ -19,7 +20,13 @@ for index, row in dataset.iterrows():
     site_link = row['link']
     title = row['title']
 
+    # allowed domain
+    allowed_link = True
+    for d in IGNORE_DOMAINS:
+        if d in site_link:
+            allowed_link = False
+
     # save link
-    if not check_link_exists(site_link):
+    if allowed_link and not check_link_exists(site_link):
         print("Adding {}\n".format(site_link))
         save_site_link(site_url, site_link, title)
