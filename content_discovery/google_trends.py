@@ -17,11 +17,13 @@ from ada.config import DATA_FOLDER
 from pytrends.request import TrendReq
 
 # G Trends params
-category = 12  # "Business & Industrial" - https://github.com/pat310/google-trends-api/wiki/Google-Trends-Categories
-geo = 'US'
-timeframe = 'today 1-m'  # 30 days ago, try "today 5-y"
+category = 25  # "Advertising & Marketing" - https://github.com/pat310/google-trends-api/wiki/Google-Trends-Categories
+# geo = 'US'
+geo = 'GLOBAL'
+# timeframe = 'today 1-m'  # 30 days ago, try "today 5-y"
+timeframe = 'today 5-y'  # 30 days ago, try "today 5-y"
 gprop = ''  # default to web searches
-keyword = "Advertising"
+keyword = "podcast"
 kw_list = [keyword]  # keywords
 pytrends = TrendReq(hl='en-US', tz=360)
 pytrends.build_payload(kw_list, cat=category, timeframe=timeframe, geo=geo, gprop=gprop)
@@ -64,8 +66,6 @@ with open(file_location, 'w') as csvfile:
         }
 
         writer.writerow(row)
-
-exit()
 
 print("\n\n=================================")
 print("Related topics:")

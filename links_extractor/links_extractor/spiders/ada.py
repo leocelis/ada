@@ -33,8 +33,7 @@ class AdaSpider(CrawlSpider):
         LinkExtractor(canonicalize=True, unique=True),
         follow=False,
         callback="parse_items"
-    )
-    ]
+    )]
 
     # Method which starts the requests by visiting all URLs specified in start_urls
     def start_requests(self):
@@ -53,6 +52,7 @@ class AdaSpider(CrawlSpider):
 
         # Now go through all the found links
         for link in links:
+
             # Check whether the domain of the URL of the link is allowed; so whether it is in one of the allowed domains
             is_allowed = False
             for allowed_domain in self.allowed_domains:

@@ -63,6 +63,12 @@ def get_domains(category: str = None):
         splitted_url = urlsplit(r['site_url'])
         domains.append(splitted_url.netloc)
 
+    # append social networks
+    domains.append('facebook.com')
+    domains.append('linkedin.com')
+    domains.append('twitter.com')
+    domains.append('twitch.com')
+
     print("\nDomain found: {}".format(domains))
 
     return domains

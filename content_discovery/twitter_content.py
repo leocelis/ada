@@ -4,14 +4,14 @@ https://developer.twitter.com/en/docs/tweets/search/api-reference/get-search-twe
 """
 import os
 import sys
+import ujson
 from time import sleep
 
-import ujson
 from twython import Twython
 
 # add parent dir
 sys.path.append(os.path.dirname(os.getcwd()))
-from ada.config import TWITTER_RETWEETS_THRESHOLD, TWITTER_WAIT_REQUESTS, TWITTER_HISTORY_COUNT, TWITTER_KEYWORDS
+from ada.config import TWITTER_RETWEETS_THRESHOLD, TWITTER_WAIT_REQUESTS, TWITTER_HISTORY_COUNT
 from ada.utils.conn import get_mysql_conn
 
 # mysql vars
@@ -41,6 +41,7 @@ def sync_tweets(keyword: str) -> None:
         try:
             # get first 100
             if tweets_count == 0:
+                # Mixed, as popular doesn't have values in some cases
                 results = twitter.search(q=query, result_type="mixed", include_entities="false", lang="en",
                                          count='100')
             else:
@@ -112,5 +113,5 @@ def save_tweet(t: dict, keyword: str) -> None:
 
 
 # search by keyword
-for k in TWITTER_KEYWORDS:
-    sync_tweets(keyword=k)
+# for k in TWITTER_KEYWORDS:
+#     sync_tweets(keyword=k)

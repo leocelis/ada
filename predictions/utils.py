@@ -51,7 +51,7 @@ def clean_text(text):
     print("Dirty: '{}'".format(text))
     text = lower_case(text)
     text = remove_punctuation(text)
-    #text = spelling_check(text)
+    # text = spelling_check(text)
     text = remove_common_words(text)
     text = lemmatize_text(text)
     print("Cleaned: {}".format(text))
@@ -137,7 +137,7 @@ def word_shares_upsert(word, shares):
         return True
 
 
-def get_words_shares():
+def get_words_shares(limit=0):
     """
     Get words and shares
 
@@ -149,6 +149,9 @@ def get_words_shares():
     sql = """
     select word, shares from prediction_blog_titles
     """
+
+    if limit:
+        sql += " ORDER BY shares desc LIMIT 0,{}".format(limit)
 
     cursor.execute(sql)
 
