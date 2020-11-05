@@ -22,7 +22,7 @@ sys.path.append(os.path.dirname(os.getcwd()))
 from ada.twitch.utils import get_top_game, get_top_streamer
 
 # SETTINGS
-COUNTDOWN = 30  # seconds
+COUNTDOWN = 60  # seconds
 COLOUR_BLACK = 0
 COLOUR_RED = 1
 COLOUR_GREEN = 2
@@ -44,7 +44,7 @@ twitch = Twitch(TWITCH_CLIENT_ID, TWITCH_CLIENT_SECRET)
 twitch.authenticate_app([])
 
 # RANK
-#POWERED_BY_ADA = "(c) leocelis.com"
+# POWERED_BY_ADA = "(c) leocelis.com"
 POWERED_BY_ADA = ""
 TOP_GAMES_TITLE = u'{} TOP {} GAMES LIVE'
 TOP_STREAMS_TITLE = u'{} TOP {} STREAMERS LIVE'
