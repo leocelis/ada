@@ -12,7 +12,7 @@ from ada.predictions.utils import clean_text, words_value, word_shares_upsert
 
 # config
 share_threshold = 10  # min shares
-category = "adtech"
+# category = "adtech"
 
 # get websites by category
 # sites = get_all_sites(category=category)

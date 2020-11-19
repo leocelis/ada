@@ -7,6 +7,7 @@ from flask_restful import Resource, Api
 
 sys.path.append(os.path.dirname(os.getcwd()))
 from ada.rest_api.mailchimp import MailChimpReports, MailChimpMembers
+from ada.rest_api.words import Words
 from ada.rest_api.ga import GAReportsPages
 from ada.rest_api.apistatus import APIStatus
 from ada.rest_api.sharingscore import APISharingScore
@@ -40,6 +41,9 @@ api.add_resource(APIStatus, '/api-status/<service>')
 
 # Sharing Score API
 api.add_resource(APISharingScore, '/sharing-score/<title>')
+
+# Words API
+api.add_resource(Words, '/words/<count>')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', ssl_context='adhoc')
