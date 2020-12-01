@@ -6,6 +6,7 @@ import pandas as pd
 
 sys.path.append(os.path.dirname(os.getcwd()))
 from ada.domain_analyzer.utils import check_link_exists, save_site_link
+from ada.utils.utils import is_content_valid
 from ada.config import IGNORE_DOMAINS
 
 # csv file
@@ -27,6 +28,6 @@ for index, row in dataset.iterrows():
             allowed_link = False
 
     # save link
-    if allowed_link and not check_link_exists(site_link):
+    if allowed_link and is_content_valid(site_link) and not check_link_exists(site_link):
         print("Adding {}\n".format(site_link))
         save_site_link(site_url, site_link, title)
