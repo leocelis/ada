@@ -18,18 +18,17 @@ from ada.content_analyzer.utils import get_all_sites, get_fb_shares_by_domain, g
 from ada.utils.utils import get_domain, clean_link
 from ada.config import SUMMARY_THRESHOLD
 
-# get all the sites
-# sites = get_all_sites(category='adtech')
-sites = get_all_sites()
-
 # store links and shares
 links_shares = dict()
 
+# get all the sites
+# sites = get_all_sites(category='adtech')
+sites = get_all_sites()
 for s in sites:
     print(".", end="", flush=True)
     d = get_domain(s['site_url'])
 
-    # facebook shares
+    # get all the links and facebook shares per link
     fbshares = get_fb_shares_by_domain(domain=d, threshold=SUMMARY_THRESHOLD, limit=0)
     for f in fbshares:
         print(".", end="", flush=True)

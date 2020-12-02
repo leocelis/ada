@@ -28,6 +28,6 @@ for index, row in dataset.iterrows():
             allowed_link = False
 
     # save link
-    if allowed_link and is_content_valid(site_link) and not check_link_exists(site_link):
+    if allowed_link and is_content_valid(site_link, title) and not check_link_exists(site_link):
         print("Adding {}\n".format(site_link))
         save_site_link(site_url, site_link, title)

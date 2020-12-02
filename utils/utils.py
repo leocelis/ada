@@ -12,7 +12,7 @@ def clean_link(link):
     return l
 
 
-def is_content_valid(link):
+def is_content_valid(link, title):
     """
     Check for valid links
 
@@ -27,6 +27,11 @@ def is_content_valid(link):
     # at least 30 characters long
     l = len(str(link))
     if l < 30:
+        return False
+
+    # at least 15 characters in the title
+    t = len(str(title))
+    if t < 15:
         return False
 
     return True
