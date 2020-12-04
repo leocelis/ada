@@ -11,7 +11,7 @@ from twython import Twython
 
 # add parent dir
 sys.path.append(os.path.dirname(os.getcwd()))
-from ada.config import TWITTER_RETWEETS_THRESHOLD, TWITTER_WAIT_REQUESTS, TWITTER_HISTORY_COUNT
+from ada.config import TWITTER_RETWEETS_THRESHOLD, TWITTER_WAIT_REQUESTS, TWITTER_HISTORY_COUNT, TWITTER_KEYWORDS
 from ada.utils.conn import get_mysql_conn
 
 # mysql vars
@@ -30,7 +30,8 @@ auth = twitter.get_authentication_tokens()
 
 
 def sync_tweets(keyword: str) -> None:
-    query = "{} -filter:retweets".format(keyword)  # no retweets
+    # %22 = exact match
+    query = "%22{}%22 -filter:retweets".format(keyword)  # no retweets
     tweets_count = 0
     next_max_id = 0
 
@@ -42,11 +43,11 @@ def sync_tweets(keyword: str) -> None:
             # get first 100
             if tweets_count == 0:
                 # Mixed, as popular doesn't have values in some cases
-                results = twitter.search(q=query, result_type="mixed", include_entities="false", lang="en",
+                results = twitter.search(q=query, result_type="popular", include_entities="false", lang="en",
                                          count='100')
             else:
                 # search next page
-                results = twitter.search(q=query, result_type="mixed", include_entities="false", lang="en",
+                results = twitter.search(q=query, result_type="popular", include_entities="false", lang="en",
                                          max_id=next_max_id)
         except Exception as e:
             print("\nERROR: {}".format(str(e)))
@@ -113,5 +114,5 @@ def save_tweet(t: dict, keyword: str) -> None:
 
 
 # search by keyword
-# for k in TWITTER_KEYWORDS:
-#     sync_tweets(keyword=k)
+for k in TWITTER_KEYWORDS:
+    sync_tweets(keyword=k)
