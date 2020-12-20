@@ -7,7 +7,7 @@ import pandas as pd
 sys.path.append(os.path.dirname(os.getcwd()))
 from ada.domain_analyzer.utils import check_link_exists, save_site_link
 from ada.utils.utils import is_content_valid
-from links_extractor.spiders.utils import get_domains
+from ada.content_analyzer.utils import get_domains
 
 # allowed domains
 domains = get_domains()
