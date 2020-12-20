@@ -1,4 +1,9 @@
+import os
+import sys
 from urllib.parse import urlsplit
+
+sys.path.append(os.path.dirname(os.getcwd()))
+from ada.utils.conn import get_mysql_conn, dictfecth
 
 
 def get_domain(site_url: str):
@@ -35,3 +40,24 @@ def is_content_valid(link, title):
         return False
 
     return True
+
+
+def get_allowed_domains():
+    """
+    Get all domains
+    :return:
+    """
+    conn = get_mysql_conn()
+    cursor = conn.cursor()
+
+    sql = """
+    SELECT site_url, sitemap_url FROM scrapy_sites
+    """
+
+    cursor.execute(sql)
+
+    conn.commit()
+    rows = dictfecth(cursor)
+    cursor.close()
+
+    return rows

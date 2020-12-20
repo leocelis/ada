@@ -6,11 +6,10 @@ import pandas as pd
 
 sys.path.append(os.path.dirname(os.getcwd()))
 from ada.domain_analyzer.utils import check_link_exists, save_site_link
-from ada.utils.utils import is_content_valid
-from ada.content_analyzer.utils import get_domains
+from ada.utils.utils import is_content_valid, get_allowed_domains
 
 # allowed domains
-domains = get_domains()
+ad = get_allowed_domains()
 
 # csv file
 file_location = "./links_extractor/adtech.csv"
@@ -22,12 +21,14 @@ for index, row in dataset.iterrows():
     parsed_uri = urlparse(row['link'])
     site_url = '{uri.scheme}://{uri.netloc}/'.format(uri=parsed_uri)
     site_link = row['link']
+    print("Site link: {}".format(site_link))
     title = row['title']
 
     # allowed domain
     allowed_link = False
-    for d in domains:
-        n = d['domain']
+    for d in ad:
+        n = d['site_url']
+        print("Domain: {}".format(n))
         if n in site_link:
             allowed_link = True
             break
