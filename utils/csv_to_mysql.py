@@ -7,7 +7,10 @@ import pandas as pd
 sys.path.append(os.path.dirname(os.getcwd()))
 from ada.domain_analyzer.utils import check_link_exists, save_site_link
 from ada.utils.utils import is_content_valid
-from ada.config import IGNORE_DOMAINS
+from links_extractor.spiders.utils import get_domains
+
+# allowed domains
+domains = get_domains()
 
 # csv file
 file_location = "./links_extractor/adtech.csv"
@@ -22,10 +25,11 @@ for index, row in dataset.iterrows():
     title = row['title']
 
     # allowed domain
-    allowed_link = True
-    for d in IGNORE_DOMAINS:
+    allowed_link = False
+    for d in domains:
         if d in site_link:
-            allowed_link = False
+            allowed_link = True
+            break
 
     # save link
     if allowed_link and is_content_valid(site_link, title) and not check_link_exists(site_link):
