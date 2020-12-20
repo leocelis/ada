@@ -21,13 +21,13 @@ for index, row in dataset.iterrows():
     parsed_uri = urlparse(row['link'])
     site_url = '{uri.scheme}://{uri.netloc}/'.format(uri=parsed_uri)
     site_link = row['link']
-    print("Site link: {}".format(site_link))
+    # print("Site link: {}".format(site_link))
     title = row['title']
 
     # allowed domain
     allowed_link = False
     for d in a_d:
-        print("Domain: {}".format(d))
+        # print("Domain: {}".format(d))
         if d in site_link:
             allowed_link = True
             break
