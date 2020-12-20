@@ -8,9 +8,19 @@ ALLOWED_URLS = ["http://localhost:3000", "https://dashboard.leocelis.com", "http
                 "https://www.ada-tool.com"]
 
 # ignore the platforms domains
-IGNORE_DOMAINS = ['facebook.com', 'linkedin.com', 'twitter.com', 'twitch.com',
-                  'whatsapp.com', 'google.com', 'printfriendly.com', 'bufferapp.com', 'outlook.com',
-                  'gmail.com']
+IGNORE_DOMAINS = ['facebook.com',
+                  'linkedin.com',
+                  'twitter.com',
+                  'twitch.com',
+                  'whatsapp.com',
+                  'google.com',
+                  'printfriendly.com',
+                  'bufferapp.com',
+                  'outlook.com',
+                  'gmail.com',
+                  'instagram.com',
+                  'youtube.com',
+                  'bluehost.']
 
 # Facebook Ads Optimization
 DATA_FOLDER = "./data"
