@@ -9,7 +9,7 @@ from ada.domain_analyzer.utils import check_link_exists, save_site_link
 from ada.utils.utils import is_content_valid, get_allowed_domains
 
 # allowed domains
-ad = get_allowed_domains()
+a_d = get_allowed_domains()
 
 # csv file
 file_location = "./links_extractor/adtech.csv"
@@ -26,10 +26,9 @@ for index, row in dataset.iterrows():
 
     # allowed domain
     allowed_link = False
-    for d in ad:
-        n = d['site_url']
-        print("Domain: {}".format(n))
-        if n in site_link:
+    for d in a_d:
+        print("Domain: {}".format(d))
+        if d in site_link:
             allowed_link = True
             break
 

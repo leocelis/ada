@@ -58,6 +58,13 @@ def get_allowed_domains():
 
     conn.commit()
     rows = dictfecth(cursor)
+
+    # extract domains
+    domains = list()
+    for r in rows:
+        d = get_domain(r['site_url'])
+        domains.append(d)
+
     cursor.close()
 
-    return rows
+    return domains
