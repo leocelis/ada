@@ -27,7 +27,8 @@ for index, row in dataset.iterrows():
     # allowed domain
     allowed_link = False
     for d in domains:
-        if d in site_link:
+        n = d['domain']
+        if n in site_link:
             allowed_link = True
             break
 
