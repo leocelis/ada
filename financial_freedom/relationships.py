@@ -1,1 +1,0 @@
-# TODO design relationships economics based on the debt book (who owes what to whom)
