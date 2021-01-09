@@ -54,9 +54,10 @@ for s in sites:
         print(".", end="", flush=True)
         l = clean_link(st['site_link'])
         if l in links_shares:
-            links_shares[l] += st['facebook'] + st['linkedin']
+            # TODO: add st['facebook'] for breakdown links_shares
+            links_shares[l] += st['linkedin'] + st['twitter']
         else:
-            links_shares[l] = st['facebook'] + st['linkedin']
+            links_shares[l] = st['linkedin'] + st['twitter']
 
 # update summary table
 for key, value in links_shares.items():
