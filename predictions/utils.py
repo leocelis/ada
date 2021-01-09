@@ -147,7 +147,7 @@ def get_words_shares(limit=0):
     cursor = conn.cursor()
 
     sql = """
-    select word, shares from prediction_blog_titles
+    select idprediction_blog_titles, word, shares from prediction_blog_titles
     """
 
     if limit:

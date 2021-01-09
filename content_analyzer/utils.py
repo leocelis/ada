@@ -541,14 +541,16 @@ def save_link_stats(link: str, t: dict) -> None:
 
     total = int(t.get('total', 0))
     blob = ujson.dumps(t).replace("'", r"\'")
+    facebook = int(t.get('shares', {}).get('facebook', 0))
+    linkedin = int(t.get('shares', {}).get('linkedin', 0))
 
     sql = """
-    INSERT INTO sharethis_stats(site_link, total, response_blob)
-    VALUES (%s, %s, %s)
+    INSERT INTO sharethis_stats(site_link, total, facebook, linkedin, response_blob)
+    VALUES (%s, %s, %s, %s, %s)
     """
 
     try:
-        cursor.execute(sql, (link, total, blob))
+        cursor.execute(sql, (link, total, facebook, linkedin, blob))
         conn.commit()
     except Exception as e:
         print("\nERROR! ({})".format(str(e)))
@@ -563,14 +565,18 @@ def update_link_stats(link: str, t: dict) -> None:
     cursor = conn.cursor()
 
     total = int(t.get('total', 0))
+    facebook = int(t.get('shares', {}).get('facebook', 0))
+    linkedin = int(t.get('shares', {}).get('linkedin', 0))
     blob = ujson.dumps(t).replace("'", r"\'")
 
     sql = """
     UPDATE sharethis_stats
     SET total = {},
+    facebook = {},
+    linkedin = {},
     response_blob = '{}'
     WHERE site_link = '{}'
-    """.format(total, blob, blob)
+    """.format(total, facebook, linkedin, blob, link)
 
     try:
         cursor.execute(sql)

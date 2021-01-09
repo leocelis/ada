@@ -1,0 +1,1 @@
+# TODO how to use debt to speed up things

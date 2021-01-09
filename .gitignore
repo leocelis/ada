@@ -79,3 +79,5 @@ client_secrets.json
 links_extractor/.scrapy/*
 .env
 links_extractor/links.csv
+# for now hide financial freedom
+financial_freedom/
