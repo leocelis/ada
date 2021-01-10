@@ -25,7 +25,7 @@ def get_word_emotion(word="anger"):
     # print(word)
     # print(post_tag[0][1])
     emo = wna.get_emotion(str(word), str(post_tag[0][1]))
-    # print("Emotion for *{}*: {}".format(word, emo))
+    print("Emotion for {}: {}".format(word, emo))
 
     if emo:
         parent = emo.get_level(emo.level - 1)

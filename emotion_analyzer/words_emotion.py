@@ -9,8 +9,11 @@ from ada.emotion_analyzer.utils import get_word_emotion, update_word_emotion
 words = get_words_shares()
 
 for w in words:
+    word = str(w.get('word'))
+    print("Finding emotion for {}".format(word))
+
     # get the emotion
-    emotions = get_word_emotion(w.get('word'))
+    emotions = get_word_emotion(word)
 
     # save the emotion
     if emotions:
