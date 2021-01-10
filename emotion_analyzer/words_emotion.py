@@ -15,7 +15,6 @@ for w in words:
     emotions = get_word_emotion(word)
 
     # save the emotion
-    if emotions:
-        update_word_emotion(w.get('idprediction_blog_titles'),
-                            emotions[0],
-                            emotions[1])
+    update_word_emotion(w.get('idprediction_blog_titles'),
+                        emotions[0],
+                        emotions[1])

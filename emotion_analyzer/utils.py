@@ -37,7 +37,7 @@ def get_word_emotion(word="anger"):
         # Emotion.printTree(e) # print emotion tree
         return str(emo), str(parent)
 
-    return
+    return "not_found", "not_found"
 
 
 def update_word_emotion(id, emotion, emotion_parent):
