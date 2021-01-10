@@ -540,14 +540,14 @@ def save_link_stats(link: str, t: dict) -> None:
     cursor = conn.cursor()
 
     total = int(t.get('total', 0))
-    blob = ujson.dumps(t).replace("'", r"\'")
     facebook = int(t.get('shares', {}).get('facebook', 0))
     linkedin = int(t.get('shares', {}).get('linkedin', 0))
     twitter = int(t.get('shares', {}).get('twitter', 0))
+    blob = ujson.dumps(t).replace("'", r"\'")
 
     sql = """
     INSERT INTO sharethis_stats(site_link, total, facebook, linkedin, twitter, response_blob)
-    VALUES (%s, %s, %s, %s, %s)
+    VALUES (%s, %s, %s, %s, %s, %s)
     """
 
     try:
@@ -580,6 +580,7 @@ def update_link_stats(link: str, t: dict) -> None:
     response_blob = '{}'
     WHERE site_link = '{}'
     """.format(total, facebook, linkedin, twitter, blob, link)
+    print(sql)
 
     try:
         cursor.execute(sql)
