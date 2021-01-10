@@ -10,26 +10,15 @@ import os
 import sys
 
 sys.path.append(os.path.dirname(os.getcwd()))
-from ada.content_analyzer.utils import get_all_sites, get_fb_shares_by_domain, get_retweets_by_domain, \
-    get_sharethis_stats_by_domain, get_title_by_link, link_shares_update_or_insert
-from ada.utils.utils import get_domain, clean_link
-from ada.config import SUMMARY_THRESHOLD
+from ada.content_analyzer.utils import get_links_shares
+from ada.emotion_analyzer.utils import get_sentiment, update_link_sentiment
 
-# store links and shares
-links_shares = dict()
+# get all links shares
+links_shares = get_links_shares()
 
-# get all the sites
-# sites = get_all_sites(category='adtech')
-sites = get_all_sites()
-for s in sites:
-    print(".", end="", flush=True)
-    d = get_domain(s['site_url'])
+for l in links_shares:
+    t = l.get('link_title', "")
+    s = get_sentiment(t)
 
-
-
-# update summary table
-for key, value in links_shares.items():
-    # get the title
-    title = get_title_by_link(link=key)
-    if title:
-        link_shares_update_or_insert(key, title, value)
+    print("Sentiment for [{}]: {}".format(t, s))
+    update_link_sentiment(l.get('idlinks_shares'), s)

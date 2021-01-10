@@ -6,10 +6,11 @@ import sys
 
 import nltk
 from emotion import Emotion
+from textblob import TextBlob
 from wnaffect import WNAffect
 
 sys.path.append(os.path.dirname(os.getcwd()))
-from ada.utils.conn import get_mysql_conn
+from ada.utils.conn import get_mysql_conn, dictfecth
 
 
 def get_word_emotion(word="anger"):
@@ -52,6 +53,67 @@ def update_word_emotion(id, emotion, emotion_parent):
     try:
         cursor.execute(sql)
         print("emotions updated.")
+        conn.commit()
+    except Exception as e:
+        print("ERROR! ({})\n".format(str(e)))
+        conn.rollback()
+        return False
+
+    cursor.close()
+    return True
+
+
+def get_words_wo_emotion(limit=0):
+    """
+    Get words without emotion
+
+    :return:
+    """
+    conn = get_mysql_conn()
+    cursor = conn.cursor()
+
+    sql = """
+    SELECT * from prediction_blog_titles WHERE emotion IS NULL
+    """
+
+    cursor.execute(sql)
+
+    conn.commit()
+    rows = dictfecth(cursor)
+    cursor.close()
+
+    return rows
+
+
+def get_sentiment(title="test"):
+    """
+
+    :param title:
+    :return:
+    """
+    p = TextBlob(title).sentiment.polarity
+    return p
+
+
+def update_link_sentiment(id, sentiment):
+    conn = get_mysql_conn()
+    cursor = conn.cursor()
+
+    # positive/negative
+    if sentiment > 0:
+        sentiment = 1
+    else:
+        sentiment = 0
+
+    sql = """
+    UPDATE links_shares
+    SET sentiment = {}
+    WHERE idlinks_shares = {}
+    """.format(sentiment, id)
+
+    try:
+        cursor.execute(sql)
+        print("Sentiment for [{}]: {} updated".format(id, sentiment))
         conn.commit()
     except Exception as e:
         print("ERROR! ({})\n".format(str(e)))

@@ -2,11 +2,10 @@ import os
 import sys
 
 sys.path.append(os.path.dirname(os.getcwd()))
-from ada.predictions.utils import get_words_shares
-from ada.emotion_analyzer.utils import get_word_emotion, update_word_emotion
+from ada.emotion_analyzer.utils import get_word_emotion, update_word_emotion, get_words_wo_emotion
 
 # get all the words
-words = get_words_shares()
+words = get_words_wo_emotion()
 
 for w in words:
     word = str(w.get('word'))

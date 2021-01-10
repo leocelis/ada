@@ -819,3 +819,27 @@ def get_shares_by_domain(domain: str, threshold: int = 1, limit: int = 0):
     cursor.close()
 
     return rows
+
+
+def get_links_shares(threshold: int = 1, limit: int = 0):
+    """
+    Get all link shares
+    """
+    conn = get_mysql_conn()
+    cursor = conn.cursor()
+
+    sql = """
+    SELECT * FROM links_shares
+    WHERE shares_total > {} ORDER BY shares_total
+    """.format(threshold)
+
+    if limit > 0:
+        sql += " LIMIT 0,{}".format(limit)
+
+    cursor.execute(sql)
+
+    conn.commit()
+    rows = dictfecth(cursor)
+    cursor.close()
+
+    return rows
