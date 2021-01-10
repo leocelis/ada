@@ -53,11 +53,16 @@ for s in sites:
     for st in sharethis:
         print(".", end="", flush=True)
         l = clean_link(st['site_link'])
+
+        # replace None with 0
+        twitter = 0 if not s.get('twitter') else s.get('twitter')
+        linkedin = 0 if not s.get('linkedin') else s.get('linkedin')
+
         if l in links_shares:
-            # TODO: add st['facebook'] for breakdown links_shares
-            links_shares[l] += st.get('linkedin', 0) + st.get('twitter', 0)
+
+            links_shares[l] += linkedin + twitter
         else:
-            links_shares[l] = st.get('linkedin', 0) + st.get('twitter', 0)
+            links_shares[l] = linkedin + twitter
 
 # update summary table
 for key, value in links_shares.items():
