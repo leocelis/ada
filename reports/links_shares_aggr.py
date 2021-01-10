@@ -34,9 +34,9 @@ for s in sites:
         print(".", end="", flush=True)
         l = clean_link(f['site_link'])
         if l in links_shares:
-            links_shares[l] += int(f['fb_shares'])
+            links_shares[l] += int(f.get('fb_shares', 0))
         else:
-            links_shares[l] = int(f['fb_shares'])
+            links_shares[l] = int(f.get('fb_shares', 0))
 
     # twitter retweets
     tretweets = get_retweets_by_domain(domain=d, threshold=SUMMARY_THRESHOLD, limit=0)
@@ -44,9 +44,9 @@ for s in sites:
         print(".", end="", flush=True)
         l = clean_link(t['query'])
         if l in links_shares:
-            links_shares[l] += t['retweet_count']
+            links_shares[l] += t.get('retweet_count', 0)
         else:
-            links_shares[l] = t['retweet_count']
+            links_shares[l] = t.get('retweet_count', 0)
 
     # sharethis
     sharethis = get_sharethis_stats_by_domain(domain=d, threshold=SUMMARY_THRESHOLD, limit=0)
@@ -55,9 +55,9 @@ for s in sites:
         l = clean_link(st['site_link'])
         if l in links_shares:
             # TODO: add st['facebook'] for breakdown links_shares
-            links_shares[l] += st['linkedin'] + st['twitter']
+            links_shares[l] += st.get('linkedin', 0) + st.get('twitter', 0)
         else:
-            links_shares[l] = st['linkedin'] + st['twitter']
+            links_shares[l] = st.get('linkedin', 0) + st.get('twitter', 0)
 
 # update summary table
 for key, value in links_shares.items():
