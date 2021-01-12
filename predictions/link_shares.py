@@ -30,13 +30,12 @@ from ada.predictions.utils import lower_case, remove_punctuation, spelling_check
 # DATA CLEANING
 # ===================================
 dataset = pd.DataFrame(get_links_shares(threshold=10, limit=10))
-#dataset = pd.DataFrame(get_links_shares(threshold=10))
+# dataset = pd.DataFrame(get_links_shares(threshold=10))
 
 # lower case
 dataset['link_title'] = dataset['link_title'].apply(lambda x: lower_case(x))
 
 # remove punctuation
-dataset['link_title'] = dataset['link_title'].str.replace('[^\w\s]', '')
 dataset['link_title'] = dataset['link_title'].apply(lambda x: remove_punctuation(x))
 
 # spelling check
@@ -45,13 +44,9 @@ dataset['link_title'] = dataset['link_title'].apply(lambda x: spelling_check(x))
 # remove common words
 dataset['link_title'] = dataset['link_title'].apply(lambda x: remove_common_words(x))
 
-# TODO: create score with how many emotions (title with 2 emotions, or 1)
-# TODO: get title scoring
-# TODO: get sentiment
-
-print("Training Dataset")
-print("================")
-print(dataset)
+# print("Training Dataset")
+# print("================")
+# print(dataset)
 
 # ===================================
 # FEATURE EXTRACTION
@@ -65,12 +60,18 @@ dataset['link_title_words_count'] = dataset['link_title'].apply(lambda x: len(x.
 # sentiment
 dataset['link_title_sentiment'] = dataset['sentiment']
 
-print("Training Dataset")
-print("================")
-print(dataset)
+# sharing score
+dataset['link_title_sharing_score'] = dataset['sharing_score']
+
+# TODO: count how many emotions
+# dataset['link_title_sharing_score'] = dataset['emotions_count']
+
+# print("Training Dataset")
+# print("================")
+# print(dataset)
 
 # ===================================
-# PREDICTION
+# VALIDATION
 # ===================================
 
 # feature
@@ -94,8 +95,11 @@ y_pred = regressor.predict(X_test)
 df = pd.DataFrame({'Actual Results': y_test, 'Predicted Results': y_pred})
 print(df)
 
-# ==================================================================
-# predict new dataset
+exit()
+
+# ===================================
+# PREDICTION
+# ===================================
 new_dataset = pd.DataFrame({'link_title': ['This is a subject test',
                                            'This is a really long subject that you should not read',
                                            'Serverless will kick you in the face']})
