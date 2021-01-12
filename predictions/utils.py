@@ -1,4 +1,5 @@
 import os
+import string
 import sys
 
 import nltk
@@ -19,7 +20,9 @@ def lower_case(text):
 
 
 def remove_punctuation(text):
-    return text.replace('[^\w\s]', '').replace('"', '')
+    # return text.replace('[^\w\s]', '').replace('"', '')
+    s = text.translate(str.maketrans('', '', string.punctuation))
+    return s
 
 
 def spelling_check(text):

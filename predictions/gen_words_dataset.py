@@ -43,4 +43,6 @@ wv = words_value(df)
 
 # save results
 for k, v in wv.items():
-    word_shares_upsert(k, v)
+    # if the word is more than 2 characters
+    if len(k) >= 2:
+        word_shares_upsert(k, v)

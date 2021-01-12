@@ -59,7 +59,6 @@ for s in sites:
         linkedin = 0 if not s.get('linkedin') else s.get('linkedin')
 
         if l in links_shares:
-
             links_shares[l] += linkedin + twitter
         else:
             links_shares[l] = linkedin + twitter

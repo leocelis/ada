@@ -1,7 +1,7 @@
 """
 (c) leocelis.com
 
-Predicts Social Share for a given Link's Title
+Predicts Link Shares based on given Link's Title
 
 Features:
 - Title length
@@ -29,7 +29,8 @@ from ada.predictions.utils import lower_case, remove_punctuation, spelling_check
 # ===================================
 # DATA CLEANING
 # ===================================
-dataset = pd.DataFrame(get_links_shares(threshold=1, limit=10000))
+dataset = pd.DataFrame(get_links_shares(threshold=10, limit=10))
+#dataset = pd.DataFrame(get_links_shares(threshold=10))
 
 # lower case
 dataset['link_title'] = dataset['link_title'].apply(lambda x: lower_case(x))
@@ -44,8 +45,10 @@ dataset['link_title'] = dataset['link_title'].apply(lambda x: spelling_check(x))
 # remove common words
 dataset['link_title'] = dataset['link_title'].apply(lambda x: remove_common_words(x))
 
-# TODO: get word emotions
-#
+# TODO: create score with how many emotions (title with 2 emotions, or 1)
+# TODO: get title scoring
+# TODO: get sentiment
+
 print("Training Dataset")
 print("================")
 print(dataset)
