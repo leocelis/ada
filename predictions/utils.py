@@ -98,7 +98,7 @@ def words_weight(df):
     for index, row in df.iterrows():
         for w in row["link_title"]:
             s = row["shares_total"]
-            weight = s / m, 2
+            weight = s / m
 
             # if the word is in the title
             if w in words:
@@ -205,7 +205,7 @@ def word_weight_upsert(word, weight):
     else:
         # insert new link with shares
         sql = """
-        INSERT INTO prediction_blog_titles(word, weight)
+        INSERT INTO prediction_blog_titles(word, weight) 
         VALUES (%s, %s)
         """.format()
 
