@@ -93,14 +93,18 @@ def words_weight(df):
     Calculates the words weight
     """
     words = dict()
+    m = get_max_shares()
 
     for index, row in df.iterrows():
         for w in row["link_title"]:
+            s = row["shares_total"]
+            weight = s / m
+
             # if the word is in the title
             if w in words:
-                s = row["shares_total"]
-                m = get_max_shares()
-                w = s / m
+                if weight > words[w]:
+                    words[w] = w
+            else:
                 words[w] = w
 
             print("Word {} weight: {}".format(w, words[w]))

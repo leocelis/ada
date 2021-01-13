@@ -38,15 +38,6 @@ for s in sites:
 # separate titles in words
 df["link_title"] = df["link_title"].apply(lambda x: clean_text(x))
 
-# calculate shares by word
-wv = words_shares(df)
-
-# save results
-for k, v in wv.items():
-    # if the word is more than 2 characters
-    if len(k) >= 2:
-        word_shares_upsert(k, v)
-
 # calculate weight by word
 ww = words_weight(df)
 
@@ -55,3 +46,12 @@ for k, v in ww.items():
     # if the word is more than 2 characters
     if len(k) >= 2:
         word_weight_upsert(k, v)
+
+# calculate shares by word
+wv = words_shares(df)
+
+# save results
+for k, v in wv.items():
+    # if the word is more than 2 characters
+    if len(k) >= 2:
+        word_shares_upsert(k, v)
