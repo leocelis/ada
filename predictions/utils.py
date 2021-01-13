@@ -105,7 +105,7 @@ def words_weight(df):
                 if weight > words[w]:
                     words[w] = w
             else:
-                words[w] = w
+                words[w] = weight
 
             print("Word {} weight: {}".format(w, words[w]))
 
