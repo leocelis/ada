@@ -121,7 +121,8 @@ except:
 new_dataset = pd.DataFrame({'link_title': ['Sofort integration guide',
                                            'Serverless will kick you in the face',
                                            'Social Media Marketing World 2021',
-                                           'huge work-from-home experiment']})
+                                           'huge work-from-home experiment',
+                                           'Click here to return to Amazon Web Services homepage']})
 
 # data cleaning
 new_dataset['link_title_length'] = new_dataset["link_title"].apply(lambda x: len(x))

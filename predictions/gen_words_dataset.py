@@ -11,7 +11,7 @@ from ada.content_analyzer.utils import get_all_sites, get_shares_by_domain
 from ada.predictions.utils import clean_text, words_value, word_shares_upsert
 
 # config
-share_threshold = 10  # min shares
+share_threshold = 1  # min shares
 # category = "adtech"
 
 # get websites by category

@@ -64,7 +64,7 @@ def clean_text(text):
 
 def words_value(df):
     """
-    Add shares per word
+    Take the highest shares and assing it to a word
 
     :param df:
     :param words:
@@ -75,8 +75,11 @@ def words_value(df):
 
     for index, row in df.iterrows():
         for w in row["link_title"]:
+            # if the word is in the title
             if w in words:
-                words[w] += row["shares_total"]
+                # if the shares are greater than stored
+                if row["shares_total"] > words[w]:
+                    words[w] = row["shares_total"]
             else:
                 words[w] = row["shares_total"]
 
