@@ -20,14 +20,10 @@ def get_sharing_score(title=None):
         if c == 0:
             title_cleaned.remove(w)
             continue
-        # instead of aggregating, replace with the biggest #
-        # s += c
-        if c > s:
-            s = c
+        s += c
         print("{} {}".format(w, c))
 
     # calculate score
-    print("---------------")
     max_shares = get_max_shares()  # post title max shares
     print("Max shares: {}".format(max_shares))
 
