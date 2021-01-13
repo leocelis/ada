@@ -20,7 +20,10 @@ def get_sharing_score(title=None):
         if c == 0:
             title_cleaned.remove(w)
             continue
-        s += c
+        # instead of aggregating, replace with the biggest #
+        # s += c
+        if c > s:
+            s = c
         print("{} {}".format(w, c))
 
     # calculate score

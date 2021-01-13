@@ -81,3 +81,4 @@ links_extractor/.scrapy/*
 links_extractor/links.csv
 # for now hide financial freedom
 financial_freedom/
+predictions/link_shares.joblib
