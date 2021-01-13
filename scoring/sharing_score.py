@@ -20,10 +20,7 @@ def get_sharing_score(title=None):
         if c == 0:
             title_cleaned.remove(w)
             continue
-        # take the highest shares
-        # s += c
-        if c > s:
-            s = c
+        s += c
         print("{} {}".format(w, c))
 
     # calculate score
