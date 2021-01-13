@@ -62,7 +62,7 @@ def clean_text(text):
     return text
 
 
-def words_value(df):
+def words_shares(df):
     """
     Take the highest shares and assing it to a word
 
@@ -75,7 +75,7 @@ def words_value(df):
 
     for index, row in df.iterrows():
         for w in row["link_title"]:
-            # if the word is in the title
+            # if the word is in the dic already
             if w in words:
                 # if the shares are greater than stored
                 if row["shares_total"] > words[w]:
@@ -84,6 +84,26 @@ def words_value(df):
                 words[w] = row["shares_total"]
 
             print("Word {} - {} shares".format(w, words[w]))
+
+    return words
+
+
+def words_weight(df):
+    """
+    Calculates the words weight
+    """
+    words = dict()
+
+    for index, row in df.iterrows():
+        for w in row["link_title"]:
+            # if the word is in the title
+            if w in words:
+                s = row["shares_total"]
+                m = get_max_shares()
+                w = s / m
+                words[w] = w
+
+            print("Word {} weight: {}".format(w, words[w]))
 
     return words
 
@@ -133,6 +153,61 @@ def word_shares_upsert(word, shares):
         try:
             cursor.execute(sql, (word, shares))
             print("{} = {} shares inserted.".format(word, shares))
+            conn.commit()
+        except Exception as e:
+            print("\nERROR! ({})".format(str(e)))
+            conn.rollback()
+            return False
+
+        cursor.close()
+        return True
+
+
+def word_weight_upsert(word, weight):
+    conn = get_mysql_conn()
+    cursor = conn.cursor()
+
+    # check if the word exists
+    sql = """
+    SELECT idprediction_blog_titles FROM prediction_blog_titles
+    WHERE word = "{}";
+    """.format(word)
+
+    r = cursor.execute(sql)
+
+    if r > 0:
+        conn.commit()
+        rows = dictfecth(cursor)
+
+        # update shares
+        id = rows[0]["idprediction_blog_titles"]
+        sql = """
+        UPDATE prediction_blog_titles
+        SET weight = {}
+        WHERE idprediction_blog_titles = '{}'
+        """.format(weight, id)
+
+        try:
+            cursor.execute(sql)
+            print("{} = {} weight updated.".format(word, weight))
+            conn.commit()
+        except Exception as e:
+            print("ERROR! ({})\n".format(str(e)))
+            conn.rollback()
+            return False
+
+        cursor.close()
+        return True
+    else:
+        # insert new link with shares
+        sql = """
+        INSERT INTO prediction_blog_titles(word, weight)
+        VALUES (%s, %s)
+        """.format()
+
+        try:
+            cursor.execute(sql, (word, weight))
+            print("{} = {} weight inserted.".format(word, weight))
             conn.commit()
         except Exception as e:
             print("\nERROR! ({})".format(str(e)))

@@ -8,7 +8,7 @@ sys.path.append(os.path.dirname(os.getcwd()))
 from ada.utils.utils import get_domain
 from ada.content_analyzer.utils import get_all_sites, get_shares_by_domain
 
-from ada.predictions.utils import clean_text, words_value, word_shares_upsert
+from ada.predictions.utils import clean_text, words_shares, word_shares_upsert, words_weight, word_weight_upsert
 
 # config
 share_threshold = 0  # min shares
@@ -39,10 +39,19 @@ for s in sites:
 df["link_title"] = df["link_title"].apply(lambda x: clean_text(x))
 
 # calculate shares by word
-wv = words_value(df)
+wv = words_shares(df)
 
 # save results
 for k, v in wv.items():
     # if the word is more than 2 characters
     if len(k) >= 2:
         word_shares_upsert(k, v)
+
+# calculate weight by word
+ww = words_weight(df)
+
+# save results
+for k, v in ww.items():
+    # if the word is more than 2 characters
+    if len(k) >= 2:
+        word_weight_upsert(k, v)
