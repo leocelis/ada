@@ -98,14 +98,14 @@ def words_weight(df):
     for index, row in df.iterrows():
         for w in row["link_title"]:
             s = row["shares_total"]
-            weight = round(s / m, 2)
+            weight = s / m, 2
 
             # if the word is in the title
             if w in words:
-                if float(weight) > float(words[w]):
-                    words[w] = w
+                if weight > words[w]:
+                    words[w] = weight
             else:
-                words[w] = float(weight)
+                words[w] = weight
 
             print("Word {} weight: {}".format(w, words[w]))
 
