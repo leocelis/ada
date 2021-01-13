@@ -2,7 +2,7 @@ import os
 import sys
 
 sys.path.append(os.path.dirname(os.getcwd()))
-from ada.predictions.utils import clean_text, get_shares_by_word, get_max_shares
+from ada.predictions.utils import clean_text, get_word_weight
 
 
 def get_sharing_score(title=None):
@@ -15,25 +15,15 @@ def get_sharing_score(title=None):
     # for each word, get shares
     s = 0
     for w in title_cleaned:
-        c = get_shares_by_word(w)
-        # if 0, remove it
-        if c == 0:
-            title_cleaned.remove(w)
-            continue
+        c = get_word_weight(w)
         s += c
         print("{} {}".format(w, c))
 
-    # calculate score
-    max_shares = get_max_shares()  # post title max shares
-    print("Max shares: {}".format(max_shares))
-
     if title_cleaned:
-        title_shares = s / len(title_cleaned)
-        print("Title shares: {}".format(title_shares))
+        t = s / len(title_cleaned)
+        print("Title weight: {}".format(t))
 
-        score = (title_shares * 100) / float(max_shares)
-        if score >= 100:
-            score = 100
+        score = t * 100
         print("Score: {}".format(score))
 
         # score_formatted = Decimal(score).quantize(0, ROUND_HALF_UP)
@@ -44,7 +34,7 @@ def get_sharing_score(title=None):
 
 
 def main():
-    get_sharing_score("this is a title")
+    get_sharing_score("Sofort web")
 
 
 if __name__ == "__main__":

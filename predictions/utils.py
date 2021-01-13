@@ -205,7 +205,7 @@ def word_weight_upsert(word, weight):
     else:
         # insert new link with shares
         sql = """
-        INSERT INTO prediction_blog_titles(word, weight) 
+        INSERT INTO prediction_blog_titles(word, weight)
         VALUES (%s, %s)
         """.format()
 
@@ -266,6 +266,25 @@ def get_shares_by_word(word):
 
     return 0
 
+
+def get_word_weight(word):
+    conn = get_mysql_conn()
+    cursor = conn.cursor()
+
+    sql = """
+    select weight from prediction_blog_titles
+    WHERE word = "{}";
+    """.format(word)
+
+    r = cursor.execute(sql)
+
+    if r > 0:
+        conn.commit()
+        rows = dictfecth(cursor)
+
+        return rows[0]["weight"]
+
+    return 0
 
 def get_max_shares():
     """
