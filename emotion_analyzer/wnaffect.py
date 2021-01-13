@@ -3,15 +3,19 @@
 Clement Michard (c) 2015
 """
 
-import os
-import sys
 import xml.etree.ElementTree as ET
 
 import nltk
 
 nltk.download("wordnet", "wn-domains")
-from emotion import Emotion
 from nltk.corpus import WordNetCorpusReader
+
+import os
+import sys
+import nltk
+
+sys.path.append(os.path.dirname(os.getcwd()))
+from ada.emotion_analyzer.emotion import Emotion
 
 
 class WNAffect:

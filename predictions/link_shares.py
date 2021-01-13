@@ -18,99 +18,122 @@ import os
 import sys
 
 import pandas as pd
-from joblib import dump
+from joblib import dump, load
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 
 sys.path.append(os.path.dirname(os.getcwd()))
 from ada.content_analyzer.utils import get_links_shares
-from ada.predictions.utils import lower_case, remove_punctuation, spelling_check, remove_common_words
+from ada.predictions.utils import lower_case, remove_punctuation, remove_common_words
+from ada.emotion_analyzer.utils import get_sentiment
+from ada.scoring.sharing_score import get_sharing_score
 
-# ===================================
-# DATA CLEANING
-# ===================================
-dataset = pd.DataFrame(get_links_shares(threshold=10, limit=10))
-# dataset = pd.DataFrame(get_links_shares(threshold=10))
+# show all columns
+pd.set_option('display.max_columns', None)
 
-# lower case
-dataset['link_title'] = dataset['link_title'].apply(lambda x: lower_case(x))
+# load trained model
+try:
+    regressor = load('predictions/link_shares.joblib')
+except:
+    print("Trained model not found!\n\n\n")
+    # ===================================
+    # DATA CLEANING
+    # ===================================
+    #dataset = pd.DataFrame(get_links_shares(threshold=10, limit=5000))
+    dataset = pd.DataFrame(get_links_shares())
 
-# remove punctuation
-dataset['link_title'] = dataset['link_title'].apply(lambda x: remove_punctuation(x))
+    # lower case
+    dataset['link_title'] = dataset['link_title'].apply(lambda x: lower_case(x))
 
-# spelling check
-dataset['link_title'] = dataset['link_title'].apply(lambda x: spelling_check(x))
+    # remove punctuation
+    dataset['link_title'] = dataset['link_title'].apply(lambda x: remove_punctuation(x))
 
-# remove common words
-dataset['link_title'] = dataset['link_title'].apply(lambda x: remove_common_words(x))
+    # spelling check
+    # dataset['link_title'] = dataset['link_title'].apply(lambda x: spelling_check(x))
 
-# print("Training Dataset")
-# print("================")
-# print(dataset)
+    # remove common words
+    dataset['link_title'] = dataset['link_title'].apply(lambda x: remove_common_words(x))
 
-# ===================================
-# FEATURE EXTRACTION
-# ===================================
-# subject length feature
-dataset['link_title_length'] = dataset['link_title'].apply(lambda x: len(x))
+    print("Training Dataset")
+    print("================")
+    print(dataset)
 
-# words count
-dataset['link_title_words_count'] = dataset['link_title'].apply(lambda x: len(x.split()))
+    # ===================================
+    # FEATURE EXTRACTION
+    # ===================================
+    # subject length feature
+    dataset['link_title_length'] = dataset['link_title'].apply(lambda x: len(x))
 
-# sentiment
-dataset['link_title_sentiment'] = dataset['sentiment']
+    # words count
+    dataset['link_title_words_count'] = dataset['link_title'].apply(lambda x: len(x.split()))
 
-# sharing score
-dataset['link_title_sharing_score'] = dataset['sharing_score']
+    # sentiment
+    dataset['link_title_sentiment'] = dataset['sentiment']
 
-# TODO: count how many emotions
-# dataset['link_title_sharing_score'] = dataset['emotions_count']
+    # sharing score
+    dataset['link_title_sharing_score'] = dataset['sharing_score']
 
-# print("Training Dataset")
-# print("================")
-# print(dataset)
+    # shares total
+    # dataset['link_title_shares_total'] = dataset['shares_total']
 
-# ===================================
-# VALIDATION
-# ===================================
+    # TODO: count how many emotions
+    # dataset['link_title_sharing_score'] = dataset['emotions_count']
 
-# feature
-X = dataset[['link_title_length', 'link_title_words_count', 'link_title_sentiment']]
+    print("Training Dataset")
+    print("================")
+    print(dataset)
 
-# target
-y = dataset['shares_total']
+    # ===================================
+    # VALIDATION
+    # ===================================
 
-# training and test dataset
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.5, random_state=100)
+    # feature
+    X = dataset[['link_title_length',
+                 'link_title_words_count',
+                 'link_title_sentiment',
+                 'link_title_sharing_score']]
+    # 'link_title_shares_total']]
 
-# training algorithm
-regressor = LinearRegression()
-regressor.fit(X_train, y_train)
+    # target
+    y = dataset['shares_total']
+    # y = dataset['sharing_score']
 
-# save trained model
-dump(regressor, 'predictions/link_shares.joblib')
+    # training and test dataset
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=100)
 
-# predict test dataset!
-y_pred = regressor.predict(X_test)
-df = pd.DataFrame({'Actual Results': y_test, 'Predicted Results': y_pred})
-print(df)
+    # training algorithm
+    regressor = LinearRegression()
+    regressor.fit(X_train, y_train)
+    dump(regressor, 'predictions/link_shares.joblib')
 
-exit()
+    # predict test dataset!
+    y_pred = regressor.predict(X_test)
+    df = pd.DataFrame({'Actual Results': y_test, 'Predicted Results': y_pred})
+    print(df)
+
+    # accuracy
+    accuracy = regressor.score(X_test, y_test)
+    print('\n\nAccuracy: {}% \n\n'.format(accuracy * 100))
 
 # ===================================
 # PREDICTION
 # ===================================
-new_dataset = pd.DataFrame({'link_title': ['This is a subject test',
-                                           'This is a really long subject that you should not read',
-                                           'Serverless will kick you in the face']})
+new_dataset = pd.DataFrame({'link_title': ['Sofort integration guide',
+                                           'Serverless will kick you in the face',
+                                           'Social Media Marketing World 2021',
+                                           'huge work-from-home experiment']})
 
 # data cleaning
 new_dataset['link_title_length'] = new_dataset["link_title"].apply(lambda x: len(x))
 new_dataset['link_title_words_count'] = new_dataset["link_title"].apply(lambda x: len(x.split()))
-new_dataset['link_title_sentiment'] = 0  # TODO: get sentiment
+new_dataset['link_title_sentiment'] = new_dataset["link_title"].apply(lambda x: get_sentiment(x))
+new_dataset['link_title_sharing_score'] = new_dataset["link_title"].apply(lambda x: get_sharing_score(x))
 
 # predict!
-X_new = new_dataset[['link_title_length', 'link_title_words_count', 'link_title_sentiment']]
+X_new = new_dataset[['link_title_length',
+                     'link_title_words_count',
+                     'link_title_sentiment',
+                     'link_title_sharing_score']]
 new_pred = regressor.predict(X_new)
 new_dataset['link_shares_prediction'] = new_pred
 

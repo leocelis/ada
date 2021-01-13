@@ -5,12 +5,12 @@ import os
 import sys
 
 import nltk
-from emotion import Emotion
 from textblob import TextBlob
-from wnaffect import WNAffect
 
 sys.path.append(os.path.dirname(os.getcwd()))
 from ada.utils.conn import get_mysql_conn, dictfecth
+from ada.emotion_analyzer.emotion import Emotion
+from ada.emotion_analyzer.wnaffect import WNAffect
 
 
 def get_word_emotion(word="anger"):
@@ -92,18 +92,19 @@ def get_sentiment(title="test"):
     :return:
     """
     p = TextBlob(title).sentiment.polarity
+
+    # positive/negative
+    if p > 0:
+        p = 1
+    else:
+        p = 0
+
     return p
 
 
 def update_link_sentiment(id, sentiment):
     conn = get_mysql_conn()
     cursor = conn.cursor()
-
-    # positive/negative
-    if sentiment > 0:
-        sentiment = 1
-    else:
-        sentiment = 0
 
     sql = """
     UPDATE links_shares
