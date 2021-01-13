@@ -102,7 +102,7 @@ def words_weight(df):
 
             # if the word is in the title
             if w in words:
-                if weight > words[w]:
+                if float(weight) > float(words[w]):
                     words[w] = w
             else:
                 words[w] = weight
