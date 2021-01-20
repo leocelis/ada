@@ -39,8 +39,9 @@ except:
     # ===================================
     # DATA CLEANING
     # ===================================
-    #dataset = pd.DataFrame(get_links_shares(threshold=10, limit=5000))
-    dataset = pd.DataFrame(get_links_shares())
+    #dataset = pd.DataFrame(get_links_shares(threshold=0, limit=20000))
+    dataset = pd.DataFrame(get_links_shares(threshold=1))
+    #dataset = pd.DataFrame(get_links_shares())
 
     # lower case
     dataset['link_title'] = dataset['link_title'].apply(lambda x: lower_case(x))
@@ -99,7 +100,7 @@ except:
     # y = dataset['sharing_score']
 
     # training and test dataset
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=100)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.10, random_state=140)
 
     # training algorithm
     regressor = LinearRegression()
@@ -113,7 +114,8 @@ except:
 
     # accuracy
     accuracy = regressor.score(X_test, y_test)
-    print('\n\nAccuracy: {}% \n\n'.format(accuracy * 100))
+    print('\n\nAccuracy: {} \n\n'.format(accuracy))
+    exit()
 
 # ===================================
 # PREDICTION

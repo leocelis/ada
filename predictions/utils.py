@@ -91,6 +91,9 @@ def words_shares(df):
 def words_weight(df):
     """
     Calculates the words weight
+
+    For every link's title where the word shows up,
+    adds up the total shares from the link to the word.
     """
     words = dict()
     m = get_max_shares()
@@ -100,10 +103,9 @@ def words_weight(df):
             s = row["shares_total"]
             weight = s / m
 
-            # if the word is in the title
             if w in words:
-                if weight > words[w]:
-                    words[w] = weight
+                # if the word is in the link, add the total shares
+                words[w] += weight
             else:
                 words[w] = weight
 
@@ -285,6 +287,7 @@ def get_word_weight(word):
         return rows[0]["weight"]
 
     return 0
+
 
 def get_max_shares():
     """

@@ -830,7 +830,7 @@ def get_links_shares(threshold: int = 1, limit: int = 0):
 
     sql = """
     SELECT * FROM links_shares
-    WHERE shares_total > {}
+    WHERE shares_total > {} ORDER BY RAND()
     """.format(threshold)
 
     if limit > 0:

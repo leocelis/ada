@@ -34,7 +34,7 @@ def get_sharing_score(title=None):
 
 
 def main():
-    get_sharing_score("Sofort web")
+    get_sharing_score("Click here to return to Amazon Web Services homepage")
 
 
 if __name__ == "__main__":
