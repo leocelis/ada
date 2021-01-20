@@ -66,6 +66,9 @@ def words_shares(df):
     """
     Take the highest shares and assing it to a word
 
+    Assumption: the most ocurrences a word shows up in a link's title,
+    the most likely is that will trigger shares
+
     :param df:
     :param words:
     :param shares_field:
@@ -77,9 +80,8 @@ def words_shares(df):
         for w in row["link_title"]:
             # if the word is in the dic already
             if w in words:
-                # if the shares are greater than stored
-                if row["shares_total"] > words[w]:
-                    words[w] = row["shares_total"]
+                # adds up the total shares
+                words[w] += row["shares_total"]
             else:
                 words[w] = row["shares_total"]
 
