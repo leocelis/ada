@@ -12,21 +12,21 @@ def get_sharing_score(title=None):
     # normalize words
     title_cleaned = clean_text(title)
 
-    # for each word, get shares
-    s = 0
-    for w in title_cleaned:
-        c = get_word_weight(w)
-        s += c
-        print("{} {}".format(w, c))
-
     if title_cleaned:
-        t = s / len(title_cleaned)
-        print("Title weight: {}".format(t))
+        # sum up words' weight
+        s = 0
+        for w in title_cleaned:
+            c = get_word_weight(w)
+            s += c
+            print("{} {}".format(w, c))
 
-        score = t * 100
-        print("Score: {}".format(score))
+        score = s * 100
+        print("Real score: {}".format(score))
 
-        # score_formatted = Decimal(score).quantize(0, ROUND_HALF_UP)
+        # adjust score
+        if score > 100:
+            score = 100
+
         final_score = round(score, 2)
         print("Score (rounded): {}".format(final_score))
 
@@ -34,7 +34,7 @@ def get_sharing_score(title=None):
 
 
 def main():
-    get_sharing_score("Click here to return to Amazon Web Services homepage")
+    get_sharing_score("The Death of Google Search Traffic and What It Means for Marketers")
 
 
 if __name__ == "__main__":
