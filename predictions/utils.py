@@ -236,7 +236,7 @@ def get_words_shares(limit=0):
     cursor = conn.cursor()
 
     sql = """
-    select * from prediction_blog_titles
+    select idprediction_blog_titles, word, shares, weight from prediction_blog_titles
     """
 
     if limit:
